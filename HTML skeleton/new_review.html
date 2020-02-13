@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="StyleSheet" href="new_review.css" />
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
+  <title>easyA</title>
+</head>
+<body>
+  <!-- class="fixed-top" -->
+  <div id="class-header" >
+    <div class="container mb-0" >
+      <div id="row1" class="row  my-3">
+        <div class="col-3">
+          <div class="container text-center">
+            <h2 class="logo">easy<span>A</span></h2>
+          </div>
+        </div>
+        <div class="col-6">
+          <div id="cover">
+            <form method="get" action="">
+              <div class="tb">
+                <div class="td"><input type="text" placeholder="CS 180" required></div>
+                <div class="td" id="s-cover">
+                  <button id=submit_btn type="submit">
+                    <div id="s-circle"></div>
+                    <span></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-3">
+          <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
+            <button type="button" class="btn btn-outline-light mx-2">Log in</button>
+            <button type="button" class="btn btn-outline-warning mx-2">Sign up</button>
+          </div>
+        </div>
+      </div>
+      <div id='row2' class=" d-flex">
+        <h1 id="name">CS 180</h1>
+        <p class="align-bottom">PROGRAMMING I</p>
+      </div>
+    </div>
+    <hr>
+  </div>
+
+  <div id="new_review" class="container">
+    <h2>It’s your turn to grade the class!</h2>
+    <form>
+      <div class="form-row">
+        <div class="col-10">
+          <input type="text" class="form-control" placeholder="Professor">
+        </div>
+        <div class="col-2">
+          <select id="new_review_grade" class="form-control" >
+            <option>A+</option>
+            <option>A</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B</option>
+            <option>B-</option>
+            <option>C+</option>
+            <option>C</option>
+            <option>C-</option>
+            <option>D+</option>
+            <option>D</option>
+            <option>D-</option>
+            <option>F</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="d-flex flex-wrap justify-content-center m-2">
+        <button type="button" class="btn btn-outline-warning">Would take the class again</button>
+        <button type="button" class="btn btn-outline-warning">Mandatory attendance</button>
+        <button type="button" class="btn btn-outline-warning">Will make you cry</button>
+        <button type="button" class="btn btn-outline-warning">Text book used</button>
+        <button type="button" class="btn btn-outline-warning">Skip class? Won’t pass</button>
+        <button type="button" class="btn btn-outline-warning">Lots of homework</button>
+        <button type="button" class="btn btn-outline-warning">Group projects</button>
+        <button type="button" class="btn btn-outline-warning">Elective</button>
+        <button type="button" class="btn btn-outline-warning">Help outside class</button>
+        <button type="button" class="btn btn-outline-warning">Pop quizes</button>
+        <button type="button" class="btn btn-outline-warning">Boring lectures</button>
+        <button type="button" class="btn btn-outline-warning">Amazing lectures</button>
+        <button type="button" class="btn btn-outline-warning">Extra credit</button>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" id="new_review_body" placeholder="Here. Vent out!" rows="10"></textarea>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div id="new_review_rating" class="col-10">
+            <button type="button" name="button"><i class="far fa-star"></i></button>
+            <button type="button" name="button"><i class="far fa-star"></i></button>
+            <button type="button" name="button"><i class="far fa-star"></i></button>
+            <button type="button" name="button"><i class="far fa-star"></i></button>
+            <button type="button" name="button"><i class="far fa-star"></i></button>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-warning">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
