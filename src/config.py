@@ -1,1 +1,2 @@
 #Config here
+DEBUG = True
