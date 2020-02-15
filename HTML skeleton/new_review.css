@@ -1,4 +1,4 @@
-.logo { /* easy */
+#logo{ /* easy */
 
 	font-family: STHeitiTC-Medium;
 	font-size: 3rem;
@@ -7,7 +7,7 @@
 
 
 
-.logo span {
+#logo span {
 	font-family: Noteworthy-Bold;
 	font-size: 110%;
 	color:#fbb03b;
