@@ -1,12 +1,17 @@
-import pyrebase
+from flask import Blueprint, render_template
 
-config = {
-  "apiKey": "AIzaSyCKndXyjPiRqsEWRveZNfSI_-wAC7ZU3EI",
-  "databaseURL": "https://easya-b1ec1.firebaseio.com",
-  "projectId": "easya-b1ec1",
-  "serviceAccount": "easyA/instance/firebase-private-key.json",
-}
 
-firebase = pyrebase.initialize.app(config)
-db = firebase.database()
+#Blueprint for the flask app
+views_app = Blueprint('views_app', __name__, template_folder = 'templates')
 
+@views_app.route('/')
+def index():
+    return render_template('home.html')
+
+@views_app.route('/login')
+def login():
+    return render_template('login.html')
+
+@views_app.route('/signup')
+def signup():
+    return render_template('signup.html')
