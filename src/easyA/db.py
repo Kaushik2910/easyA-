@@ -8,7 +8,7 @@ def init_db():
       "databaseURL": "https://easya-b1ec1.firebaseio.com",
       "projectId": "easya-b1ec1",
       "storageBucket": "easya-b1ec1.appspot.com",
-      "serviceAccount": "./instance/firebase-private-key.json",
+      "serviceAccount": "~/easyA/instance/firebase-private-key.json",
     }
 
     firebase = pyrebase.initialize_app(config)
