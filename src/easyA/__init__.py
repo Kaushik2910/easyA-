@@ -18,3 +18,5 @@ app = create_app()
 
 #Render the pages in views.py
 import easyA.views
+
+

@@ -1,12 +1,8 @@
-from google.cloud import firestore
-import os
+import pyrebase
 
 def init_db():
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = str(os.path.abspath("instance/dbauth.json"))
-
-    firestore_database = firestore.Client()
-
-    pyrebase_config = {
+    
+  config = {
       "apiKey": "AIzaSyCKndXyjPiRqsEWRveZNfSI_-wAC7ZU3EI",
       "authDomain": "easya-b1ec1.firebaseapp.com",
       "databaseURL": "https://easya-b1ec1.firebaseio.com",
@@ -15,5 +11,6 @@ def init_db():
     }
 
     pyrebase = pyrebase.initialize_app(config)
+    database = pyrebase.database()
 
-    return database
+    return database, pyrebase
