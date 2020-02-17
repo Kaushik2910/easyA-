@@ -1,13 +1,13 @@
+from flask import request, render_template
 from easyA import db
+from easyA import app
 
 db, pyrebase = db.init_db()
 auth = pyrebase.auth()
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
-
     if request.method == 'POST':
-
         email = request.form['email']
         password = request.form['password']
 
