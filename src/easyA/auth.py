@@ -6,7 +6,7 @@ db, pyrebase = db.init_db()
 auth = pyrebase.auth()
 
 @app.route('/api/signup', methods=['POST'])
-def signup():
+def api_signup():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -20,10 +20,11 @@ def signup():
 
         all_users = db.child("users").get()
 
-        try:
-            user = all_users[email]
-        except:
-            user_exists = 0
+        print(all_users)
+        # try:
+        #     user = all_users[email]
+        # except:
+        #     user_exists = 0
         
         # Check if user already exists
 
@@ -43,7 +44,7 @@ def signup():
 
 
 @app.route('/api/login', methods=['POST'])
-def login():
+def api_login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
