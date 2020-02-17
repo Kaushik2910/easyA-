@@ -18,9 +18,18 @@ def signup():
 
         }
 
+        user_exists = 0
+
+        all_users = db.child("users").get()
+
+        try:
+
+            user = all_users[email]
+            user_exists = 1
+
         # Check if user already exists
 
-        if db.child("users").contains(data):
+        if user_exists == 1:
 
             return 'User already exists'
 
