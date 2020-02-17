@@ -7,10 +7,10 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="StyleSheet" href="../static/login.css" />
+  <link rel="StyleSheet" href="../static/report.css" />
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
-  <title>Log in - easyA</title>
+  <title>Report - easyA</title>
 </head>
 <body>
   <!-- class="fixed-top" -->
@@ -18,31 +18,24 @@
     <div class="d-flex justify-content-center">
       <a href="./home.html" id="logo">easy<span>A</span></a>
     </div>
+    <div class="container review">
+      <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>
+      <p class="review-body">A well respected and humorous professor who does his best to keep endless black and white PowerPoint slides of code interesting. Lectures will never be a good way to learn how to code but Buster does his best. (recommend reading the textbook since it’s hard to focus in class)</p>
+    </div>
     <hr>
   </div>
 
-  <div id="signup_form" class="container">
+  <div id="new_report" class="container">
     <form>
-      <div class="form-group mb-4">
-        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-      </div>
       <div class="form-group">
-        <input type="password" class="form-control" id="pwd" placeholder="Password">
-      </div>
-      <!-- <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Remember me</label>
-      </div> -->
-      <hr class="mt-4">
-      <div id="log_in" class="d-flex justify-content-center text-center">
-        <p>Do not have an account? <a href="./signup.html">Sign Up!</a></p>
+        <textarea class="form-control" id="new_report_body" placeholder="Please tell us what is wrong." rows="10"></textarea>
       </div>
       <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-warning">Log in</button>
+        <button type="button" name="button" class="cancel-btn m-2">Cancel</button>
+        <button type="submit" class="btn btn-warning m-2">Submit Reprt</button>
       </div>
     </form>
   </div>
-
 
 
   <!-- Optional JavaScript -->
