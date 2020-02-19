@@ -14,6 +14,22 @@ auth = firebase_wrapper.auth()
 def index():
     return render_template('home.html')
 
+@app.route('/course')
+def course():
+    return render_template('course.html')
+
+@app.route('/new_review')
+def new_review():
+    return render_template('new_review.html')
+
+@app.route('/report')
+def report():
+    return render_template('report.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
@@ -22,7 +38,7 @@ def login():
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    if request.method == 'POST':      
+    if request.method == 'POST':
         do_signup()
     return render_template('signup.html')
 

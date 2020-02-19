@@ -7,7 +7,7 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="StyleSheet" href="../static/class.css" />
+  <link rel="StyleSheet" href="{{ url_for('static', filename='course.css') }}" />
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
   <title>CS 180 - easyA</title>
@@ -19,12 +19,12 @@
       <div id="row1" class="row  my-3">
         <div class="col-3">
           <div class="container text-center">
-            <a href="./home.html" id="logo">easy<span>A</span></a>
+            <a href="{{ url_for('signup') }}" id="logo">easy<span>A</span></a>
           </div>
         </div>
         <div class="col-6">
           <div id="cover">
-            <form method="get" action="">
+            <form method="get" action="{{ url_for('static', filename='course.css') }}">
               <div class="tb">
                 <div class="td"><input type="text" placeholder="CS 180" required></div>
                 <div class="td" id="s-cover">
@@ -60,7 +60,7 @@
           <h4>Based in 80 ratings.</h4>
         </div>
         <div class="col-6">
-          <button id="review_button" type="button" class="btn btn-light">Write a review</button>
+          <button  id="review_button" type="button" class="btn btn-light">Write a review</button>
         </div>
       </div>
       <div id='row4' class="row">
