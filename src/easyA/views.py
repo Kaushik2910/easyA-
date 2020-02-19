@@ -56,7 +56,7 @@ def do_signup():
     email_parts = email.split('@', 2)
 
     #Check user input for "@purdue.edu"
-    if email_parts[1].casefold() != "@purdue.edu":
+    if email_parts[1].casefold() != "purdue.edu":
         print("Unsupported email")
         return
 
