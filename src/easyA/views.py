@@ -14,3 +14,19 @@ def login():
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
+
+@app.route('/class')
+def class():
+    return render_template('class.html')
+
+@app.route('/new_review')
+def new_review():
+    return render_template('login.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('signup.html')
+
+@app.route('/report')
+def report():
+    return render_template('class.html')
