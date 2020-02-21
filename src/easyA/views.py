@@ -1,8 +1,7 @@
-
 from easyA import app
 from easyA import db
 
-from flask import render_template, request
+from flask import render_template, request, session
 import google.cloud
 import requests
 import json
@@ -31,8 +30,13 @@ def do_login():
     email = request.form['u_email']
     password = request.form['u_password']
 
+
     try:
-        auth.sign_in_with_email_and_password(email, password)
+        session['email'] = email
+        session['password'] = password
+        print(session['email'])
+        print(session['password'])
+        auth.sign_in_with_email_and_password(session['email'], session['password'])
         print("User logged in successfully")
         return
     except requests.exceptions.HTTPError as e:
@@ -70,11 +74,13 @@ def do_signup():
     else:
         try:
             #Create user
-            auth.create_user_with_email_and_password(email, password)
+            session['email']=email
+            session['password']=password
+            auth.create_user_with_email_and_password(session['email'], session['password'])
 
             #Record the user in the database
             data = {
-                "email": email,
+                "email": session['email'],
             }
             firestore_database.collection('users').document(career_id).set(data)
 
