@@ -36,19 +36,19 @@ body {
 	margin-bottom: -8px;
 }
 
-#signup_form {
+#signup_form_div {
 	margin-top: 16rem;
 	width: 70%;
 }
 
-#signup_form .form-control{
+#signup_form_div .form-control{
 	font-size: 1rem;
 	color: #F5F5F5;
 	border-color: #292929;
 	background-color: #1F1F1F;
 }
 
-#signup_form hr{
+#signup_form_div hr{
 	height: 1px;
 	background-color: #EBEBEB;
 	border: none;
