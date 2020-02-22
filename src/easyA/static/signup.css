@@ -53,10 +53,20 @@ body {
 	background-color: #EBEBEB;
 	border: none;
 }
+
 #log_in p{
 	color: rgba(235,235,235,0.6);
 }
+
 #log_in a {
 	color: rgba(235,235,235,0.6);
 	font-weight: bold;
+}
+
+#emailHelp, #pwdHelp{
+	color: red!important;
+}
+
+#signup_form_div .invalid_field{
+	border-color: red!important;;
 }
