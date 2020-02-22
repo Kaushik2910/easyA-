@@ -117,3 +117,11 @@ def do_signup():
         except Exception as e:
             print("Authentication or Database FAILURE - {}".format(e))
             return
+
+@app.route('/report')
+def report():
+    return render_template('report.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
