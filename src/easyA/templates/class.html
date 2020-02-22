@@ -10,7 +10,7 @@
   <link rel="StyleSheet" href="../static/class.css" />
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
-  <title>CS 180 - easyA</title>
+  <title>easyA - {{ course_id }}</title>
 </head>
 <body>
   <!-- class="fixed-top" -->
@@ -26,7 +26,7 @@
           <div id="cover">
             <form method="get" action="">
               <div class="tb">
-                <div class="td"><input type="text" placeholder="CS 180" required></div>
+                <div class="td"><input type="text" placeholder="{{ course_id }}" required></div>
                 <div class="td" id="s-cover">
                   <button id=submit_btn type="submit">
                     <div id="s-circle"></div>
@@ -47,17 +47,24 @@
       <div id='row2' class="row">
         <div class="col-6">
           <div class="container text-right">
-            <h1 id="name">CS 180</h1>
+            <h1 id="name">{{ course_id }}</h1>
           </div>
         </div>
         <div class="col-6 align-items-end m-0">
-          <p class="align-bottom">PROGRAMMING I</p>
+          <p class="align-bottom">{{ course_name }}</p>
         </div>
       </div>
       <div id='row3' class="row">
         <div class="col-6 text-right">
-          <h3><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></h3>
-          <h4>Based in 80 ratings.</h4>
+          <h3>
+            {%for i in range(0, rating)%}
+              <i class="fas fa-star"></i>
+            {%endfor%}
+            {%for i in range(0, (5 - rating))%}
+              <i class="far fa-star"></i>
+            {%endfor%}
+          </h3>
+          <h4>Based in {{ rating_count }} ratings.</h4>
         </div>
         <div class="col-6">
           <button id="review_button" type="button" class="btn btn-light">Write a review</button>
@@ -76,98 +83,38 @@
   </div>
 
   <ul>
+    {%for post in posts%}
     <li>
       <div class="container review">
         <div class="row">
           <div class="col-8">
-            <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>
+            <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
           </div>
           <div class="col text-right">
-            <p class="review-date text-right"><span>Nov 18th, 2019</span></p>
+            <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
           </div>
         </div>
-        <p class="review-tags"><span>For Credit:</span> Yes <span>Attendance:</span> Mandatory <span>Textbook:</span> No</p>
-        <p class="review-body">A well respected and humorous professor who does his best to keep endless black and white PowerPoint slides of code interesting. Lectures will never be a good way to learn how to code but Buster does his best. (recommend reading the textbook since it’s hard to focus in class)</p>
+        <p class="review-tags"><span>For Credit:</span> {{ post['for_credit'] }} <span>Attendance:</span> {{ post['attendance'] }} <span>Textbook:</span> {{ post['textbook'] }}</p>
+        <p class="review-body">{{ post['text'] }}</p>
         <div class="row">
           <div class="col-6">
-            <button type="button" name="button" class="review-votes upvote mx-2"><i class="fas fa-arrow-up"></i>420</button>
-            <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>69</button>
+            <button type="button" name="button" class="review-votes upvote mx-2"><i class="fas fa-arrow-up"></i>{{ post['upvotes'] }}</button>
+            <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>{{ post['downvotes'] }}</button>
           </div>
           <div class="col-6 text-right">
-            <p class="text-right"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></p>
+            <p class="text-right">
+              {%for i in range(0, post['rating'])%}
+                <i class="fas fa-star"></i>
+              {%endfor%}
+              {%for i in range(0, (5 - post['rating'] ))%}
+                <i class="far fa-star"></i>
+              {%endfor%}
+            </p>
           </div>
         </div>
       </div>
     </li>
-    <li>
-      <div class="container review">
-        <div class="row">
-          <div class="col-8">
-            <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>
-          </div>
-          <div class="col text-right">
-            <p class="review-date text-right"><span>Nov 18th, 2019</span></p>
-          </div>
-        </div>
-        <p class="review-tags"><span>For Credit:</span> Yes <span>Attendance:</span> Mandatory <span>Textbook:</span> No</p>
-        <p class="review-body">A well respected and humorous professor who does his best to keep endless black and white PowerPoint slides of code interesting. Lectures will never be a good way to learn how to code but Buster does his best. (recommend reading the textbook since it’s hard to focus in class)</p>
-        <div class="row">
-          <div class="col-6">
-            <button type="button" name="button" class="review-votes upvote mx-2"><i class="fas fa-arrow-up"></i>420</button>
-            <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>69</button>
-          </div>
-          <div class="col-6 text-right">
-            <p class="text-right"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></p>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="container review">
-        <div class="row">
-          <div class="col-8">
-            <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>
-          </div>
-          <div class="col text-right">
-            <p class="review-date text-right"><span>Nov 18th, 2019</span></p>
-          </div>
-        </div>
-        <p class="review-tags"><span>For Credit:</span> Yes <span>Attendance:</span> Mandatory <span>Textbook:</span> No</p>
-        <p class="review-body">A well respected and humorous professor who does his best to keep endless black and white PowerPoint slides of code interesting. Lectures will never be a good way to learn how to code but Buster does his best. (recommend reading the textbook since it’s hard to focus in class)</p>
-        <div class="row">
-          <div class="col-6">
-            <button type="button" name="button" class="review-votes upvote mx-2"><i class="fas fa-arrow-up"></i>420</button>
-            <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>69</button>
-          </div>
-          <div class="col-6 text-right">
-            <p class="text-right"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></p>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="container review">
-        <div class="row">
-          <div class="col-8">
-            <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>
-          </div>
-          <div class="col text-right">
-            <p class="review-date text-right"><span>Nov 18th, 2019</span></p>
-          </div>
-        </div>
-        <p class="review-tags"><span>For Credit:</span> Yes <span>Attendance:</span> Mandatory <span>Textbook:</span> No</p>
-        <p class="review-body">A well respected and humorous professor who does his best to keep endless black and white PowerPoint slides of code interesting. Lectures will never be a good way to learn how to code but Buster does his best. (recommend reading the textbook since it’s hard to focus in class)</p>
-        <div class="row">
-          <div class="col-6">
-            <button type="button" name="button" class="review-votes upvote mx-2"><i class="fas fa-arrow-up"></i>420</button>
-            <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>69</button>
-          </div>
-          <div class="col-6 text-right">
-            <p class="text-right"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></p>
-          </div>
-        </div>
-      </div>
-    </li>
+    {%endfor%}
   </ul>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -25,6 +25,24 @@ def signup():
         do_signup()
     return render_template('signup.html')
 
+@app.route('/course/')
+@app.route('/course/<course_id>')
+def course_page(course_id):
+    posts = []
+    course_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
+    
+    for course in course_ref.stream():
+        course_dic = course.to_dict()
+        course_id = course_dic['course_id']
+        course_name = course_dic['course_name']
+        rating = course_dic['rating']
+        rating_count = course_dic['rating_count']
+        post_ref = firestore_database.collection('posts').where('course', '==', course.reference).stream()
+        for post in post_ref:
+            posts.append(post.to_dict())
+
+    return render_template('class.html', course_id=course_id, course_name=course_name, rating=rating, rating_count=rating_count, posts=posts)
+
 #Login function
 def do_login():
     email = request.form['u_email']
