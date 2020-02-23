@@ -94,7 +94,11 @@ def do_signup():
             #Create user
             session['email']=email
             session['password']=password
-            auth.create_user_with_email_and_password(session['email'], session['password'])
+
+            user = auth.create_user_with_email_and_password(session['email'], session['password'])
+
+            #Send email verification
+            auth.send_email_verification(user['idToken'])
 
             #Record the user in the database
             data = {
