@@ -13,6 +13,11 @@ auth = firebase_wrapper.auth()
 def index():
     return render_template('home.html')
 
+@app.route('/verified_user')
+def display():
+    return render_template('verified_user.html')    
+
+
 @app.route('/signout')
 def signout():
 
