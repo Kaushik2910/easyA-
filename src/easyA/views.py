@@ -13,11 +13,20 @@ auth = firebase_wrapper.auth()
 def index():
     return render_template('home.html')
 
+@app.route('/signout')
+def signout():
+
+    session.pop('username', None)
+    session.pop('password', None)
+    return render_template('home.html')
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         do_login()
     return render_template('login.html')
+
+
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
