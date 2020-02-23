@@ -15,6 +15,9 @@ def index():
 
 @app.route('/signout')
 def signout():
+
+    session.pop('username', None)
+    session.pop('password', None)
     return render_template('home.html')
 
 @app.route('/login', methods=['POST', 'GET'])
