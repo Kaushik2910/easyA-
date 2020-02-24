@@ -1,8 +1,7 @@
-
 from easyA import app
 from easyA import db
 
-from flask import render_template, request
+from flask import render_template, request, session
 import google.cloud
 import requests
 import json
@@ -42,13 +41,36 @@ def signup():
         do_signup()
     return render_template('signup.html')
 
+@app.route('/course/')
+@app.route('/course/<course_id>')
+def course_page(course_id):
+    posts = []
+    course_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
+
+    for course in course_ref.stream():
+        course_dic = course.to_dict()
+        course_id = course_dic['course_id']
+        course_name = course_dic['course_name']
+        rating = course_dic['rating']
+        rating_count = course_dic['rating_count']
+        post_ref = firestore_database.collection('posts').where('course', '==', course.reference).stream()
+        for post in post_ref:
+            posts.append(post.to_dict())
+
+    return render_template('class.html', course_id=course_id, course_name=course_name, rating=rating, rating_count=rating_count, posts=posts)
+
 #Login function
 def do_login():
     email = request.form['u_email']
     password = request.form['u_password']
 
+
     try:
-        auth.sign_in_with_email_and_password(email, password)
+        session['email'] = email
+        session['password'] = password
+        print(session['email'])
+        print(session['password'])
+        auth.sign_in_with_email_and_password(session['email'], session['password'])
         print("User logged in successfully")
         return
     except requests.exceptions.HTTPError as e:
@@ -72,7 +94,7 @@ def do_signup():
     email_parts = email.split('@', 2)
 
     #Check user input for "@purdue.edu"
-    if email_parts[1].casefold() != "@purdue.edu":
+    if email_parts[1].casefold() != "purdue.edu":
         print("Unsupported email")
         return
 
@@ -86,11 +108,13 @@ def do_signup():
     else:
         try:
             #Create user
-            auth.create_user_with_email_and_password(email, password)
+            session['email']=email
+            session['password']=password
+            auth.create_user_with_email_and_password(session['email'], session['password'])
 
             #Record the user in the database
             data = {
-                "email": email,
+                "email": session['email'],
             }
             firestore_database.collection('users').document(career_id).set(data)
 
@@ -109,3 +133,11 @@ def do_signup():
         except Exception as e:
             print("Authentication or Database FAILURE - {}".format(e))
             return
+
+@app.route('/report')
+def report():
+    return render_template('report.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
