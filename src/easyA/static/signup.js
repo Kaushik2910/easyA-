@@ -8,11 +8,12 @@ function emailCheck(){
   if (email.match(regex) == null) {
     if (email != "") {
       emailHelp.textContent = "You can only sign up with a Purdue email";
-      form.u_password.classList.add("invalid_field");
+      form.u_email.classList.add("invalid_field");
     }
     return false;
   }
   emailHelp.textContent = "";
+  form.u_email.classList.remove("invalid_field");
   return true;
 }
 
@@ -23,17 +24,25 @@ function passwordCheck() {
 
   var pwdHelp = document.getElementById("pwdHelp");
 
+  form.u_password.classList.remove("invalid_field");
+  form.u_password2.classList.remove("invalid_field");
+
   if (password1 == '') {
     pwdHelp.textContent = "Please enter a password";
+    form.u_password.classList.add("invalid_field");
     return false;
   } else if (password1.length < 6) {
     pwdHelp.textContent = "Your password is too short";
+    form.u_password.classList.add("invalid_field");
     return false;
   } else if (password2 == '') {
     pwdHelp.textContent = "Please confirm your password";
+    form.u_password2.classList.add("invalid_field");
     return false;
   } else if (password1 != password2) {
     pwdHelp.textContent = "Password did not match: Please try again...";
+    form.u_password1.classList.add("invalid_field");
+    form.u_password2.classList.add("invalid_field");
     return false;
   }else{
     pwdHelp.textContent = "";
@@ -44,7 +53,9 @@ var inputs = document.getElementsByTagName("input");
 
 for (var i = 0; i < inputs.length; i++) {
   inputs[i].addEventListener("change", function(){
-    if (emailCheck() && passwordCheck()) {
+    var email = emailCheck()
+    var pwd = passwordCheck()
+    if (email && pwd) {
       document.getElementById("signup_btn").disabled = false;
     } else {
       document.getElementById("signup_btn").disabled = true;
