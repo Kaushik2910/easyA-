@@ -34,10 +34,10 @@ flask run
 ```
 
 ### Hosted on
-'localhost:5000'
+`localhost:5000`
 
-### Pages (In-development)
-'''
+# Pages (In-development)
+```
 localhost:5000                - Homepage
 localhost:5000/login          - Log In Page
 localhost:5000/signup         - Sign up Page
@@ -45,4 +45,4 @@ localhost:5000/course/CS18000 - A Test Course Page
 localhost:5000/course/CS25200 - A Test Course page
 localhost:5000/contact        - Contact Us Page
 localhost:5000/report         - Post Review Page
-'''
+```
