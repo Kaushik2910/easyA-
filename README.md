@@ -19,7 +19,7 @@ pip install google-cloud-firestore
 
 ## Getting Started
 
-To host a flask web server, go to 'src/' directory and run:
+To host a flask web server, go to `src/` directory and run:
 ### Linux/MacOS
 ```
 export FLASK_APP=easyA
@@ -36,7 +36,7 @@ flask run
 ### Hosted on
 `localhost:5000`
 
-# Pages (In-development)
+## Pages (In-development)
 ```
 localhost:5000                - Homepage
 localhost:5000/login          - Log In Page
