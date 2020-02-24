@@ -4,4 +4,3 @@ export FLASK_ENV=development
 
 python -m flask run
 
-echo "localhost:5000"
