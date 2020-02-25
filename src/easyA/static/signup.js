@@ -8,8 +8,10 @@ function emailCheck(){
   if (email.match(regex) == null) {
     if (email != "") {
       emailHelp.textContent = "You can only sign up with a Purdue email";
-      form.u_email.classList.add("invalid_field");
+    } else {
+      emailHelp.textContent = "Please enter your Purdue email";
     }
+    form.u_email.classList.add("invalid_field");
     return false;
   }
   emailHelp.textContent = "";
@@ -49,16 +51,19 @@ function passwordCheck() {
     return true;
   }
 }
-var inputs = document.getElementsByTagName("input");
 
-for (var i = 0; i < inputs.length; i++) {
-  inputs[i].addEventListener("change", function(){
-    var email = emailCheck()
-    var pwd = passwordCheck()
-    if (email && pwd) {
-      document.getElementById("signup_btn").disabled = false;
-    } else {
-      document.getElementById("signup_btn").disabled = true;
-    }
-  });
+function validateForm(){
+  var email = emailCheck()
+  var pwd = passwordCheck()
+  return email && pwd;
 }
+
+// var submit_btn = document.getElementById("signup_btn");
+//
+// submit_btn.addEventListener("click", function(){
+//   var email = emailCheck()
+//   var pwd = passwordCheck()
+//   if (email && pwd) {
+//     document.getElementById("signup_form").submit;
+//   }
+// });

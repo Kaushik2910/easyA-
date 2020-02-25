@@ -22,7 +22,7 @@
   </div>
 
   <div id="signup_form_div" class="container">
-    <form id="signup_form" action="/signup" method="POST">
+    <form id="signup_form" action="{{ url_for('signup') }}" onsubmit="return validateForm()" method="POST">
       <div class="form-group mb-4">
         <input id="u_email" name="u_email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
         <small id="emailHelp" class="form-text pl-2"></small>
@@ -38,9 +38,7 @@
         <p>Already have an account? <a href="{{ url_for('login') }}">Log In</a></p>
       </div>
       <div class="d-flex justify-content-end">
-        <form action="{{ url_for('index') }}" method="get">
-          <button id=signup_btn disabled type="submit" class="btn btn-warning">Sign up</button>
-        </form>
+        <button id=signup_btn type="submit" class="btn btn-warning">Sign up</button>
       </div>
     </form>
   </div>
