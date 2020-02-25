@@ -21,8 +21,9 @@
     <hr>
   </div>
 
-  <div id="signup_form" class="container">
-    <form action="/signup" method="POST">
+
+  <div id="signup_form_div" class="container">
+    <form id="signup_form" action="{{ url_for('signup') }}" onsubmit="return validateForm()" method="POST">
       <div class="form-group mb-4">
         <input name="u_email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
       </div>
