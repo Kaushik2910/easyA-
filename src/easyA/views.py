@@ -5,6 +5,7 @@ from flask import render_template, request, session
 import google.cloud
 import requests
 import json
+import datetime
 
 firestore_database, realtime_database, firebase_wrapper = db.init_db()
 auth = firebase_wrapper.auth()
@@ -17,17 +18,9 @@ def index():
 def course():
     return render_template('course.html')
 
-@app.route('/new_review')
-def new_review():
-    return render_template('new_review.html')
-
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
-@app.route('/report')
-def report():
-    return render_template('report.html')
 
 @app.route('/verified_user')
 def display():
