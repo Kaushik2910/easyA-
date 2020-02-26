@@ -230,3 +230,11 @@ def do_signup():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/reset_pwd')
+def reset_pwd():
+    return render_template('reset_pwd.html')
+
+@app.route('/forgot_pwd')
+def forgot_pwd():
+    return render_template('forgot_pwd.html')
