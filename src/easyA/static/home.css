@@ -1,5 +1,5 @@
 
-    
+
 #group_2 {
 	top: 228.40815734863px;
 	left: 729px;
@@ -207,7 +207,7 @@ button span:before, button span:after
     background-color: #FBB03B;
 }
 
-.dropbtn 
+.dropbtn
 {
     background-color: #8E8E8E;
     color: white;
@@ -215,14 +215,14 @@ button span:before, button span:after
     font-size: 16px;
     border: none;
 }
-  
-.dropdown 
+
+.dropdown
 {
     position: relative;
     display: inline-block;
 }
-  
-.dropdown-content 
+
+.dropdown-content
 {
     display: none;
     position: absolute;
@@ -231,17 +231,21 @@ button span:before, button span:after
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-  
-.dropdown-content a 
+
+.dropdown-content a
   {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
   }
-  
+
+#user {
+  min-width: 12rem;
+}
+
 .dropdown-content a:hover {background-color: #FBB03B;}
-  
+
 .dropdown:hover .dropdown-content {display: block;}
-  
+
 .dropdown:hover .dropbtn {background-color: #FBB03B;}

@@ -7,10 +7,10 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="StyleSheet" href="{{ url_for('static', filename='login.css') }}" />
+  <link rel="StyleSheet" href="{{ url_for('static', filename='reset_pwd.css') }}" />
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
-  <title>Log in - easyA</title>
+  <title>Sign Up - easyA</title>
 </head>
 <body>
   <!-- class="fixed-top" -->
@@ -21,27 +21,17 @@
     <hr>
   </div>
 
-  <div id="login_form" class="container">
-    <form action="{{ url_for('login') }}" method="POST" >
-      <div class="form-group mb-4">
-        <input name="u_email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-      </div>
+  <div id="reset_pwd_form_div" class="container">
+    <form id="reset_pwd_form" action="{{ url_for('reset_pwd') }}" onsubmit="return validateForm()" method="POST">
       <div class="form-group">
-        <input name="u_password" type="password" class="form-control" id="pwd" placeholder="Password">
-        <small class="form-text text-muted pl-2 text-right"><a href="{{ url_for('forgot_pwd') }}">Forgot password?</a></small>
+        <input id="u_password" name="u_password" type="password" class="form-control" id="pwd" placeholder="New password">
+        <input id="u_password2" name="u_password2" type="password" class="form-control" id="comfirm_pwd" placeholder="Comfirm password">
+        <small id="pwdHelp" class="form-text text-muted pl-2"></small>
+        <small class="form-text text-muted pl-2">Do not use the same password that you use for bank, Purdue or anything important.<br>We have no idea of cybersecurity ¯\_(ツ)_/¯</small>
       </div>
-      <!-- <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Remember me</label>
-      </div> -->
-      <hr class="mt-4">
-      <div id="log_in" class="d-flex justify-content-center text-center">
-        <p>Do not have an account? <a href="{{ url_for('signup') }}">Sign Up!</a></p>
-      </div>
+      <!-- <hr class="mt-4"> -->
       <div class="d-flex justify-content-end">
-        <form action="{{ url_for('login') }}" method="get">
-          <button type="submit" class="btn btn-warning">Log in</button>
-        </form>
+        <button id=reset_pwd_btn type="submit" class="btn btn-warning">Reset Password</button>
       </div>
     </form>
   </div>
@@ -49,6 +39,7 @@
 
 
   <!-- Optional JavaScript -->
+  <script src="{{ url_for('static', filename='reset_pwd.js') }}"></script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

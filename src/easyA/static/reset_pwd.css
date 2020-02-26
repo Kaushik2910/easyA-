@@ -36,19 +36,19 @@ body {
 	margin-bottom: -8px;
 }
 
-#signup_form_div {
+#reset_pwd_form_div {
 	margin-top: 16rem;
 	width: 70%;
 }
 
-#signup_form_div .form-control{
+#reset_pwd_form_div .form-control{
 	font-size: 1rem;
 	color: #F5F5F5;
 	border-color: #292929;
 	background-color: #1F1F1F;
 }
 
-#signup_form_div hr{
+#reset_pwd_form_div hr{
 	height: 1px;
 	background-color: #EBEBEB;
 	border: none;
@@ -67,6 +67,6 @@ body {
 	color: red!important;
 }
 
-#signup_form_div .invalid_field{
+#reset_pwd_form_div .invalid_field{
 	border-color: red!important;;
 }

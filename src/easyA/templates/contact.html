@@ -7,7 +7,7 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="StyleSheet" href="../static/contact.css"/>
+  <link rel="StyleSheet" href="{{ url_for('static', filename='contact.css') }}"/>
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
   <title>Contact - easyA</title>
@@ -16,7 +16,7 @@
   <!-- class="fixed-top" -->
   <div id="class-header" >
     <div class="d-flex justify-content-center">
-      <a href="./" id="logo">easy<span>A</span></a>
+      <a href="{{ url_for('index') }}" id="logo">easy<span>A</span></a>
     </div>
     <div class="container review">
       <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>

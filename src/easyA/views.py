@@ -13,10 +13,33 @@ auth = firebase_wrapper.auth()
 def index():
     return render_template('home.html')
 
+@app.route('/course')
+def course():
+    return render_template('course.html')
+
+@app.route('/new_review')
+def new_review():
+    return render_template('new_review.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/report')
+def report():
+    return render_template('report.html')
+
 @app.route('/verified_user')
 def display():
     return render_template('verified_user.html')
 
+@app.route('/reset_pwd')
+def reset_pwd():
+    return render_template('reset_pwd.html')
+
+@app.route('/forgot_pwd')
+def forgot_pwd():
+    return render_template('forgot_pwd.html')
 
 @app.route('/signout')
 def signout():
@@ -43,9 +66,9 @@ def signup():
 @app.route('/course/<course_id>')
 def course_page(course_id):
     posts = []
-    courses_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
+    course_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
 
-    for course in courses_ref.stream():
+    for course in course_ref.stream():
         course_dic = course.to_dict()
         course_id = course_dic['course_id']
         course_name = course_dic['course_name']
@@ -223,7 +246,3 @@ def do_signup():
         except Exception as e:
             print("Authentication or Database FAILURE - {}".format(e))
             return
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
