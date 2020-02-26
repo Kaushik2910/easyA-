@@ -79,7 +79,7 @@ def course_page(course_id, get_info=False):
 
     if get_info:
         return course, course_id, course_name
-    return render_template('class.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts)
+    return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts)
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
