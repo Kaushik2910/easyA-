@@ -16,7 +16,7 @@
   <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
     {% if 'email' in session %}
     <div class="btn-group">
-      <button type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ email }}</button>
+      <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ session['email'] }}</button>
       <div class="dropdown-menu pull-right">
         <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
         <a class="dropdown-item"  onclick="window.location.href = './login';">Log Out</a>
@@ -52,6 +52,7 @@
 
 
   <!-- Optional JavaScript -->
+  <script src="{{ url_for('static', filename='home.js') }}"></script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
