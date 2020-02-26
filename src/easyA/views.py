@@ -1,7 +1,7 @@
 from easyA import app
 from easyA import db
 
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect, url_for
 import google.cloud
 import requests
 import json
@@ -36,10 +36,9 @@ def forgot_pwd():
 
 @app.route('/signout')
 def signout():
-
     session.pop('username', None)
     session.pop('password', None)
-    return render_template('home.html')
+    return redirect(url_for('index'))
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
