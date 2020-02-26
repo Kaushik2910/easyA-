@@ -11,18 +11,21 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
   <title>easyA</title>
 </head>
-<body onload="Check_Login()">
-
+<!--<body onload="Check_Login()">-->
+<body>
   <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
     <div class="btn-group">
-      <button id="login_check1" type="button" class="btn btn-outline-warning mx-2 float-right" data-toggle="dropdown">{{ email }}</button>
+      {% if 'email' in session %}
+      <button id="login_check1" type="button" class="btn btn-outline-warning mx-2 float-right" data-toggle="dropdown">{{ session['email'] }}</button>
       <div id="login_check1" class="dropdown-menu">
           <a class="dropdown-item" href="#">Password Change</a>
-          <a class="dropdown-item"  onclick="window.location.href = './login';">Log Out</a>
+          <a class="dropdown-item"  onclick="window.location.href = './signout';">Log Out</a>
       </div>
+      {% else %}
+      <button id="login_check2" onclick="window.location.href = './login';" type="button" class="btn btn-outline-light mx-2">Log in</button>
+      <button id="login_check3" onclick="window.location.href = './signup';" type="button" class="btn btn-outline-warning mx-2">Sign up</button>
+      {% endif %}
     </div>
-    <button id="login_check2" onclick="window.location.href = './login';" type="button" class="btn btn-outline-light mx-2">Log in</button>
-    <button id="login_check3" onclick="window.location.href = './signup';" type="button" class="btn btn-outline-warning mx-2">Sign up</button>
   </div>
 
   <div id="header" class="container text-center">
@@ -46,6 +49,7 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!--
   <script>
     function Check_Login()
     {
@@ -61,7 +65,7 @@
       z.style.display="none";
       }
     }
-  </script>
+  </script> -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
