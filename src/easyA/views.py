@@ -8,10 +8,10 @@ import json
 
 firestore_database, realtime_database, firebase_wrapper = db.init_db()
 auth = firebase_wrapper.auth()
-
+Email="False"
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return render_template('home.html', email=Email)
 
 @app.route('/verified_user')
 def display():
@@ -59,6 +59,7 @@ def course_page(course_id):
 
 #Login function
 def do_login():
+    global Email
     email = request.form['u_email']
     password = request.form['u_password']
 
@@ -70,6 +71,7 @@ def do_login():
         print(session['password'])
         auth.sign_in_with_email_and_password(session['email'], session['password'])
         print("User logged in successfully")
+        Email=email
         return
     except requests.exceptions.HTTPError as e:
         #Create a dictionary from the error
