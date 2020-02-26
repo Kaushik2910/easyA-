@@ -181,7 +181,7 @@ button span:before, button span:after
 }
 #class-header {
 	width: 100%;
-	position: fixed;
+	position: static;
 	background-color: #292929;
 	top: 0;
 	left: 0;
@@ -217,7 +217,7 @@ hr {
 }
 
 #new_review {
-	margin-top: 18rem;
+	margin-top: 3rem;
 }
 
 #new_review h2{
@@ -246,7 +246,7 @@ hr {
 	outline-color: white;
 }
 
-#new_review_grade{
+.new_review_input{
 	color:#525252;
 	border-color: #292929;
 	background-color: #1F1F1F;

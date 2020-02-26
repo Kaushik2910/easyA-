@@ -14,7 +14,7 @@
 </head>
 <body>
   <!-- class="fixed-top" -->
-  <div id="class-header" >
+  <div id="class-header">
     <div class="container mb-0" >
       <div id="row1" class="row  my-3">
         <div class="col-3">
@@ -53,6 +53,9 @@
         <div class="col-6 align-items-end m-0">
           <p class="align-bottom">{{ course_name }}</p>
         </div>
+        <div class="col-6">
+            <p class="align-bottom">{{ description }}</p>
+        </div>
       </div>
       <div id='row3' class="row">
         <div class="col-6 text-right">
@@ -67,7 +70,7 @@
           <h4>Based in {{ rating_count }} ratings.</h4>
         </div>
         <div class="col-6">
-          <button id="review_button" type="button" class="btn btn-light">Write a review</button>
+          <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light">Write a review</button>
         </div>
       </div>
       <div id='row4' class="row">
@@ -82,10 +85,15 @@
     <hr>
   </div>
 
-  <ul>
+  <ul id="posts">
     {%for post in posts%}
     <li>
       <div class="container review">
+        <div class="row">
+            <div class="col-8">
+                <p class="review-professor"><span>Author:</span> A Purdue Student</p>
+            </div>
+        </div>
         <div class="row">
           <div class="col-8">
             <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
@@ -94,7 +102,7 @@
             <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
           </div>
         </div>
-        <p class="review-tags"><span>For Credit:</span> {{ post['for_credit'] }} <span>Attendance:</span> {{ post['attendance'] }} <span>Textbook:</span> {{ post['textbook'] }}</p>
+        <p class="review-tags"> <span>Attendance:</span> {{ post['attendance'] }} <span>Textbook:</span> {{ post['textbook'] }} <span>Grade:</span> {{ post['grade'] }}</p>
         <p class="review-body">{{ post['text'] }}</p>
         <div class="row">
           <div class="col-6">
