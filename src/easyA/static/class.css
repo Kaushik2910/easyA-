@@ -180,15 +180,11 @@ button span:before, button span:after
 }
 #class-header {
 	width: 100%;
-	position: static;
+	position: fixed;
 	background-color: #292929;
 	top: 0;
-    left: 0;
+	left: 0;
 	z-index: 99999;
-}
-
-#posts {
-    display: inline-block;
 }
 
 #row1 {
@@ -203,7 +199,7 @@ hr {
 	margin-bottom: -8px;
 }
 ul {
-	margin-top: 2%;
+	margin-top: 400px;
 }
 
 #row2{
