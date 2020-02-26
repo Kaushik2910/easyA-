@@ -14,7 +14,7 @@
 </head>
 <body>
   <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
-    {% if email in session %}
+    {% if 'email' in session %}
     <div class="btn-group">
       <button type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ email }}</button>
       <div class="dropdown-menu pull-right">
