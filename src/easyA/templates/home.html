@@ -4,30 +4,33 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="StyleSheet" href="{{ url_for('static', filename='home.css') }}" />
   <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
   <title>easyA</title>
 </head>
 <body>
-<div class="btn-group">
-  <button type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Account
-  </button>
-  <div class="dropdown-menu pull-right">
-      <a class="dropdown-item" href="#">Password Change</a>
-      <a class="dropdown-item"  onclick="window.location.href = './login';">Log Out</a>
-  </div>
-</div>
   <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
+    {% if email %}
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ email }}</button>
+      <div class="dropdown-menu pull-right">
+        <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
+        <a class="dropdown-item"  onclick="window.location.href = './login';">Log Out</a>
+      </div>
+    </div>
+    {% else %}
     <form action="{{ url_for('login') }}" method="get">
       <button type="submit" class="btn btn-outline-light mx-2">Log in</button>
     </form>
     <form class="" action="{{ url_for('signup') }}" method="get">
       <button type="submit" class="btn btn-outline-warning mx-2">Sign up</button>
     </form>
+    {% endif %}
+
   </div>
   <div id="header" class="container text-center">
     <h1>easy<span id="a">A</span></h1>

@@ -33,6 +33,13 @@ def report():
 def display():
     return render_template('verified_user.html')
 
+@app.route('/reset_pwd')
+def reset_pwd():
+    return render_template('reset_pwd.html')
+
+@app.route('/forgot_pwd')
+def forgot_pwd():
+    return render_template('forgot_pwd.html')
 
 @app.route('/signout')
 def signout():

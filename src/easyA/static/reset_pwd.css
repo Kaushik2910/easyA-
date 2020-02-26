@@ -36,31 +36,37 @@ body {
 	margin-bottom: -8px;
 }
 
-#login_form {
-	margin-top: 20rem;
+#reset_pwd_form_div {
+	margin-top: 16rem;
 	width: 70%;
 }
 
-#login_form .form-control{
+#reset_pwd_form_div .form-control{
 	font-size: 1rem;
 	color: #F5F5F5;
 	border-color: #292929;
 	background-color: #1F1F1F;
 }
 
-#login_form hr{
+#reset_pwd_form_div hr{
 	height: 1px;
 	background-color: #EBEBEB;
 	border: none;
 }
+
 #log_in p{
 	color: rgba(235,235,235,0.6);
 }
+
 #log_in a {
 	color: rgba(235,235,235,0.6);
 	font-weight: bold;
 }
 
-.form-text a {
-	color: rgba(235,235,235,0.6);
+#emailHelp, #pwdHelp{
+	color: red!important;
+}
+
+#reset_pwd_form_div .invalid_field{
+	border-color: red!important;;
 }
