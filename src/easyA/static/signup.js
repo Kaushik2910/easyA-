@@ -57,13 +57,3 @@ function validateForm(){
   var pwd = passwordCheck()
   return email && pwd;
 }
-
-// var submit_btn = document.getElementById("signup_btn");
-//
-// submit_btn.addEventListener("click", function(){
-//   var email = emailCheck()
-//   var pwd = passwordCheck()
-//   if (email && pwd) {
-//     document.getElementById("signup_form").submit;
-//   }
-// });
