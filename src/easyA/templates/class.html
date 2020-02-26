@@ -38,10 +38,16 @@
           </div>
         </div>
         <div class="col-3">
-          <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
-            <button onclick="window.location.href = './login.html';" type="button" class="btn btn-outline-light mx-2">Log in</button>
-            <button onclick="window.location.href = './signup.html';" type="button" class="btn btn-outline-warning mx-2">Sign up</button>
-          </div>
+            {% if 'email' in session %}
+            <button id="login_check1" type="button" class="btn btn-outline-warning mx-2 float-right" data-toggle="dropdown">{{ session['email'] }}</button>
+            <div id="login_check1" class="dropdown-menu">
+                <a class="dropdown-item" href="#">Password Change</a>
+                <a class="dropdown-item"  onclick="window.location.href = './signout';">Log Out</a>
+            </div>
+            {% else %}
+            <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';" type="button" class="btn btn-outline-light mx-2">Log in</button>
+            <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button" class="btn btn-outline-warning mx-2">Sign up</button>
+            {% endif %}
         </div>
       </div>
       <div id='row2' class="row">
@@ -67,7 +73,7 @@
               <i class="far fa-star"></i>
             {%endfor%}
           </h3>
-          <h4>Based in {{ rating_count }} ratings.</h4>
+          <h4>Based on {{ rating_count }} ratings.</h4>
         </div>
         <div class="col-6">
           <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light">Write a review</button>
@@ -85,7 +91,7 @@
     <hr>
   </div>
 
-  <ul id="posts">
+  <ul>
     {%for post in posts%}
     <li>
       <div class="container review">
@@ -110,11 +116,15 @@
             <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>{{ post['downvotes'] }}</button>
           </div>
           <div class="col-6 text-right">
+            <form action="{{ url_for('report') }}" method="POST">
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="btn btn-warning">Report</button>
+            </form>
             <p class="text-right">
               {%for i in range(0, post['rating'])%}
                 <i class="fas fa-star"></i>
               {%endfor%}
-              {%for i in range(0, (5 - post['rating'] ))%}
+              {%for i in range(0, (5 - post['rating']))%}
                 <i class="far fa-star"></i>
               {%endfor%}
             </p>

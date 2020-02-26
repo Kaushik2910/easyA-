@@ -42,17 +42,27 @@ def signup():
 def course_page(course_id, get_info=False):
     posts = []
     courses_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
-    
+
     for course in courses_ref.stream():
         course_dic = course.to_dict()
         course_id = course_dic['course_id']
         course_name = course_dic['course_name']
         description = course_dic['description']
-        rating = course_dic['rating']
-        rating_count = course_dic['rating_count']
+        rating = 0
+        rating_count = 0
         post_ref = firestore_database.collection('posts').where('course', '==', course.reference).stream()
         for post in post_ref:
-            posts.append(post.to_dict())
+            tempDict = post.to_dict()
+            tempDict['post_ID'] = post.id
+
+            #Sum all course rating
+            rating += tempDict['rating']
+            rating_count += 1
+
+            posts.append(tempDict)
+        
+        #Calculate average rating
+        rating = int(rating / rating_count)
 
     if get_info:
         return course, course_id, course_name
@@ -60,7 +70,7 @@ def course_page(course_id, get_info=False):
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
-    if session['email'] is None:
+    if 'email' not in session:
         return redirect('/course/' + course_id)
     professors = []
     course, course_id, course_name = course_page(course_id, True)
@@ -72,7 +82,43 @@ def new_review(course_id):
         professors.append(professor.to_dict())
     return render_template('new_review.html', course_id=course_id, course_name=course_name, professors=professors)
 
-#Posting function
+@app.route('/report', methods=['POST', 'GET'])
+def report():
+    if request.method == 'POST':
+        print(request.form['post_ID'])
+        return render_template('report.html', post=request.form['post_ID'])
+    
+    return redirect(url_for('index'))
+
+#Posting a report function
+@app.route('/post_report', methods=['POST', 'GET'])
+def post_report():
+    if request.method == 'POST':
+        career_id = (session['email'].split('@', 2))[0]
+        author = firestore_database.collection('users').document(career_id).get()
+        post = request.form['post_object']
+        print(post)
+        data = {
+            "report_date": datetime.datetime.now().isoformat(),
+            "author": author.reference,
+            "report_post": post.reference,
+            "text": request.form['text'],
+        }
+
+        #Increment post count for the course
+        report_count = post.to_dict()['report_count'] + 1
+        post.reference.update({
+            "report_count": int(report_count)
+        })
+
+        #Add the report to the database
+        firestore_database.collection('reports').add(data)
+
+        return redirect('/course/' + str(post.to_dict()['course'].to_dict()['course_id']))
+    
+    return redirect(url_for('index'))
+
+#Posting a review function
 def post_review(course, course_id):
     career_id = (session['email'].split('@', 2))[0]
     author = firestore_database.collection('users').document(career_id).get()
@@ -91,12 +137,6 @@ def post_review(course, course_id):
         "downvotes": 0,
         "upvotes": 0
     }
-
-    #Increment post count for the course
-    post_count = course.to_dict()['rating_count'] + 1
-    course.reference.update({
-        "rating_count": post_count
-    })
 
     #Add the post to the database
     firestore_database.collection('posts').add(data)
@@ -186,10 +226,6 @@ def do_signup():
         except Exception as e:
             print("Authentication or Database FAILURE - {}".format(e))
             return signup()
-
-@app.route('/report')
-def report():
-    return render_template('report.html')
 
 @app.route('/contact')
 def contact():

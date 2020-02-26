@@ -187,10 +187,6 @@ button span:before, button span:after
 	z-index: 99999;
 }
 
-#posts {
-    display: inline-block;
-}
-
 #row1 {
 	max-width: 1080px;
 	width: 100%;
