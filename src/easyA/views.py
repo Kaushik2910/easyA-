@@ -23,9 +23,14 @@ def display():
 def contact():
     return render_template('contact.html')
 
-@app.route('/reset_pwd')
-def reset_pwd():
-    return render_template('reset_pwd.html')
+@app.route('/reset_pwd', methods=['POST', 'GET'])
+def reset_pwd(errorMessage="", requestTrigger=True):
+    if 'email' not in session:
+        return redirect(url_for('index'))
+    if (request.method == 'POST') and requestTrigger:
+        return do_change_password()
+
+    return render_template('reset_pwd.html', errorMessage=errorMessage)
 
 @app.route('/forgot_pwd')
 def forgot_pwd():
@@ -181,8 +186,6 @@ def do_login():
             return login("Email is not verified! Please verify your email!", False)
 
         session['email'] = email
-        session['password'] = password
-
 
         print("User logged in successfully")
         return redirect(url_for('index'))
@@ -249,3 +252,31 @@ def do_signup():
         except Exception as e:
             print("Authentication or Database FAILURE - {}".format(e))
             return signup("Authentication or Database FAILURE", False)
+
+#Change password function
+def do_change_password():
+    password = request.form['u_password']
+    new_password = request.form['u_new_password']
+    confirm_password = request.form['u_confirm_password']
+
+    #Check user input for password confirmation
+    if new_password != confirm_password:
+        return reset_pwd("Passwords do not match!", False)
+
+    try:
+        pyrebase_user = auth.sign_in_with_email_and_password(session['email'], password)
+        admin_auth.update_user(pyrebase_user['localId'], password=new_password);
+        return reset_pwd("Password changed succussfully!", False)
+    except requests.exceptions.HTTPError as e:
+        #Create a dictionary from the error
+        e_dict = json.loads(e.strerror)
+
+        #Check if a credentials error occured
+        if e_dict["error"]["message"] == "INVALID_PASSWORD" or e_dict["error"]["message"] == "EMAIL_NOT_FOUND":
+            return reset_pwd("Please enter the correct old password!", False)
+        else:
+            #Print error code and message
+            print("HTTPError Code {}: {}".format(e_dict["error"]["code"], e_dict["error"]["message"]))
+            return reset_pwd(e_dict["error"]["message"], False)
+
+

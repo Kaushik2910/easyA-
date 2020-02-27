@@ -24,9 +24,10 @@
   <div id="reset_pwd_form_div" class="container">
     <form id="reset_pwd_form" action="{{ url_for('reset_pwd') }}" onsubmit="return validateForm()" method="POST">
       <div class="form-group">
-        <input id="u_password" name="u_password" type="password" class="form-control" id="pwd" placeholder="New password">
-        <input id="u_password2" name="u_password2" type="password" class="form-control" id="comfirm_pwd" placeholder="Comfirm password">
-        <small id="pwdHelp" class="form-text text-muted pl-2"></small>
+        <input id="u_password" name="u_password" type="password" class="form-control" id="pwd" placeholder="Old Password">
+        <input id="u_password" name="u_new_password" type="password" class="form-control" id="pwd" placeholder="New password">
+        <input id="u_password2" name="u_confirm_password" type="password" class="form-control" id="comfirm_pwd" placeholder="Confirm password">
+        <small id="pwdHelp" class="form-text text-muted pl-2">{{ errorMessage }}</small>
         <small class="form-text text-muted pl-2">Do not use the same password that you use for bank, Purdue or anything important.<br>We have no idea of cybersecurity ¯\_(ツ)_/¯</small>
       </div>
       <!-- <hr class="mt-4"> -->
