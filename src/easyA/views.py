@@ -8,7 +8,7 @@ import requests
 import json
 import datetime
 
-firestore_database, realtime_database, firebase_wrapper = db.init_db()
+firestore_database, realtime_database, firebase_wrapper, admin_auth = db.init_db()
 auth = firebase_wrapper.auth()
 
 @app.route('/')
@@ -39,12 +39,18 @@ def signout():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login(errorMessage="", requestTrigger=True):
+    if 'email' in session:
+        return redirect(url_for('index'))
+
     if (request.method == 'POST') and requestTrigger:
         return do_login()
     return render_template('login.html', errorMessage=errorMessage)
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup(errorMessage="", requestTrigger=True):
+    if 'email' in session:
+        return redirect(url_for('index'))
+
     if (request.method == 'POST') and requestTrigger:
         return do_signup()
     return render_template('signup.html', errorMessage=errorMessage)
@@ -165,9 +171,19 @@ def do_login():
     password = request.form['u_password']
 
     try:
-        auth.sign_in_with_email_and_password(email, password)
+        pyrebase_user = auth.sign_in_with_email_and_password(email, password)
+        firebase_user = admin_auth.get_user(pyrebase_user['localId'])
+        
+        if not firebase_user.email_verified:
+            #Send email verification
+            auth.send_email_verification(pyrebase_user['idToken'])
+
+            return login("Email is not verified! Please verify your email!", False)
+
         session['email'] = email
         session['password'] = password
+
+
         print("User logged in successfully")
         return redirect(url_for('index'))
     except requests.exceptions.HTTPError as e:
@@ -212,9 +228,6 @@ def do_signup():
             session['password']=password
 
             user = auth.create_user_with_email_and_password(session['email'], session['password'])
-
-            #Send email verification
-            auth.send_email_verification(user['idToken'])
 
             #Record the user in the database
             data = {
