@@ -32,9 +32,12 @@ def reset_pwd(errorMessage="", requestTrigger=True):
 
     return render_template('reset_pwd.html', errorMessage=errorMessage)
 
-@app.route('/forgot_pwd')
-def forgot_pwd():
-    return render_template('forgot_pwd.html')
+@app.route('/forgot_pwd', methods=['POST', 'GET'])
+def forgot_pwd(errorMessage="", requestTrigger=True):
+    if (request.method == 'POST' and requestTrigger):
+        return do_password_reset()
+
+    return render_template('forgot_pwd.html', errorMessage=errorMessage)
 
 @app.route('/signout')
 def signout():
@@ -279,4 +282,17 @@ def do_change_password():
             print("HTTPError Code {}: {}".format(e_dict["error"]["code"], e_dict["error"]["message"]))
             return reset_pwd(e_dict["error"]["message"], False)
 
+def do_password_reset():
 
+    email = request.form['u_email']
+    print("Email for Password Reset: ", email)
+
+    try:
+        # Send Password Reset email
+        auth.send_password_reset_email(email)
+        return forgot_pwd('Password Reset Email Sent!', False)
+    except Exception as e:
+        print("Some unexpected error occured - {}".format(e))
+        return forgot_pwd('Some unexpected error occured!', False)
+    
+    
