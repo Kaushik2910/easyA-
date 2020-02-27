@@ -15,6 +15,7 @@ This web application is implemented using `Python 3.7.*`
 pip install Flask
 pip install pyrebase
 pip install google-cloud-firestore
+pip install firebase-admin
 ```
 
 ## Getting Started
