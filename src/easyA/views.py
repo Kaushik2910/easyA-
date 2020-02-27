@@ -75,7 +75,10 @@ def course_page(course_id, get_info=False):
             posts.append(tempDict)
 
         #Calculate average rating
-        rating = int(rating / rating_count)
+        if rating_count != 0:
+            rating = int(rating / rating_count)
+        else:
+            rating = 0
 
     if get_info:
         return course, course_id, course_name
