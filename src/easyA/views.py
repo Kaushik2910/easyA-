@@ -38,16 +38,16 @@ def signout():
     return redirect(url_for('index'))
 
 @app.route('/login', methods=['POST', 'GET'])
-def login():
-    if request.method == 'POST':
+def login(errorMessage="", requestTrigger=True):
+    if (request.method == 'POST') and requestTrigger:
         return do_login()
-    return render_template('login.html')
+    return render_template('login.html', errorMessage=errorMessage)
 
 @app.route('/signup', methods=['POST', 'GET'])
-def signup():
-    if request.method == 'POST':
+def signup(errorMessage="", requestTrigger=True):
+    if (request.method == 'POST') and requestTrigger:
         return do_signup()
-    return render_template('signup.html')
+    return render_template('signup.html', errorMessage=errorMessage)
 
 
 @app.route( '/course/')
@@ -164,13 +164,10 @@ def do_login():
     email = request.form['u_email']
     password = request.form['u_password']
 
-
     try:
+        auth.sign_in_with_email_and_password(email, password)
         session['email'] = email
         session['password'] = password
-        print(session['email'])
-        print(session['password'])
-        auth.sign_in_with_email_and_password(session['email'], session['password'])
         print("User logged in successfully")
         return redirect(url_for('index'))
     except requests.exceptions.HTTPError as e:
@@ -179,12 +176,11 @@ def do_login():
 
         #Check if a credentials error occured
         if e_dict["error"]["message"] == "INVALID_PASSWORD" or e_dict["error"]["message"] == "EMAIL_NOT_FOUND":
-            print("Incorrect credentials!")
-            return login()
+            return login("Incorrect credentials!", False)
         else:
             #Print error code and message
             print("HTTPError Code {}: {}".format(e_dict["error"]["code"], e_dict["error"]["message"]))
-            return login()
+            return login(e_dict["error"]["message"], False)
 
 #Sign up function
 def do_signup():
@@ -194,15 +190,13 @@ def do_signup():
 
     #Check user input for password confirmation
     if password != confirm_password:
-        print("Unmatching password")
-        return signup()
+        return signup("Passwords do not match!", False)
 
     email_parts = email.split('@', 2)
 
     #Check user input for "@purdue.edu"
     if email_parts[1].casefold() != "purdue.edu":
-        print("Unsupported email")
-        return signup()
+        return signup("Email not supported!", False)
 
     #Check if user's career ID exists in the database
     career_id = email_parts[0]
@@ -210,7 +204,7 @@ def do_signup():
 
     if user_ref.get().exists:
         print("User {} already exists!".format(user_ref.get().to_dict()))
-        return signup()
+        return signup("The email {} has already been used.".format(email), False)
     else:
         try:
             #Create user
@@ -238,7 +232,7 @@ def do_signup():
 
             #Print error code and message
             print("HTTPError Code {}: {}".format(e_dict["error"]["code"], e_dict["error"]["message"]))
-            return signup()
+            return signup(e_dict["error"]["message"], False)
         except Exception as e:
             print("Authentication or Database FAILURE - {}".format(e))
-            return signup()
+            return signup("Authentication or Database FAILURE", False)

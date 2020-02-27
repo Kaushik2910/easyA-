@@ -61,6 +61,10 @@ body {
 	font-weight: bold;
 }
 
+#emailHelp, #pwdHelp{
+	color: red!important;
+}
+
 .form-text a {
 	color: rgba(235,235,235,0.6);
 }
