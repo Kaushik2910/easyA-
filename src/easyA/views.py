@@ -229,7 +229,7 @@ def do_signup():
         return signup("The email {} has already been used.".format(email), False)
     else:
         try:
-            user = auth.create_user_with_email_and_password(email, password)
+            auth.create_user_with_email_and_password(email, password)
 
             #Record the user in the database
             data = {
@@ -264,7 +264,7 @@ def do_change_password():
 
     try:
         pyrebase_user = auth.sign_in_with_email_and_password(session['email'], password)
-        admin_auth.update_user(pyrebase_user['localId'], password=new_password);
+        admin_auth.update_user(pyrebase_user['localId'], password=new_password)
         return reset_pwd("Password changed succussfully!", False)
     except requests.exceptions.HTTPError as e:
         #Create a dictionary from the error
@@ -279,7 +279,6 @@ def do_change_password():
             return reset_pwd(e_dict["error"]["message"], False)
 
 def do_password_reset():
-
     email = request.form['u_email']
     print("Email for Password Reset: ", email)
 
@@ -287,6 +286,14 @@ def do_password_reset():
         # Send Password Reset email
         auth.send_password_reset_email(email)
         return forgot_pwd('Password Reset Email Sent!', False)
-    except Exception as e:
-        print("Some unexpected error occured - {}".format(e))
-        return forgot_pwd('Some unexpected error occured!', False)
+    except requests.exceptions.HTTPError as e:
+        #Create a dictionary from the error
+        e_dict = json.loads(e.strerror)
+
+        #Check if a credentials error occured
+        if e_dict["error"]["message"] == "EMAIL_NOT_FOUND":
+            return forgot_pwd("Email is not registed!", False)
+        else:
+            #Print error code and message
+            print("HTTPError Code {}: {}".format(e_dict["error"]["code"], e_dict["error"]["message"]))
+            return forgot_pwd(e_dict["error"]["message"], False)

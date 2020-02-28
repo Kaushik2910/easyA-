@@ -24,9 +24,9 @@
   <div id="forgot_pwd_form_div" class="container">
     <form id="forgot_pwd_form" action="{{ url_for('forgot_pwd') }}" onsubmit="return emailCheck()" method="POST">
       <div class="form-group mb-4">
-        <input id="u_email" name="u_email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text pl-2"></small>
         <small class="form-text text-muted pl-2">Enter your Purdue email to reset your password</small>
+        <input id="u_email" name="u_email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text pl-2">{{ errorMessage }}</small>
       </div>
       <hr class="mt-4">
       <div id="log_in" class="d-flex justify-content-center text-center">
