@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="col-6">
-          <div id="cover">
+          <!-- <div id="cover">
               <div class="tb">
                 <div class="td"><input type="text" placeholder="{{ course_id }}" required></div>
                 <div class="td" id="s-cover">
@@ -33,18 +33,28 @@
                   </button>
                 </div>
               </div>
-          </div>
+          </div> -->
         </div>
         <div class="col-3">
           <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
-            <button type="button" class="btn btn-outline-light mx-2">Log in</button>
-            <button type="button" class="btn btn-outline-warning mx-2">Sign up</button>
+            {% if 'email' in session %}
+            <div class="btn-group">
+              <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ session['email'] }}</button>
+              <div class="dropdown-menu pull-right">
+                <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
+                <a class="dropdown-item"  onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
+              </div>
+            </div>
+            {% else %}
+            <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';" type="button" class="btn btn-outline-light mx-2">Log in</button>
+            <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button" class="btn btn-outline-warning mx-2">Sign up</button>
+            {% endif %}
           </div>
         </div>
       </div>
-      <div id='row2' class=" d-flex">
+      <div id='row2' class="d-flex justify-content-around align-items-center">
         <h1 id="name">{{ course_id }}</h1>
-        <p class="align-bottom">{{ course_name }}</p>
+        <h2 class="align-bottom">{{ course_name }}</h2>
       </div>
     </div>
     <hr>
@@ -148,6 +158,7 @@
 
 
   <!-- Optional JavaScript -->
+  <script src="{{ url_for('static', filename='course.js') }}"></script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
