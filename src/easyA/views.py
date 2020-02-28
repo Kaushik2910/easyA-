@@ -101,7 +101,7 @@ def course_page(course_id, get_info=False):
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
     if 'email' not in session:
-        return redirect('/course/' + course_id)
+        return login("Please login to post reviews!", False)
     professors = []
     course, course_id, course_name = course_page(course_id, True)
     if request.method == 'POST':
