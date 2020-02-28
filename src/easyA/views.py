@@ -229,15 +229,11 @@ def do_signup():
         return signup("The email {} has already been used.".format(email), False)
     else:
         try:
-            #Create user
-            session['email']=email
-            session['password']=password
-
-            user = auth.create_user_with_email_and_password(session['email'], session['password'])
+            user = auth.create_user_with_email_and_password(email, password)
 
             #Record the user in the database
             data = {
-                "email": session['email'],
+                "email": email,
             }
             firestore_database.collection('users').document(career_id).set(data)
 
@@ -294,5 +290,3 @@ def do_password_reset():
     except Exception as e:
         print("Some unexpected error occured - {}".format(e))
         return forgot_pwd('Some unexpected error occured!', False)
-    
-    
