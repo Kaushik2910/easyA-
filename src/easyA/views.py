@@ -15,9 +15,9 @@ auth = firebase_wrapper.auth()
 def index():
     return render_template('home.html')
 
-@app.route('/not_found')
-def not_found():
-    return render_template('not_found.html')
+@app.errorhandler(404)
+def not_found(e):
+  return render_template("not_found.html") 
 
 @app.route('/verified_user')
 def display():
