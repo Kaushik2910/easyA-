@@ -1,0 +1,45 @@
+#logo { /* easy */
+	margin-top: 3%;
+	font-family: STHeitiTC-Medium;
+	font-size: 6.5rem;
+	color:#ffffff;
+}
+
+#logo span {
+	font-family: Noteworthy-Bold;
+	font-size: 110%;
+	color:#fbb03b;
+}
+
+h1, h2, h3, h4, h5, h6, p{
+		color: #F5F5F5;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #292929;
+}
+
+#class-header {
+	width: 100%;
+	/* position: fixed; */
+	background-color: #292929;
+	top: 0;
+	left: 0;
+	z-index: 99999;
+}
+
+#class-header hr {
+	height: 12px;
+	border: 0;
+	box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+	margin-bottom: -8px;
+}
+
+#not_found_msg {
+	margin-top: 2rem;
+	padding: 0 30%;
+}
+#not_found_msg h1{
+	font-size: 6rem;
+}

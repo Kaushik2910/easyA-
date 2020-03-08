@@ -15,6 +15,10 @@ auth = firebase_wrapper.auth()
 def index():
     return render_template('home.html')
 
+@app.route('/not_found')
+def not_found():
+    return render_template('not_found.html')
+
 @app.route('/verified_user')
 def display():
     return render_template('verified_user.html')
@@ -181,7 +185,7 @@ def do_login():
     try:
         pyrebase_user = auth.sign_in_with_email_and_password(email, password)
         firebase_user = admin_auth.get_user(pyrebase_user['localId'])
-        
+
         if not firebase_user.email_verified:
             #Send email verification
             auth.send_email_verification(pyrebase_user['idToken'])
