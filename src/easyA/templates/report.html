@@ -19,15 +19,40 @@
       <a href="./" id="logo">easy<span>A</span></a>
     </div>
     <div class="container review">
-      <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>
-      <p class="review-body">A well respected and humorous professor who does his best to keep endless black and white PowerPoint slides of code interesting. Lectures will never be a good way to learn how to code but Buster does his best. (recommend reading the textbook since it’s hard to focus in class)</p>
-    </div>
+        <div class="row">
+            <div class="col-8">
+                <p class="review-professor"><span>Author:</span> A Purdue Student</p>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
+          </div>
+          <div class="col text-right">
+            <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
+          </div>
+        </div>
+        <p class="review-tags"> <span>Attendance:</span> {{ post['attendance'] }} <span>Textbook:</span> {{ post['textbook'] }} <span>Grade:</span> {{ post['grade'] }}</p>
+        <p class="review-body">{{ post['text'] }}</p>
+        <div class="row">
+          <div class="col-6 text-right">
+            <p class="text-right">
+              {%for i in range(0, post['rating'])%}
+                <i class="fas fa-star"></i>
+              {%endfor%}
+              {%for i in range(0, (5 - post['rating']))%}
+                <i class="far fa-star"></i>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
+      </div>
     <hr>
   </div>
 
   <div id="new_report" class="container">
     <form action="{{ url_for('post_report') }}" method="POST">
-        <input name="post_ID" type="hidden" value="{{ post }}"></input>
+        <input name="post_ID" type="hidden" value="{{ post_ID }}"></input>
       <div class="form-group">
         <textarea name="text" class="form-control" id="new_report_body" placeholder="Please tell us what is wrong." rows="10"></textarea>
       </div>

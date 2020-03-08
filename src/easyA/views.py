@@ -46,7 +46,6 @@ def forgot_pwd(errorMessage="", requestTrigger=True):
 @app.route('/signout')
 def signout():
     session.pop('email', None)
-    session.pop('password', None)
     return redirect(url_for('index'))
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -118,10 +117,14 @@ def new_review(course_id):
 
 @app.route('/report', methods=['POST', 'GET'])
 def report():
-    if request.method == 'POST':
-        print(request.form['post_ID'])
-        return render_template('report.html', post=request.form['post_ID'])
+    #Check for logged in or not
+    if 'email' not in session:
+        return redirect(url_for('index'))
 
+    if request.method == 'POST':
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+        return render_template('report.html', post_ID=request.form['post_ID'], post=post.to_dict())
+    
     return redirect(url_for('index'))
 
 #Posting a report function
@@ -130,8 +133,7 @@ def post_report():
     if request.method == 'POST':
         career_id = (session['email'].split('@', 2))[0]
         author = firestore_database.collection('users').document(career_id).get()
-        post = request.form['post_object']
-        print(post)
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         data = {
             "report_date": datetime.datetime.now().isoformat(),
             "author": author.reference,
@@ -148,7 +150,7 @@ def post_report():
         #Add the report to the database
         firestore_database.collection('reports').add(data)
 
-        return redirect('/course/' + str(post.to_dict()['course'].to_dict()['course_id']))
+        return redirect('/course/' + str(post.to_dict()['course'].get().to_dict()['course_id']))
 
     return redirect(url_for('index'))
 
