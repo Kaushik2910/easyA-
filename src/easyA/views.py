@@ -66,12 +66,17 @@ def signup(errorMessage="", requestTrigger=True):
         return do_signup()
     return render_template('signup.html', errorMessage=errorMessage)
 
-
 @app.route( '/course/')
 @app.route('/course/<course_id>')
 def course_page(course_id, get_info=False):
     posts = []
+    user_posts = []
     courses_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
+    
+    #Check how many posts the user has
+    if 'email' in session:
+        career_id = (session['email'].split('@', 2))[0]
+        user = firestore_database.collection('users').document(career_id).get()
 
     for course in courses_ref.stream():
         course_dic = course.to_dict()
@@ -88,8 +93,13 @@ def course_page(course_id, get_info=False):
             #Sum all course rating
             rating += tempDict['rating']
             rating_count += 1
+            if tempDict['text'] and not tempDict['text'].isspace():
+                posts.append(tempDict)
 
-            posts.append(tempDict)
+            #Collect logged in user's posts
+            if 'email' in session and tempDict['author'] == user.reference:
+                user_posts.append(tempDict)
+            
 
         #Calculate average rating
         if rating_count != 0:
@@ -98,21 +108,31 @@ def course_page(course_id, get_info=False):
             rating = 0
 
     if get_info:
-        return course, course_id, course_name
-    return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts)
+        return course, course_id, course_name, user_posts
+    return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts, user_posts=user_posts)
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
     if 'email' not in session:
         return login("Please login to post reviews!", False)
+
     professors = []
-    course, course_id, course_name = course_page(course_id, True)
+    course, course_id, course_name, user_posts = course_page(course_id, True)
+    if len(user_posts) > 0:
+        #User has already posted a review, do not post render new review page
+
+        #TODO: Show error in course page
+
+        return redirect('/course/' + course_id)
+
     if request.method == 'POST':
         return post_review(course, course_id)
 
     professor_ref = firestore_database.collection('professors').where('course', '==', course.reference).stream()
     for professor in professor_ref:
         professors.append(professor.to_dict())
+
+    
     return render_template('new_review.html', course_id=course_id, course_name=course_name, professors=professors)
 
 @app.route('/report', methods=['POST', 'GET'])
@@ -178,6 +198,39 @@ def post_review(course, course_id):
     firestore_database.collection('posts').add(data)
 
     return redirect('/course/' + str(course_id))
+
+#Posting a report function
+@app.route('/delete_review', methods=['POST', 'GET'])
+def delete_review():
+    #Check for logged in or not
+    if 'email' not in session:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        career_id = (session['email'].split('@', 2))[0]
+        author = firestore_database.collection('users').document(career_id).get()
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+        post_dict = post.to_dict()
+
+        #Make sure the user owns the post
+        if post_dict['author'] != author.reference:
+
+            #TODO: Show error that user cannot delete this post
+
+            return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
+    
+        
+        #Delete all related reports
+        report_ref = firestore_database.collection('reports').where('report_post', '==', post.reference).stream()
+        for report in report_ref:
+            report.reference.delete()
+
+        #Delete post
+        post.reference.delete()
+
+        return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
+
+    return redirect(url_for('index'))
 
 #Login function
 def do_login():

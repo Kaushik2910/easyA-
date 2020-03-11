@@ -92,12 +92,50 @@
     <hr>
   </div>
   <ul>
+    {%for post in user_posts%}
+    {%if not post['text'] or post['text'].isspace()%}
+    <li>
+      <div class="container review">
+        <div class="row">
+            <div class="col-6">
+                <p class="review-professor"><span>Author:</span> You</p>
+            </div>
+            <div class="col-6 text-right">
+                <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
+              </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="text">
+                    {%for i in range(0, post['rating'])%}
+                      <i class="fas fa-star"></i>
+                    {%endfor%}
+                    {%for i in range(0, (5 - post['rating']))%}
+                      <i class="far fa-star"></i>
+                    {%endfor%}
+                  </p>
+              </div>
+          <div class="col-6 text-right">
+              <form action="{{ url_for('delete_review') }}" method="POST">
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="btn btn-warning">Delete</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </li>
+    {%endif%}
+    {%endfor%}
     {%for post in posts%}
     <li>
       <div class="container review">
         <div class="row">
             <div class="col-8">
-                <p class="review-professor"><span>Author:</span> A Purdue Student</p>
+                {% if post in user_posts %}
+                    <p class="review-professor"><span>Author:</span> You</p>
+                {% else %}
+                    <p class="review-professor"><span>Author:</span> A Purdue Student</p>
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -116,10 +154,17 @@
             <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>{{ post['downvotes'] }}</button>
           </div>
           <div class="col-6 text-right">
-            <form action="{{ url_for('report') }}" method="POST">
+              {%if post in user_posts%}
+              <form action="{{ url_for('delete_review') }}" method="POST">
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="btn btn-warning">Delete</button>
+              </form>
+              {%else%}
+              <form action="{{ url_for('report') }}" method="POST">
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                 <button type="submit" class="btn btn-warning">Report</button>
-            </form>
+              </form>
+              {%endif%}
             <p class="text-right">
               {%for i in range(0, post['rating'])%}
                 <i class="fas fa-star"></i>
