@@ -32,3 +32,26 @@ function validateSearch() {
   // alert("Sorry we could not find the class you are looking for.\nCheck out CS 180 or CS252");
   return true;
 }
+
+function show_suggestions(){
+  var sugs = document.getElementsByClassName("suggestion");
+  var sug_number = 0;
+  for (var i = 0; i < sugs.length; i++) {
+    if (sugs[i].innerText == "") {
+      sugs[i].style.display = "none";
+    } else {
+      sugs[i].style.display = "";
+      sug_number++;
+    }
+  }
+  var sug_div = document.getElementById('suggestions');
+  var sbar = document.getElementById("cover");
+  if (sug_number == 0) {
+    sug_div.style.display = "none";
+    sbar.style.marginTop = "-1rem"
+  } else {
+    sug_div.style.display = "";
+    sbar.style.marginTop = "-"+sug_number+"rem"
+  }
+
+}

@@ -13,7 +13,7 @@
 	width: 339px;
 	height: 178px; */
 	font-family: STHeitiTC-Medium;
-	font-size: 9.25rem;
+	font-size: 8rem;
 	/* text-align: center; */
 	color:#ffffff;
 }
@@ -25,13 +25,13 @@
 	width: 129px;
 	height: 295px; */
 	font-family: Noteworthy-Bold;
-	font-size: 10.25rem;
+	font-size: 110%;
 	/* text-align: center; */
 	color:#fbb03b;
 }
 
 #slogan {
-	font-size: 1.5rem;
+	font-size: 1rem;
 	color:#F5F5F5;
 }
 
@@ -66,15 +66,15 @@ input, button
     background-color: transparent;
 }
 
-/* #buttons{
-  height: 40px;
-} */
+
 
 #header
 {
-    padding-top: 10%;
+    padding-top: 0%;
 
 }
+
+
 
 #cover
 {
@@ -83,9 +83,10 @@ input, button
     right: 0;
     width: 100%;
     /* min-width: 800px; */
-    position: relative;
+    /* position: relative; */
     padding: 5px;
     /* margin: -83px auto 0 auto; */
+		margin-top: -1rem;
     background-color: #F5F5F5;
     border-radius: 20px;
     box-shadow: 0 10px 40px #EBEBEB, 0 0 0 20px #8E8E8E;
@@ -108,8 +109,6 @@ input[type="text"]
 input[type="text"]::placeholder
 {
     color: #8E8E8E;
-    /* color: FBB03B #; */
-
 }
 
 #s-cover
@@ -205,6 +204,15 @@ button span:before, button span:after
     right: -6px;
     width: 40px;
     background-color: #FBB03B;
+}
+
+#suggestions {
+	/* display: none; */
+}
+
+#suggestions button {
+	text-align: left;
+	font-size: 2rem;
 }
 
 .dropbtn
