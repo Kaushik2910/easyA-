@@ -57,4 +57,9 @@ function show_suggestions(){
   }
 }
 
-// var search_bar = document.getElementById("search_bar");
+var sugs = document.getElementsByClassName("suggestion");
+for (var i = 0; i < sugs.length; i++) {
+  sugs[i].addEventListener("onclick", function () {
+    window.location.href = "course/" + sugs[i].textContent;
+  });
+}
