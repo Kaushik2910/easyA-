@@ -40,14 +40,7 @@
     <form method="get" action="#" id="search_bar_form" onsubmit="return validateSearch()">
       <div class="tb">
         <div class="td">
-          <input id="search_bar" type="text" placeholder="Search" required>
-          <!-- Example -->
-          <select>
-            {% for course in course_list %}
-            <option>{{ course['course_id'] }}</option>
-            {% endfor %}
-          </select>
-          <!-- Example-->
+          <input id="search_bar" type="text" placeholder="Search" oninput="show_suggestions()" required>
          </div>
         <div class="td" id="s-cover">
           <button id=submit_btn type="submit">
@@ -60,12 +53,9 @@
     <div id="suggestions">
       <hr>
       <div class="d-flex flex-column">
-        <button type="button" class="btn suggestion"></button>
-        <button type="button" class="btn suggestion"></button>
-        <button type="button" class="btn suggestion"></button>
-        <button type="button" class="btn suggestion"></button>
-        <button type="button" class="btn suggestion"></button>
-        <button type="button" class="btn suggestion"></button>
+        {% for course in course_list %}
+        <button type="button" class="btn suggestion">{{ course['course_id'] }}</button>
+        {% endfor %}
       </div>
     </div>
   </div>

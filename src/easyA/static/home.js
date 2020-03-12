@@ -36,8 +36,10 @@ function validateSearch() {
 function show_suggestions(){
   var sugs = document.getElementsByClassName("suggestion");
   var sug_number = 0;
+  var search_bar = document.getElementById("search_bar");
+  var search_str = search_bar.value.toUpperCase().replace(/ /g,"");
   for (var i = 0; i < sugs.length; i++) {
-    if (sugs[i].innerText == "") {
+    if (!sugs[i].innerText.includes(search_str) || i >= 6 || search_str == "") {
       sugs[i].style.display = "none";
     } else {
       sugs[i].style.display = "";
@@ -53,5 +55,6 @@ function show_suggestions(){
     sug_div.style.display = "";
     sbar.style.marginTop = "-"+sug_number+"rem"
   }
-
 }
+
+// var search_bar = document.getElementById("search_bar");
