@@ -17,7 +17,7 @@ def index():
 
 @app.errorhandler(404)
 def not_found(e):
-  return render_template("not_found.html") 
+  return render_template("not_found.html")
 
 @app.route('/verified_user')
 def display():
@@ -69,47 +69,51 @@ def signup(errorMessage="", requestTrigger=True):
 @app.route( '/course/')
 @app.route('/course/<course_id>')
 def course_page(course_id, get_info=False):
-    posts = []
-    user_posts = []
-    courses_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
-    
-    #Check how many posts the user has
-    if 'email' in session:
-        career_id = (session['email'].split('@', 2))[0]
-        user = firestore_database.collection('users').document(career_id).get()
+    try:
+        posts = []
+        user_posts = []
+        courses_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
 
-    for course in courses_ref.stream():
-        course_dic = course.to_dict()
-        course_id = course_dic['course_id']
-        course_name = course_dic['course_name']
-        description = course_dic['description']
-        rating = 0
-        rating_count = 0
-        post_ref = firestore_database.collection('posts').where('course', '==', course.reference).stream()
-        for post in post_ref:
-            tempDict = post.to_dict()
-            tempDict['post_ID'] = post.id
+        #Check how many posts the user has
+        if 'email' in session:
+            career_id = (session['email'].split('@', 2))[0]
+            user = firestore_database.collection('users').document(career_id).get()
 
-            #Sum all course rating
-            rating += tempDict['rating']
-            rating_count += 1
-            if tempDict['text'] and not tempDict['text'].isspace():
-                posts.append(tempDict)
-
-            #Collect logged in user's posts
-            if 'email' in session and tempDict['author'] == user.reference:
-                user_posts.append(tempDict)
-            
-
-        #Calculate average rating
-        if rating_count != 0:
-            rating = int(rating / rating_count)
-        else:
+        for course in courses_ref.stream():
+            course_dic = course.to_dict()
+            course_id = course_dic['course_id']
+            course_name = course_dic['course_name']
+            description = course_dic['description']
             rating = 0
+            rating_count = 0
+            post_ref = firestore_database.collection('posts').where('course', '==', course.reference).stream()
+            for post in post_ref:
+                tempDict = post.to_dict()
+                tempDict['post_ID'] = post.id
 
-    if get_info:
-        return course, course_id, course_name, user_posts
-    return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts, user_posts=user_posts)
+                #Sum all course rating
+                rating += tempDict['rating']
+                rating_count += 1
+                if tempDict['text'] and not tempDict['text'].isspace():
+                    posts.append(tempDict)
+
+                #Collect logged in user's posts
+                if 'email' in session and tempDict['author'] == user.reference:
+                    user_posts.append(tempDict)
+
+
+            #Calculate average rating
+            if rating_count != 0:
+                rating = int(rating / rating_count)
+            else:
+                rating = 0
+
+        if get_info:
+            return course, course_id, course_name, user_posts
+        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts, user_posts=user_posts)
+
+    except Exception as e:
+        return render_template("not_found.html") 
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
@@ -132,7 +136,7 @@ def new_review(course_id):
     for professor in professor_ref:
         professors.append(professor.to_dict())
 
-    
+
     return render_template('new_review.html', course_id=course_id, course_name=course_name, professors=professors)
 
 @app.route('/report', methods=['POST', 'GET'])
@@ -144,7 +148,7 @@ def report():
     if request.method == 'POST':
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         return render_template('report.html', post_ID=request.form['post_ID'], post=post.to_dict())
-    
+
     return redirect(url_for('index'))
 
 #Posting a report function
@@ -218,8 +222,8 @@ def delete_review():
             #TODO: Show error that user cannot delete this post
 
             return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
-    
-        
+
+
         #Delete all related reports
         report_ref = firestore_database.collection('reports').where('report_post', '==', post.reference).stream()
         for report in report_ref:
