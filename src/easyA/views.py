@@ -13,7 +13,12 @@ auth = firebase_wrapper.auth()
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    courses_ref = firestore_database.collection('courses').stream()
+    course_list = []
+    for course in courses_ref:
+        course_list.append(course.to_dict())
+
+    return render_template('home.html', course_list=course_list)
 
 @app.errorhandler(404)
 def not_found(e):

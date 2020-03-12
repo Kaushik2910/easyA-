@@ -41,6 +41,13 @@
       <div class="tb">
         <div class="td">
           <input id="search_bar" type="text" placeholder="Search" required>
+          <!-- Example -->
+          <select>
+            {% for course in course_list %}
+            <option>{{ course['course_id'] }}</option>
+            {% endfor %}
+          </select>
+          <!-- Example-->
          </div>
         <div class="td" id="s-cover">
           <button id=submit_btn type="submit">
