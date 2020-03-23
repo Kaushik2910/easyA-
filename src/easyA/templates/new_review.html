@@ -109,45 +109,36 @@
                 <option>Online</option>
             </select>
         </div>
-        <div class="col-3">
-            <label for="new_review_rating" style="color: #F5F5F5;">Rating: </label>
-            <select name="rating" id="new_review_rating" class="form-control new_review_input" >
-                <option>5</option>
-                <option>4</option>
-                <option>3</option>
-                <option>2</option>
-                <option>1</option>
-                <option>0</option>
-            </select>
-        </div>
       </div>
       <div class="d-flex flex-wrap justify-content-center m-2">
-        <button type="button" class="btn btn-outline-warning">Would take the class again</button>
-        <button type="button" class="btn btn-outline-warning">Mandatory attendance</button>
-        <button type="button" class="btn btn-outline-warning">Will make you cry</button>
-        <button type="button" class="btn btn-outline-warning">Text book used</button>
-        <button type="button" class="btn btn-outline-warning">Skip class? Won’t pass</button>
-        <button type="button" class="btn btn-outline-warning">Lots of homework</button>
-        <button type="button" class="btn btn-outline-warning">Group projects</button>
-        <button type="button" class="btn btn-outline-warning">Elective</button>
-        <button type="button" class="btn btn-outline-warning">Help outside class</button>
-        <button type="button" class="btn btn-outline-warning">Pop quizes</button>
-        <button type="button" class="btn btn-outline-warning">Boring lectures</button>
-        <button type="button" class="btn btn-outline-warning">Amazing lectures</button>
-        <button type="button" class="btn btn-outline-warning">Extra credit</button>
+        <button type="button" class="btn btn-outline-warning tag">Would take the class again</button>
+        <button type="button" class="btn btn-outline-warning tag">Mandatory attendance</button>
+        <button type="button" class="btn btn-outline-warning tag">Will make you cry</button>
+        <button type="button" class="btn btn-outline-warning tag">Text book used</button>
+        <button type="button" class="btn btn-outline-warning tag">Skip class? Won’t pass</button>
+        <button type="button" class="btn btn-outline-warning tag">Lots of homework</button>
+        <button type="button" class="btn btn-outline-warning tag">Group projects</button>
+        <button type="button" class="btn btn-outline-warning tag">Elective</button>
+        <button type="button" class="btn btn-outline-warning tag">Help outside class</button>
+        <button type="button" class="btn btn-outline-warning tag">Pop quizes</button>
+        <button type="button" class="btn btn-outline-warning tag">Boring lectures</button>
+        <button type="button" class="btn btn-outline-warning tag">Amazing lectures</button>
+        <button type="button" class="btn btn-outline-warning tag">Extra credit</button>
       </div>
+      <input type="hidden" id="tags" name="tags" value="">
       <div class="form-group">
         <textarea name="text" class="form-control" id="new_review_body" placeholder="Here. Vent out!" rows="10"></textarea>
       </div>
       <div class="container">
         <div class="row">
           <div id="new_review_rating" class="col-10">
-            <button type="button" name="button"><i class="far fa-star"></i></button>
-            <button type="button" name="button"><i class="far fa-star"></i></button>
-            <button type="button" name="button"><i class="far fa-star"></i></button>
-            <button type="button" name="button"><i class="far fa-star"></i></button>
-            <button type="button" name="button"><i class="far fa-star"></i></button>
+            <button id="1" class="star_btn" type="button" name="button"><i class="star far fa-star"></i></button>
+            <button id="2" class="star_btn" type="button" name="button"><i class="star far fa-star"></i></button>
+            <button id="3" class="star_btn" type="button" name="button"><i class="star far fa-star"></i></button>
+            <button id="4" class="star_btn" type="button" name="button"><i class="star far fa-star"></i></button>
+            <button id="5" class="star_btn" type="button" name="button"><i class="star far fa-star"></i></button>
           </div>
+          <input type="hidden" id="rating" name="tags" value="">
           <div class="col">
             <button type="submit" class="btn btn-warning">Submit</button>
           </div>
@@ -158,7 +149,7 @@
 
 
   <!-- Optional JavaScript -->
-  <script src="{{ url_for('static', filename='course.js') }}"></script>
+  <script src="{{ url_for('static', filename='new_review.js') }}"></script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
