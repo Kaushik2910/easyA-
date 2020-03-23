@@ -27,7 +27,7 @@
               <div class="tb">
                 <div class="td">
                   <input id="search_bar" type="text" placeholder="Search" required>
-                 </div>
+                </div>
                 <div class="td" id="s-cover">
                   <button id=submit_btn type="submit">
                     <div id="s-circle"></div>
@@ -39,18 +39,18 @@
           </div>
         </div>
         <div class="col-3">
-            {% if 'email' in session %}
-            <div class="btn-group">
-              <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ session['email'] }}</button>
-              <div class="dropdown-menu pull-right">
-                <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
-                <a class="dropdown-item"  onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
-              </div>
+          {% if 'email' in session %}
+          <div class="btn-group">
+            <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ session['email'] }}</button>
+            <div class="dropdown-menu pull-right">
+              <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
+              <a class="dropdown-item"  onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
             </div>
-            {% else %}
-            <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';" type="button" class="btn btn-outline-light mx-2">Log in</button>
-            <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button" class="btn btn-outline-warning mx-2">Sign up</button>
-            {% endif %}
+          </div>
+          {% else %}
+          <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';" type="button" class="btn btn-outline-light mx-2">Log in</button>
+          <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button" class="btn btn-outline-warning mx-2">Sign up</button>
+          {% endif %}
         </div>
       </div>
       <div id='row2' class="row">
@@ -68,10 +68,10 @@
         <div class="col-6 text-right">
           <h3>
             {%for i in range(0, rating)%}
-              <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
             {%endfor%}
             {%for i in range(0, (5 - rating))%}
-              <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
             {%endfor%}
           </h3>
           <h4>Based on {{ rating_count }} ratings.</h4>
@@ -95,31 +95,31 @@
     {%for post in user_posts%}
     {%if not post['text'] or post['text'].isspace()%}
     <li>
-      <div class="container review">
+      <div class="container review d-flex">
         <div class="row">
-            <div class="col-6">
-                <p class="review-professor"><span>Author:</span> You</p>
-            </div>
-            <div class="col-6 text-right">
-                <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
-              </div>
+          <div class="col-6">
+            <p class="review-professor"><span>Author:</span> You</p>
+          </div>
+          <div class="col-6 text-right">
+            <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
+          </div>
         </div>
         <div class="row">
-            <div class="col-6">
-                <p class="text">
-                    {%for i in range(0, post['rating'])%}
-                      <i class="fas fa-star"></i>
-                    {%endfor%}
-                    {%for i in range(0, (5 - post['rating']))%}
-                      <i class="far fa-star"></i>
-                    {%endfor%}
-                  </p>
-              </div>
+          <div class="col-6">
+            <p class="text">
+              {%for i in range(0, post['rating'])%}
+              <i class="fas fa-star"></i>
+              {%endfor%}
+              {%for i in range(0, (5 - post['rating']))%}
+              <i class="far fa-star"></i>
+              {%endfor%}
+            </p>
+          </div>
           <div class="col-6 text-right">
-              <form action="{{ url_for('delete_review') }}" method="POST">
-                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                <button type="submit" class="btn btn-warning">Delete</button>
-              </form>
+            <form action="{{ url_for('delete_review') }}" method="POST">
+              <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+              <button type="submit" class="btn btn-warning">Delete</button>
+            </form>
           </div>
         </div>
       </div>
@@ -129,14 +129,38 @@
     {%for post in posts%}
     <li>
       <div class="container review">
-        <div class="row">
-            <div class="col-8">
-                {% if post in user_posts %}
-                    <p class="review-professor"><span>Author:</span> You</p>
-                {% else %}
-                    <p class="review-professor"><span>Author:</span> A Purdue Student</p>
-                {% endif %}
+        <div class="d-flex justify-content-end">
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <!-- <button class="dropdown-item" type="button">Share</button> -->
+              <!-- We have not implemented sharing posts yet (sprint 3) -->
+              {%if post in user_posts%}
+              <form action="{{ url_for('delete_review') }}" method="POST">
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="dropdown-item">Delete</button>
+              </form>
+              {%else%}
+              <form action="{{ url_for('contact') }}" method="POST">
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="dropdown-item">Contact</button>
+              </form>
+              <form action="{{ url_for('report') }}" method="POST">
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="dropdown-item">Report</button>
+              </form>
+              {%endif%}
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            {% if post in user_posts %}
+            <p class="review-professor"><span>Author:</span> You</p>
+            {% else %}
+            <p class="review-professor"><span>Author:</span> A Purdue Student</p>
+            {% endif %}
+          </div>
         </div>
         <div class="row">
           <div class="col-8">
@@ -154,23 +178,13 @@
             <button type="button" name="button" class="review-votes downvote mx-2"><i class="fas fa-arrow-down"></i>{{ post['downvotes'] }}</button>
           </div>
           <div class="col-6 text-right">
-              {%if post in user_posts%}
-              <form action="{{ url_for('delete_review') }}" method="POST">
-                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                <button type="submit" class="btn btn-warning">Delete</button>
-              </form>
-              {%else%}
-              <form action="{{ url_for('report') }}" method="POST">
-                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                <button type="submit" class="btn btn-warning">Report</button>
-              </form>
-              {%endif%}
+
             <p class="text-right">
               {%for i in range(0, post['rating'])%}
-                <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
               {%endfor%}
               {%for i in range(0, (5 - post['rating']))%}
-                <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
               {%endfor%}
             </p>
           </div>
