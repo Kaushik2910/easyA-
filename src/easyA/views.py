@@ -28,9 +28,18 @@ def not_found(e):
 def display():
     return render_template('verified_user.html')
 
-@app.route('/contact')
+# App route for contact page
+@app.route('/contact', methods=['POST', 'GET'])
 def contact():
-    return render_template('contact.html')
+    #Check for logged in or not
+    if 'email' not in session:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+        return render_template('contact.html', post_ID=request.form['post_ID'], post=post.to_dict())
+
+    return redirect(url_for('index'))
 
 @app.route('/reset_pwd', methods=['POST', 'GET'])
 def reset_pwd(errorMessage="", requestTrigger=True):
@@ -208,7 +217,7 @@ def post_review(course, course_id):
 
     return redirect('/course/' + str(course_id))
 
-#Posting a report function
+#Deleting a review function
 @app.route('/delete_review', methods=['POST', 'GET'])
 def delete_review():
     #Check for logged in or not
