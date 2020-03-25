@@ -27,6 +27,7 @@
 
   <div id="new_msg" class="container">
     <form action="{{ url_for('post_contact') }}" method="POST">
+      <input name="post_ID" type="hidden" value="{{ post_ID }}"></input>
       <div class="form-row">
         <div class="col-6">
           <input type="text" class="form-control" placeholder="First Name">

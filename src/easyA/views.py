@@ -1,8 +1,9 @@
-from easyA import app
+from easyA import app, mail
 from easyA import db
 
 
 from flask import render_template, request, session, redirect, url_for
+from flask_mail import Message
 import google.cloud
 import requests
 import json
@@ -194,27 +195,20 @@ def post_report():
 
 @app.route('/post_contact', methods=['POST', 'GET'])
 def post_contact():
-    # if request.method == 'POST':
-    #     career_id = (session['email'].split('@', 2))[0]
-    #     author = firestore_database.collection('users').document(career_id).get()
-    #     post = firestore_database.collection('posts').document(request.form['post_ID']).get()
-    #     data = {
-    #         "report_date": datetime.datetime.now().isoformat(),
-    #         "author": author.reference,
-    #         "report_post": post.reference,
-    #         "text": request.form['text'],
-    #     }
+    
+    if request.method == 'POST':
+    
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
 
-    #     #Increment post count for the course
-    #     report_count = post.to_dict()['report_count'] + 1
-    #     post.reference.update({
-    #         "report_count": int(report_count)
-    #     })
+        post_dict = post.to_dict()
+        author_dict = post_dict['author'].get().to_dict()
+        author_email = author_dict['email']
 
-    #     #Add the report to the database
-    #     firestore_database.collection('reports').add(data)
+        print(author_email)
 
-    #     return redirect('/course/' + str(post.to_dict()['course'].get().to_dict()['course_id']))
+        msg = Message("Hello", recipients=["pmotwani@purdue.edu"])
+        # mail.send(msg)
+   
 
     return redirect(url_for('index'))
 
