@@ -192,6 +192,32 @@ def post_report():
 
     return redirect(url_for('index'))
 
+@app.route('/post_contact', methods=['POST', 'GET'])
+def post_contact():
+    # if request.method == 'POST':
+    #     career_id = (session['email'].split('@', 2))[0]
+    #     author = firestore_database.collection('users').document(career_id).get()
+    #     post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+    #     data = {
+    #         "report_date": datetime.datetime.now().isoformat(),
+    #         "author": author.reference,
+    #         "report_post": post.reference,
+    #         "text": request.form['text'],
+    #     }
+
+    #     #Increment post count for the course
+    #     report_count = post.to_dict()['report_count'] + 1
+    #     post.reference.update({
+    #         "report_count": int(report_count)
+    #     })
+
+    #     #Add the report to the database
+    #     firestore_database.collection('reports').add(data)
+
+    #     return redirect('/course/' + str(post.to_dict()['course'].get().to_dict()['course_id']))
+
+    return redirect(url_for('index'))
+
 #Posting a review function
 def post_review(course, course_id):
     career_id = (session['email'].split('@', 2))[0]
