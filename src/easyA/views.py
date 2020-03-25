@@ -205,7 +205,7 @@ def post_review(course, course_id):
         "textbook": request.form['textbook'],
         "grade": request.form['grade'],
         "rating": int(request.form['rating']),
-        "tags": "",
+        "tags": request.form['tags'],
         "text": request.form['text'],
         "report_count": 0,
         "downvotes": 0,
