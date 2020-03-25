@@ -208,7 +208,7 @@ def post_contact():
         print(author_email)
         print(message)
 
-        msg = Message(message, recipients=[author_email])
+        msg = Message(body=message, subject="easyA: Someone would like to contact you!", recipients=[author_email])
         mail.send(msg)
    
 
