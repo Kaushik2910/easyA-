@@ -195,7 +195,7 @@ def post_report():
 
 @app.route('/post_contact', methods=['POST', 'GET'])
 def post_contact():
-    
+
     if request.method == 'POST':
     
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
@@ -203,11 +203,13 @@ def post_contact():
         post_dict = post.to_dict()
         author_dict = post_dict['author'].get().to_dict()
         author_email = author_dict['email']
+        message = request.form['message']
 
         print(author_email)
+        print(message)
 
-        msg = Message("Hello", recipients=["pmotwani@purdue.edu"])
-        # mail.send(msg)
+        msg = Message(message, recipients=[author_email])
+        mail.send(msg)
    
 
     return redirect(url_for('index'))

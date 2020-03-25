@@ -5,7 +5,17 @@ from flask import render_template
 def create_app(test_config=None):
     #Create the Flask application and its blueprints
     app = Flask(__name__)
+
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+    app.config['MAIL_USERNAME'] = 'easyApurdue@gmail.com'  # enter your email here
+    app.config['MAIL_DEFAULT_SENDER'] = 'easyApurdue@gmail.com' # enter your email here
+    app.config['MAIL_PASSWORD'] = 'Password**1' # enter your password here
+
     mail = Mail(app)
+
     app.secret_key = 'any random'
 
 
@@ -19,12 +29,6 @@ def create_app(test_config=None):
 
 
 app, mail = create_app()
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'pratyakshmotwani99@gmail.com'  # enter your email here
-app.config['MAIL_DEFAULT_SENDER'] = 'pratyakshmotwani99@gmail.com' # enter your email here
-app.config['MAIL_PASSWORD'] = 'pratsandrishu' # enter your password here
 
 #Render the pages in views.py
 import easyA.views
