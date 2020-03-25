@@ -96,36 +96,36 @@
           <div class="col-6 text-right">
             <div class="btn-group">
               <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter <i
-              class="fas fa-filter"></i></button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <form class="px-4 py-3">
-                  <div class="form-group">
-                      <label for="sort">Sort by</label>
-                      <select class="form-control" id="sort">
-                          <option>Chronological</option>
-                          <option>Upvotes</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="proffesor">Proffesor</label>
-                      <select class="form-control" id="proffesor">
-                          {% for professor in professors %}
-                          <option>{{ professor['professor_name'] }}</option>
-                          {% endfor %}
-                      </select>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                      <label class="form-check-label" for="defaultCheck1">Tag</label>
-                  </div>
-                  <div class="dropdown-divider"></div>
-                  <button type="submit" class="btn btn-warning btn-sm">Apply Filters</button>
-                </form>
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
+              <div class="dropdown-menu bg-warning">
+                <a class="dropdown-item text-light" href="#">Chronological</a>
+                <a class="dropdown-item text-light" href="#">Upvotes</a>
               </div>
             </div>
 
+            <div class="btn-group">
+              <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proffesor</button>
+              <div class="dropdown-menu bg-warning text-light">
+                <input type="checkbox" value="test" checked> test
+                {% for professor in professors %}
+                <input type="checkbox" value="{{ professor['professor_name'] }}" checked> {{ professor['professor_name'] }}
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="btn-group">
+              <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
+              <div class="dropdown-menu bg-warning text-light">
+                <input type="checkbox" value="test" checked> test
+              </div>
+            </div>
+
+
           </div>
+
+
         </div>
       </div>
       <hr>
@@ -172,7 +172,7 @@
             <div class="btn-group">
               <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false"></button>
-              <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-menu dropdown-menu-right bg-warning">
                 <!-- <button class="dropdown-item" type="button">Share</button> -->
                 <!-- We have not implemented sharing posts yet (sprint 3) -->
                 {%if post in user_posts%}
@@ -183,11 +183,11 @@
                 {%else%}
                 <form action="{{ url_for('contact') }}" method="POST">
                   <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                  <button type="submit" class="dropdown-item">Contact</button>
+                  <button type="submit" class="dropdown-item text-light">Contact</button>
                 </form>
                 <form action="{{ url_for('report') }}" method="POST">
                   <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                  <button type="submit" class="dropdown-item">Report</button>
+                  <button type="submit" class="dropdown-item text-light">Report</button>
                 </form>
                 {%endif%}
               </div>
@@ -196,9 +196,8 @@
           <div class="row">
             <div class="col-8">
               {% if post in user_posts %}
-              <p class="review-professor"><span>Author:</span> You</p>
+              <p class="review-professor"><span>Your post</span></p>
               {% else %}
-              <p class="review-professor"><span>Author:</span> A Purdue Student</p>
               {% endif %}
             </div>
           </div>
