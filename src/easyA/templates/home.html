@@ -54,9 +54,10 @@
       <hr>
       <div class="d-flex flex-column">
         {% for course in course_list %}
-        <form class="" action="course/{{ course['course_id'] }}" method="get">
+        <!-- <form class="" action="course/{{ course['course_id'] }}" method="get">
           <button type="submit" class="btn suggestion">{{ course['course_id'] }}</button>
-        </form>
+        </form> -->
+        <button type="button" class="btn suggestion"  onclick="window.location.href = 'course/{{ course['course_id'] }}';">{{ course['course_id'] }}</button>
         {% endfor %}
       </div>
     </div>
