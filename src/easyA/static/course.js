@@ -24,11 +24,7 @@ function validateSearch() {
     course += "0";
   }
   course += temp;
-  search_bar_form.action = "course/" + course;
+  search_bar_form.action = course;
 
-  // if (course == "CS18000" || course == "CS25200") {
-  //   return true;
-  // }
-  // alert("Sorry we could not find the class you are looking for.\nCheck out CS 180 or CS252");
   return true;
 }
