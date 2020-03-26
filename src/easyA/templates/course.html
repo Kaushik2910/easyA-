@@ -108,7 +108,8 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
                         <div class="dropdown-menu bg-warning text-light">
                             {% for professor in current_profs %}
-                            <input type="checkbox" value="{{ professor }}" checked> {{ professor }}</input>
+                            <input class="prof_check" type="checkbox" value="{{ professor }}"> {{ professor }}</input>
+                            <br>
                             {% endfor %}
                         </div>
                     </div>
@@ -118,7 +119,8 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
                         <div class="dropdown-menu bg-warning text-light">
                             {% for tag in current_tags %}
-                                <input type="checkbox" value="{{ tag }}" checked> {{ tag }}</input>
+                                <input class="prof_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
+                                <br>
                             {% endfor %}
                         </div>
                     </div>
@@ -163,7 +165,7 @@
         {%endif%}
         {%endfor%}
         {%for post in posts%}
-        <li>
+        <li class="review_li">
             <div class="container review">
                 <div class="d-flex justify-content-end">
                     <div class="btn-group">

@@ -19,8 +19,8 @@
       <a href="{{ url_for('index') }}" id="logo">easy<span>A</span></a>
     </div>
     <div class="container review">
-      <p class="review-professor"><span>Professor:</span>  Buster Dunsmore</p>
-      <p class="review-body">A well respected and humorous professor who does his best to keep endless black and white PowerPoint slides of code interesting. Lectures will never be a good way to learn how to code but Buster does his best. (recommend reading the textbook since it’s hard to focus in class)</p>
+      <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
+      <p class="review-body">{{ post['text'] }}</p>
     </div>
     <hr>
   </div>
