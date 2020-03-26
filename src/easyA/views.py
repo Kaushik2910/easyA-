@@ -203,14 +203,19 @@ def post_contact():
         post_dict = post.to_dict()
         author_dict = post_dict['author'].get().to_dict()
         author_email = author_dict['email']
+        user_email = session['email']
+
         message = request.form['message']
+        subject = request.form['subject']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
 
-        print(author_email)
-        print(message)
+        name = first_name + " " + last_name
+        message_body = "The user would like to send you the following message:\n\n" + "Name: " + name + "\nSubject: " + subject + "\nMeassage: " + message + "\nSent by: " + user_email
+        print(message_body)
 
-        msg = Message(body=message, subject="easyA: Someone would like to contact you!", recipients=[author_email])
+        msg = Message(body=message_body, subject="easyA: Someone would like to contact you!", recipients=[author_email])
         mail.send(msg)
-   
 
     return redirect(url_for('index'))
 
