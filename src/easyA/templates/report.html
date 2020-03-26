@@ -19,34 +19,9 @@
       <a href="./" id="logo">easy<span>A</span></a>
     </div>
     <div class="container review">
-        <div class="row">
-            <div class="col-8">
-                <p class="review-professor"><span>Author:</span> A Purdue Student</p>
-            </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
-          </div>
-          <div class="col text-right">
-            <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
-          </div>
-        </div>
-        <p class="review-tags"> <span>Attendance:</span> {{ post['attendance'] }} <span>Textbook:</span> {{ post['textbook'] }} <span>Grade:</span> {{ post['grade'] }}</p>
+        <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
         <p class="review-body">{{ post['text'] }}</p>
-        <div class="row">
-          <div class="col-6 text-right">
-            <p class="text-right">
-              {%for i in range(0, post['rating'])%}
-                <i class="fas fa-star"></i>
-              {%endfor%}
-              {%for i in range(0, (5 - post['rating']))%}
-                <i class="far fa-star"></i>
-              {%endfor%}
-            </p>
-          </div>
-        </div>
-      </div>
+    </div>
     <hr>
   </div>
 
