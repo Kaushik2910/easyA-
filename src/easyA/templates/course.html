@@ -43,6 +43,7 @@
                 </div>
                 <div class="col-3">
                     {% if 'email' in session %}
+                    <input id="userID" type="text" name="" hidden value="user">
                     <div class="btn-group">
                         <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
@@ -54,6 +55,7 @@
                         </div>
                     </div>
                     {% else %}
+                    <input id="userID" type="text" name="" hidden value="guest">
                     <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';" type="button"
                         class="btn btn-outline-light mx-2">Log in</button>
                     <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
@@ -180,11 +182,11 @@
                                 <button type="submit" class="dropdown-item">Delete</button>
                             </form>
                             {%else%}
-                            <form action="{{ url_for('contact') }}" method="POST">
+                            <form action="{{ url_for('contact') }}" onsubmit="return validateRequest()" method="POST">
                                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                                 <button type="submit" class="dropdown-item text-light">Contact</button>
                             </form>
-                            <form action="{{ url_for('report') }}" method="POST">
+                            <form action="{{ url_for('report') }}" onsubmit="return validateRequest()" method="POST" >
                                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                                 <button type="submit" class="dropdown-item text-light">Report</button>
                             </form>

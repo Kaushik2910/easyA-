@@ -1,6 +1,8 @@
-var user = document.getElementById("user");
-var fixed_user = user.innerHTML;
-user.innerHTML =  fixed_user.replace("@purdue.edu", "");
+if (userID.value == "user") {
+  var user = document.getElementById("user");
+  var fixed_user = user.innerHTML;
+  user.innerHTML =  fixed_user.replace("@purdue.edu", "");
+}
 
 function validateSearch() {
   var search_bar = document.getElementById("search_bar");
@@ -26,5 +28,14 @@ function validateSearch() {
   course += temp;
   search_bar_form.action = course;
 
+  return true;
+}
+
+function validateRequest() {
+  var user = document.getElementById("userID");
+  if (userID.value == "guest") {
+    alert("You have to log in first");
+    return false;
+  }
   return true;
 }
