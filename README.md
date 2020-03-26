@@ -16,6 +16,7 @@ pip install Flask
 pip install pyrebase
 pip install google-cloud-firestore
 pip install firebase-admin
+pip install Flask-Mail
 ```
 
 ## Getting Started
