@@ -87,6 +87,8 @@ def course_page(course_id, get_info=False):
     try:
         posts = []
         user_posts = []
+        current_profs = []
+        current_tags = []
         courses_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
 
         #Check how many posts the user has
@@ -111,7 +113,16 @@ def course_page(course_id, get_info=False):
                 rating_count += 1
                 if tempDict['text'] and not tempDict['text'].isspace():
                     posts.append(tempDict)
+                    #Build professors array
+                    if tempDict['professor'] not in current_profs:
+                        current_profs.append(tempDict['professor'])
 
+                    #Build tags array
+                    post_tags = tempDict['tags'].split(",")
+                    for tag in post_tags:
+                        if tag and tag not in current_profs:
+                            current_tags.append(tag)
+                
                 #Collect logged in user's posts
                 if 'email' in session and tempDict['author'] == user.reference:
                     user_posts.append(tempDict)
@@ -125,8 +136,7 @@ def course_page(course_id, get_info=False):
 
         if get_info:
             return course, course_id, course_name, user_posts
-        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts, user_posts=user_posts)
-
+        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags)
     except Exception as e:
         return render_template("not_found.html") 
 
@@ -211,8 +221,7 @@ def post_contact():
         last_name = request.form['last_name']
 
         name = first_name + " " + last_name
-        message_body = "The user would like to send you the following message:\n\n" + "Name: " + name + "\nSubject: " + subject + "\nMeassage: " + message + "\nSent by: " + user_email
-        print(message_body)
+        message_body = "A user sent you the following message:\n\n" + "Name: " + name + "\nSubject: " + subject + "\nMeassage: " + message + "\nSent by: " + user_email
 
         msg = Message(body=message_body, subject="easyA: Someone would like to contact you!", recipients=[author_email])
         mail.send(msg)
