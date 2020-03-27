@@ -39,3 +39,52 @@ function validateRequest() {
   }
   return true;
 }
+
+function filter_reviews() {
+  var prof_checks = document.getElementsByClassName("prof_check");
+  var profs = [];
+  for (var i = 0; i < prof_checks.length; i++) {
+    if (prof_checks[i].checked) {
+      profs.push(prof_checks[i].value);
+    }
+  }
+  var tag_checks = document.getElementsByClassName("tag_check");
+  var tags = [];
+  for (var i = 0; i < tag_checks.length; i++) {
+    if (tag_checks[i].checked) {
+      tags.push(tag_checks[i].value);
+    }
+  }
+  var reviews = document.getElementsByClassName("review_li");
+  for (var i = 0; i < reviews.length; i++) {
+    var review_prof = reviews[i].getElementsByClassName("review-professor")[0].innerText.replace("Professor: ", "");
+    var prof_filter = profs.length == 0 || profs.includes(review_prof);
+
+    var review_tags_obj = reviews[i].getElementsByClassName("review_tag");
+    var review_tags = [];
+    for (var j = 0; j < review_tags_obj.length; j++) {
+      review_tags.push(review_tags_obj[j].innerText);
+    }
+
+    var tags_filter = false;
+    if (tags.length == 0) {
+      tags_filter = true;
+    } else {
+      for (var j = 0; j < review_tags.length; j++) {
+        tags_filter = tags_filter || tags.includes(review_tags[j]);
+      }
+    }
+
+    if (prof_filter && tags_filter) {
+      reviews[i].style.display = "block";
+    } else {
+      reviews[i].style.display = "none";
+    }
+  }
+}
+
+var checkboxes = document.getElementsByClassName("filter_check");
+
+for (var i = 0; i < checkboxes.length; i++) {
+  checkboxes[i].addEventListener( 'change', filter_reviews);
+}

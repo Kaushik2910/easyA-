@@ -110,7 +110,7 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
                         <div class="dropdown-menu bg-warning text-light">
                             {% for professor in current_profs %}
-                            <input class="prof_check" type="checkbox" value="{{ professor }}"> {{ professor }}</input>
+                            <input class="prof_check filter_check" type="checkbox" value="{{ professor }}"> {{ professor }}</input>
                             <br>
                             {% endfor %}
                         </div>
@@ -121,7 +121,7 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
                         <div class="dropdown-menu bg-warning text-light">
                             {% for tag in current_tags %}
-                                <input class="prof_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
+                                <input class="tag_check filter_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
                                 <br>
                             {% endfor %}
                         </div>
@@ -134,7 +134,7 @@
     <ul>
         {%for post in user_posts%}
         {%if not post['text'] or post['text'].isspace()%}
-        <li>
+        <li class="review_li">
             <div class="container review d-flex">
                 <div class="row">
                     <div class="col-6">
@@ -236,7 +236,7 @@
                 <div class="container tags d-flex flex-wrap justify-content-around">
                     {% for tag in post['tags'].split(",") %}
                     {% if tag %}
-                    <p class="text-warning">{{ tag }}</p>
+                    <p class="text-warning review_tag">{{ tag }}</p>
                     {% endif %}
                     {% endfor %}
                 </div>
