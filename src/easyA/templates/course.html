@@ -211,7 +211,11 @@
                     </div>
                 </div>
                 <p class="review-tags"> <span>Attendance:</span> {{ post['attendance'] }} <span>Textbook:</span>
-                    {{ post['textbook'] }} <span>Grade:</span> {{ post['grade'] }} <span>Semester:</span> {{ post['semester_taken'] }}</p>
+                    {{ post['textbook'] }} <span>Grade:</span> {{ post['grade'] }} 
+                    {% if post['semester_taken'] %}
+                    <span>Semester:</span> {{ post['semester_taken'] }}</p>                 
+                    {% endif %}
+
                 <p class="review-body">{{ post['text'] }}</p>
                 <div class="row">
                     <div class="col-6">
