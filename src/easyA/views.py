@@ -239,6 +239,7 @@ def post_review(course, course_id):
         "professor": request.form['professor'],
         "attendance": request.form['attendance'],
         "textbook": request.form['textbook'],
+        "semester_taken": request.form['semester_taken'],
         "grade": request.form['grade'],
         "rating": int(request.form['rating']),
         "tags": request.form['tags'],
