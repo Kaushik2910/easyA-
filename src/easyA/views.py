@@ -147,15 +147,21 @@ def course_page(course_id, get_info=False):
 
         #Sort posts chronologically -- default
         sorted_posts = sorted(posts, key = lambda i: (time.mktime(datetime.datetime.strptime(i['posted_date'][:19], "%Y-%m-%dT%H:%M:%S").timetuple())))
-        print(sorted_posts)
 
         if request.method == 'POST':
             sort_function = request.form['sort']
         else:
-            sort_function = "chronological"
+            sort_function = "chronological_old"
         
-        if sort_function == 'upvotes':
+        if sort_function == 'most_upvotes':
             sorted_posts = sorted(sorted_posts, key = lambda i: (i['upvotes']), reverse=True)
+        elif sort_function == 'least_upvotes':
+            sorted_posts = sorted(sorted_posts, key = lambda i: (i['upvotes']))
+        elif sort_function == 'chronological_new':
+            sorted_posts = sorted(posts, key = lambda i: (time.mktime(datetime.datetime.strptime(i['posted_date'][:19], "%Y-%m-%dT%H:%M:%S").timetuple())), reverse=True)
+        elif sort_function == 'chronological_old':
+            sorted_posts = sorted(posts, key = lambda i: (time.mktime(datetime.datetime.strptime(i['posted_date'][:19], "%Y-%m-%dT%H:%M:%S").timetuple())))
+
 
         return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags)
 
