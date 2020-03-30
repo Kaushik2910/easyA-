@@ -7,7 +7,9 @@ from flask_mail import Message
 import google.cloud
 import requests
 import json
+import time
 import datetime
+import operator
 
 firestore_database, realtime_database, firebase_wrapper, admin_auth = db.init_db()
 auth = firebase_wrapper.auth()
@@ -82,9 +84,10 @@ def signup(errorMessage="", requestTrigger=True):
     return render_template('signup.html', errorMessage=errorMessage)
 
 @app.route( '/course/')
-@app.route('/course/<course_id>')
+@app.route('/course/<course_id>', methods=['POST', 'GET'])
 def course_page(course_id, get_info=False):
-    try:
+
+        course_name = ""
         posts = []
         user_posts = []
         current_profs = []
@@ -134,11 +137,27 @@ def course_page(course_id, get_info=False):
             else:
                 rating = 0
 
+        if not course_name:
+            return render_template("not_found.html")
+
         if get_info:
             return course, course_id, course_name, user_posts
-        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags)
-    except Exception as e:
-        return render_template("not_found.html") 
+
+        #Sort posts
+
+        #Sort posts chronologically -- default
+        sorted_posts = sorted(posts, key = lambda i: (time.mktime(datetime.datetime.strptime(i['posted_date'][:19], "%Y-%m-%dT%H:%M:%S").timetuple())))
+        print(sorted_posts)
+
+        if request.method == 'POST':
+            sort_function = request.form['sort']
+        else:
+            sort_function = "chronological"
+        
+        if sort_function == 'upvotes':
+            sorted_posts = sorted(sorted_posts, key = lambda i: (i['upvotes']), reverse=True)
+
+        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags)
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):

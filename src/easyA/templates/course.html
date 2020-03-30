@@ -100,12 +100,14 @@
                         <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
                         <div class="dropdown-menu bg-warning">
-                          <form action="{{ url_for('course') }}/{{ course['course_id'] }}" method="GET">
+                          <form action="/course/{{course_id}}" method="POST">
                               <input name="sort" type="hidden" value="chronological"></input>
+                              <input name="course_id" type="hidden" value="{{course_id}}"></input>
                               <button type="submit" class="dropdown-item text-light">Chronological</button>
                           </form>
-                          <form action="{{ url_for('course') }}/{{ course['course_id'] }}" method="GET">
-                              <input name="sort" type="hidden" value="upvotes"></input>
+                          <form action="/course/{{course_id}}" method="POST">
+                            <input name="sort" type="hidden" value="upvotes"></input>
+                            <input name="course_id" type="hidden" value="{{course_id}}"></input>
                               <button type="submit" class="dropdown-item text-light">Upvotes</button>
                           </form>
                         </div>
