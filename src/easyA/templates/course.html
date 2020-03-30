@@ -100,8 +100,14 @@
                         <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
                         <div class="dropdown-menu bg-warning">
-                            <a class="dropdown-item text-light" href="#">Chronological</a>
-                            <a class="dropdown-item text-light" href="#">Upvotes</a>
+                          <form action="{{ url_for('course') }}/{{ course['course_id'] }}" method="GET">
+                              <input name="sort" type="hidden" value="chronological"></input>
+                              <button type="submit" class="dropdown-item text-light">Chronological</button>
+                          </form>
+                          <form action="{{ url_for('course') }}/{{ course['course_id'] }}" method="GET">
+                              <input name="sort" type="hidden" value="upvotes"></input>
+                              <button type="submit" class="dropdown-item text-light">Upvotes</button>
+                          </form>
                         </div>
                     </div>
 
@@ -214,11 +220,11 @@
                     {{ post['textbook'] }} <span>Grade:</span> {{ post['grade'] }}
 
                     {% if post['semester_taken'] %}
-                    <span>Semester:</span> {{ post['semester_taken'] }}</p>                 
+                    <span>Semester:</span> {{ post['semester_taken'] }}</p>
                     {% endif %}
 
                 <p class="review-body">{{ post['text'] }}</p>
-                
+
                 <div class="row">
                     <div class="col-6">
                         <button type="button" name="button" class="review-votes upvote mx-2"><i
