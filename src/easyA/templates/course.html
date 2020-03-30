@@ -56,11 +56,39 @@
                     </div>
                     {% else %}
                     <input id="userID" type="text" name="" hidden value="guest">
-                    <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';" type="button"
-                        class="btn btn-outline-light mx-2">Log in</button>
+                    <button id="login_check2" type="submit" class="btn btn-outline-light mx-2" data-toggle="modal" data-target="#myModal">Log in</button>
                     <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
                         class="btn btn-outline-warning mx-2">Sign up</button>
                     {% endif %}
+
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog" style="height: 65%;">
+                          <div class="modal-content" style="height: 65%; background-color: #292929;">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="color:white">Login</h5>
+                              </div>
+                              <div class="modal-body">
+                                  <form action="{{ url_for('login') }}" method="POST" >
+                                      <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
+                                    <div class="form-group mb-4">
+                                      <input name="u_email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                      <input name="u_password" type="password" class="form-control" id="pwd" placeholder="Password">
+                                      <small id="pwdHelp" class="form-text text-muted pl-2"></small>
+                                      <small class="form-text text-muted pl-2 text-right"><a href="./forgot_pwd">Forgot password?</a></small>
+                                    </div>
+                                    <div id="log_in" class="d-flex justify-content-center text-center">
+                                      <p style="color:white">Do not have an account? <a href="./signup">Sign Up!</a></p>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                      <button type="submit" class="btn btn-warning">Log in</button>
+                                    </div>
+                                  </form>
+                              </div>
+                          </div>      
+                        </div>
+                    </div>    
                 </div>
             </div>
             <div id='row2' class="row">
@@ -86,10 +114,19 @@
                     </h3>
                     <h4>Based on {{ rating_count }} ratings.</h4>
                 </div>
-                <div class="col-6">
-                    <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';"
-                        type="button" class="btn btn-light">Write a review</button>
-                </div>
+                {% if 'email' in session %}
+                        <!-- You show the logged in user button -->
+                        <div class="col-6">
+                            <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';"
+                                type="button" class="btn btn-light">Write a review</button>
+                        </div>
+                {% else %}
+                        <!-- You show the unlogged in user button -->
+                        <!-- The popup log in should be here -->
+                        <div class="col-6">
+                            <button id="review_button" type="submit" class="btn btn-light" data-toggle="modal" data-target="#myModal">Write a review</button>
+                        </div>
+                {% endif %}
             </div>
             <div id='row4' class="row">
                 <div class="col-6">
@@ -196,14 +233,25 @@
                                 <button type="submit" class="dropdown-item">Delete</button>
                             </form>
                             {%else%}
-                            <form action="{{ url_for('contact') }}" onsubmit="return validateRequest()" method="POST">
-                                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                                <button type="submit" class="dropdown-item text-light">Contact</button>
-                            </form>
-                            <form action="{{ url_for('report') }}" onsubmit="return validateRequest()" method="POST" >
-                                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                                <button type="submit" class="dropdown-item text-light">Report</button>
-                            </form>
+                                {% if 'email' in session %}
+                                <!-- You show the logged in user button -->
+                                <form action="{{ url_for('contact') }}" onsubmit="return validateRequest()" method="POST">
+                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                                    <button type="submit" class="dropdown-item text-light">Contact</button>
+                                </form>
+                                <form action="{{ url_for('report') }}" onsubmit="return validateRequest()" method="POST" >
+                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                                    <button type="submit" class="dropdown-item text-light">Report</button>
+                                </form>
+                                {% else %}
+                                <!-- You show the unlogged in user button -->
+                                <!-- The popup log in should be here -->
+                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                                    <button type="submit" class="dropdown-item text-light" data-toggle="modal" data-target="#myModal">Contact</button>
+
+                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                                    <button type="submit" class="dropdown-item text-light" data-toggle="modal" data-target="#myModal">Report</button>
+                                {% endif %}
                             {%endif%}
                         </div>
                     </div>
