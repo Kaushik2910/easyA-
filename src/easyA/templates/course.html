@@ -101,14 +101,24 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
                         <div class="dropdown-menu bg-warning">
                           <form action="/course/{{course_id}}" method="POST">
-                              <input name="sort" type="hidden" value="chronological"></input>
+                              <input name="sort" type="hidden" value="chronological_new"></input>
                               <input name="course_id" type="hidden" value="{{course_id}}"></input>
-                              <button type="submit" class="dropdown-item text-light">Chronological</button>
+                              <button type="submit" class="dropdown-item text-light">Newest Posts</button>
                           </form>
                           <form action="/course/{{course_id}}" method="POST">
-                            <input name="sort" type="hidden" value="upvotes"></input>
+                              <input name="sort" type="hidden" value="chronological_old"></input>
+                              <input name="course_id" type="hidden" value="{{course_id}}"></input>
+                              <button type="submit" class="dropdown-item text-light">Oldest Posts</button>
+                          </form>
+                          <form action="/course/{{course_id}}" method="POST">
+                            <input name="sort" type="hidden" value="most_upvotes"></input>
                             <input name="course_id" type="hidden" value="{{course_id}}"></input>
-                              <button type="submit" class="dropdown-item text-light">Upvotes</button>
+                              <button type="submit" class="dropdown-item text-light">Most upvotes</button>
+                          </form>
+                          <form action="/course/{{course_id}}" method="POST">
+                            <input name="sort" type="hidden" value="least_upvotes"></input>
+                            <input name="course_id" type="hidden" value="{{course_id}}"></input>
+                              <button type="submit" class="dropdown-item text-light">Least upvotes<</button>
                           </form>
                         </div>
                     </div>
