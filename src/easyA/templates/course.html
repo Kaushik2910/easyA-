@@ -281,7 +281,6 @@
                         <!-- Upvoting/Downvoting is here -->
                         <form action="{{ url_for('do_upvote') }}" method="POST" >
                             <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-
                             {% if post['post_ID'] in upvoted %}
                             <!-- Show bright upvotes-->
                             <button type="submit" name="button" class="review-votes upvote mx-2"><i
@@ -294,7 +293,7 @@
                         </form>
                         <form action="{{ url_for('do_downvote') }}" method="POST" >
                             <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                            {% if post['post_ID'] in upvoted %}
+                            {% if post['post_ID'] in downvoted %}
                             <!-- Show bright downvotes-->
                             <button type="submit" name="button" class="review-votes downvote mx-2"><i
                                 class="fas fa-arrow-down"></i>{{ post['downvotes'] }}</button>
