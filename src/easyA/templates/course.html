@@ -86,9 +86,9 @@
                                     </div>
                                   </form>
                               </div>
-                          </div>      
+                          </div>
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </div>
             <div id='row2' class="row">
@@ -136,23 +136,17 @@
                     <div class="btn-group">
                         <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
-                        <div class="dropdown-menu bg-warning">
-                          <form action="/course/{{course_id}}" method="POST">
-                              <input name="sort" type="hidden" value="chronological_new"></input>
-                              <button type="submit" class="dropdown-item text-light">Newest Posts</button>
+                        <div id="sort_options" class="dropdown-menu bg-warning text-light">
+                          <form id="sort_form" class="d-none" action="/course/{{course_id}}" method="POST">
+                              <input id="sort_input" name="sort" type="hidden" value=""></input>
                           </form>
-                          <form action="/course/{{course_id}}" method="POST">
-                              <input name="sort" type="hidden" value="chronological_old"></input>
-                              <button type="submit" class="dropdown-item text-light">Oldest Posts</button>
-                          </form>
-                          <form action="/course/{{course_id}}" method="POST">
-                            <input name="sort" type="hidden" value="most_upvotes"></input>
-                              <button type="submit" class="dropdown-item text-light">Most upvotes</button>
-                          </form>
-                          <form action="/course/{{course_id}}" method="POST">
-                            <input name="sort" type="hidden" value="least_upvotes"></input>
-                              <button type="submit" class="dropdown-item text-light">Least upvotes</button>
-                          </form>
+                          <small>Chronological</small>
+                          <button id="chronological_new" type="button" class="dropdown-item sort_btn text-light">Newest Posts</button>
+                          <button id="chronological_old" type="button" class="dropdown-item sort_btn text-light">Oldest Posts</button>
+                          <div class="dropdown-divider"></div>
+                          <small>Upvotes</small>
+                          <button id="most_upvotes" type="button" class="dropdown-item sort_btn text-light">Most Upvotes</button>
+                          <button id="least_upvotes" type="button" class="dropdown-item sort_btn text-light">Least Upvotes</button>
                         </div>
                     </div>
 

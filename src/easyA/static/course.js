@@ -88,3 +88,13 @@ var checkboxes = document.getElementsByClassName("filter_check");
 for (var i = 0; i < checkboxes.length; i++) {
   checkboxes[i].addEventListener( 'change', filter_reviews);
 }
+
+var sort_btns = document.getElementsByClassName("sort_btn");
+var sort_input = document.getElementById("sort_input");
+var sort_form = document.getElementById("sort_form");
+for (var i = 0; i < sort_btns.length; i++) {
+  sort_btns[i].onclick = function(){
+    sort_input.value = this.id;
+    sort_form.submit();
+  };
+}
