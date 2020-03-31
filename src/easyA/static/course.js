@@ -98,3 +98,19 @@ for (var i = 0; i < sort_btns.length; i++) {
     sort_form.submit();
   };
 }
+
+var votes = document.getElementsByClassName("review-votes");
+
+for (var i = 0; i < votes.length; i++) {
+  votes[i].onclick = function(){
+    this.classList.toggle("voted");
+    var num = this.innerText
+    num++;
+    if (this.classList.includes("upvote");) {
+      this.innerHTML = "<i class='fas fa-arrow-down'></i> " + num;
+    } else {
+      this.innerHTML = "<i class='fas fa-arrow-down'></i> " + num;
+    }
+
+  };
+}
