@@ -162,6 +162,8 @@ def course_page(course_id, get_info=False):
 
         if request.method == 'POST':
             sort_function = request.form['sort']
+        elif 'sort' in session:
+            sort_function = session.pop('sort', None)
         else:
             sort_function = "chronological_old"
         
@@ -175,7 +177,7 @@ def course_page(course_id, get_info=False):
             sorted_posts = sorted(posts, key = lambda i: (time.mktime(datetime.datetime.strptime(i['posted_date'][:19], "%Y-%m-%dT%H:%M:%S").timetuple())))
 
 
-        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted)
+        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted, sort_value=sort_function)
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
@@ -524,6 +526,7 @@ def do_upvote():
             "upvotes": int(upvotes)
         })
 
+        session['sort'] = request.form['sort']
         return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
     return redirect(url_for('index'))
 
@@ -602,5 +605,6 @@ def do_downvote():
             "downvotes": int(downvotes)
         })
 
+        session['sort'] = request.form['sort']
         return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
     return redirect(url_for('index'))

@@ -34,20 +34,31 @@ function show_suggestions(){
   var sug_number = 0;
   var search_bar = document.getElementById("search_bar");
   var search_str = search_bar.value.toUpperCase().replace(/ /g,"");
+
+  var error_btn = document.getElementById("no_class");
+  var error_str = error_btn.innerText.toUpperCase();
   for (var i = 0; i < sugs.length; i++) {
     if (!sugs[i].innerText.includes(search_str) || i >= 6 || search_str == "") {
       sugs[i].style.display = "none";
-    } else {
+    } else if (!sugs[i].innerText.includes(error_str)) {
       sugs[i].style.display = "";
       sug_number++;
     }
   }
+  
   var sug_div = document.getElementById('suggestions');
   var sbar = document.getElementById("cover");
-  if (sug_number == 0) {
+  
+  if (search_str == "" && sug_number == 0) {
     sug_div.style.display = "none";
+    error_btn.style.display = "none";
+    sbar.style.marginTop = "-1rem"
+  } else if (sug_number == 0) {
+    error_btn.style.display = "";
+    sug_div.style.display = "";
     sbar.style.marginTop = "-1rem"
   } else {
+    error_btn.style.display = "none";
     sug_div.style.display = "";
     sbar.style.marginTop = "-"+sug_number+"rem"
   }

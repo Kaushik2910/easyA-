@@ -56,37 +56,42 @@
                     </div>
                     {% else %}
                     <input id="userID" type="text" name="" hidden value="guest">
-                    <button id="login_check2" type="submit" class="btn btn-outline-light mx-2" data-toggle="modal" data-target="#myModal">Log in</button>
+                    <button id="login_check2" type="submit" class="btn btn-outline-light mx-2" data-toggle="modal"
+                        data-target="#myModal">Log in</button>
                     <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
                         class="btn btn-outline-warning mx-2">Sign up</button>
                     {% endif %}
 
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog" style="height: 65%;">
-                          <div class="modal-content" style="height: 65%; background-color: #292929;">
-                            <div class="modal-header">
-                                <h5 class="modal-title" style="color:white">Login</h5>
-                              </div>
-                              <div class="modal-body">
-                                  <form action="{{ url_for('login') }}" method="POST" >
-                                      <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
-                                    <div class="form-group mb-4">
-                                      <input name="u_email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-                                    </div>
-                                    <div class="form-group">
-                                      <input name="u_password" type="password" class="form-control" id="pwd" placeholder="Password">
-                                      <small id="pwdHelp" class="form-text text-muted pl-2"></small>
-                                      <small class="form-text text-muted pl-2 text-right"><a href="/forgot_pwd">Forgot password?</a></small>
-                                    </div>
-                                    <div id="log_in" class="d-flex justify-content-center text-center">
-                                      <p style="color:white">Do not have an account? <a href="/signup">Sign Up!</a></p>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                      <button type="submit" class="btn btn-warning">Log in</button>
-                                    </div>
-                                  </form>
-                              </div>
-                          </div>
+                            <div class="modal-content" style="height: 65%; background-color: #292929;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="color:white">Login</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('login') }}" method="POST">
+                                        <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
+                                        <div class="form-group mb-4">
+                                            <input name="u_email" type="email" class="form-control"
+                                                aria-describedby="emailHelp" placeholder="Enter email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input name="u_password" type="password" class="form-control" id="pwd"
+                                                placeholder="Password">
+                                            <small id="pwdHelp" class="form-text text-muted pl-2"></small>
+                                            <small class="form-text text-muted pl-2 text-right"><a
+                                                    href="/forgot_pwd">Forgot password?</a></small>
+                                        </div>
+                                        <div id="log_in" class="d-flex justify-content-center text-center">
+                                            <p style="color:white">Do not have an account? <a href="/signup">Sign
+                                                    Up!</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-warning">Log in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,17 +120,18 @@
                     <h4>Based on {{ rating_count }} ratings.</h4>
                 </div>
                 {% if 'email' in session %}
-                        <!-- You show the logged in user button -->
-                        <div class="col-6">
-                            <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';"
-                                type="button" class="btn btn-light">Write a review</button>
-                        </div>
+                <!-- You show the logged in user button -->
+                <div class="col-6">
+                    <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';"
+                        type="button" class="btn btn-light">Write a review</button>
+                </div>
                 {% else %}
-                        <!-- You show the unlogged in user button -->
-                        <!-- The popup log in should be here -->
-                        <div class="col-6">
-                            <button id="review_button" type="submit" class="btn btn-light" data-toggle="modal" data-target="#myModal">Write a review</button>
-                        </div>
+                <!-- You show the unlogged in user button -->
+                <!-- The popup log in should be here -->
+                <div class="col-6">
+                    <button id="review_button" type="submit" class="btn btn-light" data-toggle="modal"
+                        data-target="#myModal">Write a review</button>
+                </div>
                 {% endif %}
             </div>
             <div id='row4' class="row">
@@ -137,16 +143,20 @@
                         <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
                         <div id="sort_options" class="dropdown-menu bg-warning text-light">
-                          <form id="sort_form" class="d-none" action="/course/{{course_id}}" method="POST">
-                              <input id="sort_input" name="sort" type="hidden" value=""></input>
-                          </form>
-                          <small>Chronological</small>
-                          <button id="chronological_new" type="button" class="dropdown-item sort_btn text-light">Newest Posts</button>
-                          <button id="chronological_old" type="button" class="dropdown-item sort_btn text-light">Oldest Posts</button>
-                          <div class="dropdown-divider"></div>
-                          <small>Upvotes</small>
-                          <button id="most_upvotes" type="button" class="dropdown-item sort_btn text-light">Most Upvotes</button>
-                          <button id="least_upvotes" type="button" class="dropdown-item sort_btn text-light">Least Upvotes</button>
+                            <form id="sort_form" class="d-none" action="/course/{{course_id}}" method="POST">
+                                <input id="sort_input" name="sort" type="hidden" value=""></input>
+                            </form>
+                            <small>Chronological</small>
+                            <button id="chronological_new" type="button"
+                                class="dropdown-item sort_btn text-light">Newest Posts</button>
+                            <button id="chronological_old" type="button"
+                                class="dropdown-item sort_btn text-light">Oldest Posts</button>
+                            <div class="dropdown-divider"></div>
+                            <small>Upvotes</small>
+                            <button id="most_upvotes" type="button" class="dropdown-item sort_btn text-light">Most
+                                Upvotes</button>
+                            <button id="least_upvotes" type="button" class="dropdown-item sort_btn text-light">Least
+                                Upvotes</button>
                         </div>
                     </div>
 
@@ -155,7 +165,8 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
                         <div class="dropdown-menu bg-warning text-light">
                             {% for professor in current_profs %}
-                            <input class="prof_check filter_check" type="checkbox" value="{{ professor }}"> {{ professor }}</input>
+                            <input class="prof_check filter_check" type="checkbox" value="{{ professor }}">
+                            {{ professor }}</input>
                             <br>
                             {% endfor %}
                         </div>
@@ -166,8 +177,8 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
                         <div class="dropdown-menu bg-warning text-light">
                             {% for tag in current_tags %}
-                                <input class="tag_check filter_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
-                                <br>
+                            <input class="tag_check filter_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
+                            <br>
                             {% endfor %}
                         </div>
                     </div>
@@ -180,18 +191,32 @@
         {%for post in user_posts%}
         {%if not post['text'] or post['text'].isspace()%}
         <li class="review_li">
-            <div class="container review d-flex">
-                <div class="row">
-                    <div class="col-6">
-                        <p class="review-professor"><span>Author:</span> You</p>
+            <div class="container review">
+                <div class="d-flex justify-content-end">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu dropdown-menu-right bg-warning">
+                            <!-- <button class="dropdown-item" type="button">Share</button> -->
+                            <!-- We have not implemented sharing posts yet (sprint 3) -->
+                            <form action="{{ url_for('delete_review') }}" method="POST">
+                                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                                <button type="submit" class="dropdown-item">Delete</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-6 text-right">
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <p class="review-professor"><span>Your empty post</span></p>
+                    </div>
+                    <div class="col text-right">
                         <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
-                        <p class="text">
+                    <div class="col-12 text-right">
+                        <p class="text-right">
                             {%for i in range(0, post['rating'])%}
                             <i class="fas fa-star"></i>
                             {%endfor%}
@@ -199,12 +224,6 @@
                             <i class="far fa-star"></i>
                             {%endfor%}
                         </p>
-                    </div>
-                    <div class="col-6 text-right">
-                        <form action="{{ url_for('delete_review') }}" method="POST">
-                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                            <button type="submit" class="btn btn-warning">Delete</button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -227,25 +246,27 @@
                                 <button type="submit" class="dropdown-item">Delete</button>
                             </form>
                             {%else%}
-                                {% if 'email' in session %}
-                                <!-- You show the logged in user button -->
-                                <form action="{{ url_for('contact') }}" onsubmit="return validateRequest()" method="POST">
-                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                                    <button type="submit" class="dropdown-item text-light">Contact</button>
-                                </form>
-                                <form action="{{ url_for('report') }}" onsubmit="return validateRequest()" method="POST" >
-                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                                    <button type="submit" class="dropdown-item text-light">Report</button>
-                                </form>
-                                {% else %}
-                                <!-- You show the unlogged in user button -->
-                                <!-- The popup log in should be here -->
-                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                                    <button type="submit" class="dropdown-item text-light" data-toggle="modal" data-target="#myModal">Contact</button>
+                            {% if 'email' in session %}
+                            <!-- You show the logged in user button -->
+                            <form action="{{ url_for('contact') }}" onsubmit="return validateRequest()" method="POST">
+                                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                                <button type="submit" class="dropdown-item text-light">Contact</button>
+                            </form>
+                            <form action="{{ url_for('report') }}" onsubmit="return validateRequest()" method="POST">
+                                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                                <button type="submit" class="dropdown-item text-light">Report</button>
+                            </form>
+                            {% else %}
+                            <!-- You show the unlogged in user button -->
+                            <!-- The popup log in should be here -->
+                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                            <button type="submit" class="dropdown-item text-light" data-toggle="modal"
+                                data-target="#myModal">Contact</button>
 
-                                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                                    <button type="submit" class="dropdown-item text-light" data-toggle="modal" data-target="#myModal">Report</button>
-                                {% endif %}
+                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                            <button type="submit" class="dropdown-item text-light" data-toggle="modal"
+                                data-target="#myModal">Report</button>
+                            {% endif %}
                             {%endif%}
                         </div>
                     </div>
@@ -271,7 +292,7 @@
 
                     {% if post['semester_taken'] %}
                     <span>Semester:</span> {{ post['semester_taken'] }}</p>
-                    {% endif %}
+                {% endif %}
 
                 <p class="review-body">{{ post['text'] }}</p>
 
@@ -279,40 +300,40 @@
                     <div class="col-6">
                         {% if 'email' in session %}
                         <!-- Upvoting/Downvoting is here -->
-                        <form action="{{ url_for('do_upvote') }}" method="POST" style="display: inline;">
+                        <form action="" method="POST">
                             <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                            <input name="sort" type="hidden" value="{{ sort_value }}"></input>
                             {% if post['post_ID'] in upvoted %}
                             <!-- Show bright upvotes-->
                             <button type="submit" name="button" class="voted review-votes upvote mx-2">
-                              <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
+                                <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
                             </button>
                             {% else %}
                             <!-- Default color-->
                             <button type="submit" name="button" class="review-votes upvote mx-2">
-                              <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
+                                <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
                             </button>
                             {% endif %}
-                        </form>
-                        <form action="{{ url_for('do_downvote') }}" method="POST" style="display: inline;" >
-                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+
                             {% if post['post_ID'] in downvoted %}
                             <!-- Show bright downvotes-->
                             <button type="submit" name="button" class="voted review-votes downvote mx-2">
-                              <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
+                                <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
                             </button>
                             {% else %}
                             <!-- Default color-->
                             <button type="submit" name="button" class="review-votes downvote mx-2">
-                              <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
+                                <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
                             </button>
                             {% endif %}
                         </form>
 
                         {% else %}
-                            <button type="button" name="button" class="review-votes upvote mx-2"><i
-                                class="fas fa-arrow-up" data-toggle="modal" data-target="#myModal"></i>{{ post['upvotes'] }}</button>
-                            <button type="button" name="button" class="review-votes downvote mx-2"><i
-                                class="fas fa-arrow-down"  data-toggle="modal" data-target="#myModal"></i>{{ post['downvotes'] }}</button>
+                        <button type="button" name="button" class="review-votes upvote mx-2"><i class="fas fa-arrow-up"
+                                data-toggle="modal" data-target="#myModal"></i>{{ post['upvotes'] }}</button>
+                        <button type="button" name="button" class="review-votes downvote mx-2"><i
+                                class="fas fa-arrow-down" data-toggle="modal"
+                                data-target="#myModal"></i>{{ post['downvotes'] }}</button>
                         {% endif %}
                     </div>
                     <div class="col-6 text-right">
