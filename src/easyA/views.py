@@ -92,12 +92,24 @@ def course_page(course_id, get_info=False):
         user_posts = []
         current_profs = []
         current_tags = []
+        upvoted = []
+        downvoted = []
         courses_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
 
         #Check how many posts the user has
         if 'email' in session:
             career_id = (session['email'].split('@', 2))[0]
             user = firestore_database.collection('users').document(career_id).get()
+
+            if 'upvoted' in user.to_dict():
+                #Grab array of upvoted posts
+                if user.to_dict()['upvoted'] != "[]":
+                    upvoted = user.to_dict()['upvoted'].strip("[]").replace('\'', '').split(", ")
+
+            if 'downvoted' in user.to_dict():
+                #Grab array of downvoted posts
+                if user.to_dict()['downvoted'] != "[]":
+                    downvoted = user.to_dict()['downvoted'].strip("[]").replace('\'', '').split(", ")
 
         for course in courses_ref.stream():
             course_dic = course.to_dict()
@@ -163,7 +175,7 @@ def course_page(course_id, get_info=False):
             sorted_posts = sorted(posts, key = lambda i: (time.mktime(datetime.datetime.strptime(i['posted_date'][:19], "%Y-%m-%dT%H:%M:%S").timetuple())))
 
 
-        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags)
+        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted)
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
@@ -436,3 +448,157 @@ def do_password_reset():
             #Print error code and message
             print("HTTPError Code {}: {}".format(e_dict["error"]["code"], e_dict["error"]["message"]))
             return forgot_pwd(e_dict["error"]["message"], False)
+
+@app.route('/upvote', methods=['POST', 'GET'])
+def do_upvote():
+    #Check for logged in or not
+    if 'email' not in session:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        career_id = (session['email'].split('@', 2))[0]
+        author = firestore_database.collection('users').document(career_id).get()
+
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+        post_dict = post.to_dict()
+
+        upvoted = []
+        downvoted = []
+
+        if 'upvoted' in author.to_dict():
+            #Grab array of upvoted posts
+            if author.to_dict()['upvoted'] != "[]":
+                upvoted = author.to_dict()['upvoted'].strip("[]").replace('\'', '').split(", ")
+
+        
+        if 'downvoted' in author.to_dict():
+            #Grab array of downvoted posts
+            if author.to_dict()['downvoted'] != "[]":
+                downvoted = author.to_dict()['downvoted'].strip("[]").replace('\'', '').split(", ")
+
+        if request.form['post_ID'] in upvoted:
+            #Undo upvote
+            upvotes = post.to_dict()['upvotes'] - 1
+            
+            upvoted.remove(request.form['post_ID'])
+
+            #Update database
+            author.reference.update({
+                "upvoted": str(upvoted),
+            })
+        elif request.form['post_ID'] in downvoted:
+            #Switch from downvotes to upvotes
+
+            upvotes = post.to_dict()['upvotes'] + 1
+
+            downvotes = post.to_dict()['downvotes'] - 1
+            
+            downvoted.remove(request.form['post_ID'])
+            upvoted.append(request.form['post_ID'])
+
+            #Update database
+            author.reference.update({
+                "upvoted": str(upvoted),
+                "downvoted": str(downvoted)
+            })
+
+            post.reference.update({
+            "downvotes": int(downvotes)
+            })
+        else:
+            #Include in upvote array
+            upvoted.append(request.form['post_ID'])
+
+            #Upvote
+            upvotes = post.to_dict()['upvotes'] + 1
+            
+            #Update database
+            author.reference.update({
+                "upvoted": str(upvoted),
+            })
+        
+
+        post.reference.update({
+            "upvotes": int(upvotes)
+        })
+
+        return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
+    return redirect(url_for('index'))
+
+@app.route('/downvote', methods=['POST', 'GET'])
+def do_downvote():
+    if request.method == 'POST':
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+        post_dict = post.to_dict()
+
+        #Check for logged in or not
+        if 'email' not in session:
+            return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
+
+        career_id = (session['email'].split('@', 2))[0]
+        author = firestore_database.collection('users').document(career_id).get()
+
+        upvoted = []
+        downvoted = []
+
+        if 'upvoted' in author.to_dict():
+            #Grab array of upvoted posts
+            if author.to_dict()['upvoted'] != "[]":
+                upvoted = author.to_dict()['upvoted'].strip("[]").replace('\'', '').split(", ")
+
+        
+        if 'downvoted' in author.to_dict():
+            #Grab array of downvoted posts
+            if author.to_dict()['downvoted'] != "[]":
+                downvoted = author.to_dict()['downvoted'].strip("[]").replace('\'', '').split(", ")
+
+
+        if request.form['post_ID'] in downvoted:
+            #Undo downvote
+            downvotes = post.to_dict()['downvotes'] - 1
+            
+            downvoted.remove(request.form['post_ID'])
+
+            #Update database
+            author.reference.update({
+                "downvoted": str(downvoted),
+            })
+        elif request.form['post_ID'] in upvoted:
+            #Downvote
+            downvotes = post.to_dict()['downvotes'] + 1
+
+            upvotes = post.to_dict()['upvotes'] - 1
+            
+            #Switch from upvotes to downvotes
+            
+            upvoted.remove(request.form['post_ID'])
+            downvoted.append(request.form['post_ID'])
+
+            #Update database
+            author.reference.update({
+                "upvoted": str(upvoted),
+                "downvoted": str(downvoted)
+            })
+
+            post.reference.update({
+            "upvotes": int(upvotes)
+            })
+        else:
+            #Downvote
+            downvotes = post.to_dict()['downvotes'] + 1
+
+            #Include in downvote array
+            downvoted.append(request.form['post_ID'])
+            
+            #Update database
+            author.reference.update({
+                "downvoted": str(downvoted),
+            })
+        
+
+        post.reference.update({
+            "downvotes": int(downvotes)
+        })
+
+        return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
+    return redirect(url_for('index'))

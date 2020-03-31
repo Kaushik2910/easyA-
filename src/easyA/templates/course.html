@@ -277,10 +277,40 @@
 
                 <div class="row">
                     <div class="col-6">
-                        <button type="button" name="button" class="review-votes upvote mx-2"><i
+                        {% if 'email' in session %}
+                        <!-- Upvoting/Downvoting is here -->
+                        <form action="{{ url_for('do_upvote') }}" method="POST" >
+                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+
+                            {% if post['post_ID'] in upvoted %}
+                            <!-- Show bright upvotes-->
+                            <button type="submit" name="button" class="review-votes upvote mx-2"><i
                                 class="fas fa-arrow-up"></i>{{ post['upvotes'] }}</button>
-                        <button type="button" name="button" class="review-votes downvote mx-2"><i
+                            {% else %}
+                            <!-- Default color-->
+                            <button type="submit" name="button" class="review-votes upvote mx-2"><i
+                                class="fas fa-arrow-up"></i>{{ post['upvotes'] }}</button>
+                            {% endif %}
+                        </form>
+                        <form action="{{ url_for('do_downvote') }}" method="POST" >
+                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                            {% if post['post_ID'] in upvoted %}
+                            <!-- Show bright downvotes-->
+                            <button type="submit" name="button" class="review-votes downvote mx-2"><i
                                 class="fas fa-arrow-down"></i>{{ post['downvotes'] }}</button>
+                            {% else %}
+                            <!-- Default color-->
+                            <button type="submit" name="button" class="review-votes downvote mx-2"><i
+                                class="fas fa-arrow-down"></i>{{ post['downvotes'] }}</button>
+                            {% endif %}
+                        </form>
+                        <!-- Upvoting/Downvoting ends-->
+                        {% else %}
+                            <button type="button" name="button" class="review-votes upvote mx-2"><i
+                                class="fas fa-arrow-up" data-toggle="modal" data-target="#myModal"></i>{{ post['upvotes'] }}</button>
+                            <button type="button" name="button" class="review-votes downvote mx-2"><i
+                                class="fas fa-arrow-down"  data-toggle="modal" data-target="#myModal"></i>{{ post['downvotes'] }}</button>
+                        {% endif %}
                     </div>
                     <div class="col-6 text-right">
 
