@@ -74,10 +74,11 @@
             <div class="form-row">
                 <div class="col-10">
                     <label for="new_review_professor" style="color: #F5F5F5;">Professor: </label>
-                    <select name="professor" id="new_review_professor" class="form-control new_review_input">
-                        {% for professor in professors %}
-                        <option>{{ professor['professor_name'] }}</option>
-                        {% endfor %}
+                    <select name="professor" id="new_review_professor" class="form-control new_review_input" required>
+                      <option value="">Professor</option>
+                      {% for professor in professors %}
+                      <option value="{{ professor['professor_name'] }}">{{ professor['professor_name'] }}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="col-2">
@@ -165,7 +166,7 @@
                         <button id="5" class="star_btn" type="button" name="button"><i
                                 class="star far fa-star"></i></button>
                     </div>
-                    <input type="hidden" id="rating" name="rating" value="">
+                    <input type="hidden" id="rating" name="rating" required>
                     <div class="col">
                         <button type="submit" class="btn btn-warning">Submit</button>
                     </div>
