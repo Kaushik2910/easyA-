@@ -279,7 +279,7 @@
                     <div class="col-6">
                         {% if 'email' in session %}
                         <!-- Upvoting/Downvoting is here -->
-                        <form action="" method="POST" >
+                        <form action="{{ url_for('do_upvote') }}" method="POST" style="display: inline;">
                             <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                             {% if post['post_ID'] in upvoted %}
                             <!-- Show bright upvotes-->
@@ -292,7 +292,9 @@
                               <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
                             </button>
                             {% endif %}
-
+                        </form>
+                        <form action="{{ url_for('do_downvote') }}" method="POST" style="display: inline;" >
+                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                             {% if post['post_ID'] in downvoted %}
                             <!-- Show bright downvotes-->
                             <button type="submit" name="button" class="voted review-votes downvote mx-2">

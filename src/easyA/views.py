@@ -63,7 +63,7 @@ def forgot_pwd(errorMessage="", requestTrigger=True):
 @app.route('/signout')
 def signout():
     session.pop('email', None)
-    return redirect(url_for('index'))
+    return redirect(request.environ['HTTP_REFERER'])
 
 @app.route('/login', methods=['POST', 'GET'])
 def login(errorMessage="", requestTrigger=True):
@@ -263,6 +263,8 @@ def post_contact():
         msg = Message(body=message_body, subject="easyA: Someone would like to contact you!", recipients=[author_email])
         mail.send(msg)
 
+        return redirect('/course/' + str(post.to_dict()['course'].get().to_dict()['course_id']))
+
     return redirect(url_for('index'))
 
 #Posting a review function
@@ -342,7 +344,7 @@ def do_login():
         session['email'] = email
 
         print("User logged in successfully")
-        return redirect(url_for('index'))
+        return redirect(request.environ['HTTP_REFERER'])
     except requests.exceptions.HTTPError as e:
         #Create a dictionary from the error
         e_dict = json.loads(e.strerror)
