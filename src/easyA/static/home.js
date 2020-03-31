@@ -33,7 +33,10 @@ function show_suggestions(){
   var sugs = document.getElementsByClassName("suggestion");
   var sug_number = 0;
   var search_bar = document.getElementById("search_bar");
-  var search_str = search_bar.value.toUpperCase().replace(/ /g,"");
+  var search_str = search_bar.value.toUpperCase().replace(/ /g, "");
+  if (search_str == null) {
+      search_str = "";
+  }
 
   var error_btn = document.getElementById("no_class");
   var error_str = error_btn.innerText.toUpperCase();

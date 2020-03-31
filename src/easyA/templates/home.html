@@ -91,7 +91,7 @@
             <div class="d-flex flex-column">
                 {% for course in course_list %}
                 <button type="button" class="btn suggestion"
-                    onclick="window.location.href = 'course/{{ course['course_id'] }}';">{{ course['course_id'] }}</button>
+                    onclick="window.location.href = 'course/{{ course['course_id'] }}';">{{ course['course_id'] }} - {{ course['post_count'] }}</button>
                 {% endfor %}
 
                 <button id="no_class" type="button" class="btn suggestion" style="color: red; display: none;">No course found!</button>

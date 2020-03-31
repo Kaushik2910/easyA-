@@ -19,7 +19,15 @@ def index():
     courses_ref = firestore_database.collection('courses').stream()
     course_list = []
     for course in courses_ref:
-        course_list.append(course.to_dict())
+        post_ref = firestore_database.collection('posts').where('course', '==', course.reference).stream()
+        tempDict = course.to_dict()
+        tempDict['post_count'] = 0
+        for post in post_ref:
+            tempDict['post_count'] = tempDict['post_count'] + 1
+        
+        course_list.append(tempDict)
+        
+
 
     return render_template('home.html', course_list=course_list)
 
