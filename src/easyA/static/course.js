@@ -103,14 +103,33 @@ var votes = document.getElementsByClassName("review-votes");
 
 for (var i = 0; i < votes.length; i++) {
   votes[i].onclick = function(){
-    this.classList.toggle("voted");
-    var num = this.innerText
-    num++;
-    if (this.classList.includes("upvote");) {
-      this.innerHTML = "<i class='fas fa-arrow-down'></i> " + num;
+    var num = this.innerText;
+    if (this.classList.contains("voted")) {
+      num--;
+    } else {
+      num++;
+    }
+    if (this.classList.contains("upvote")) {
+      this.innerHTML = "<i class='fas fa-arrow-up'></i> " + num;
+      this.parentElement.action = "/upvote";
+      this.parentElement.action = "";
+      // if (votes[i + 1].classList.contains("voted")) {
+      //   var num_next = votes[i + 1].innerText;
+      //   num_next--;
+      //   votes[i + 1].innerHTML = "<i class='fas fa-arrow-down'></i> " + num_next;
+      // }
     } else {
       this.innerHTML = "<i class='fas fa-arrow-down'></i> " + num;
+      this.parentElement.action = "/downvote";
+      this.parentElement.action = "";
+      // if (votes[i - 1].classList.contains("voted")) {
+      //   var prev_num = votes[i - 1].innerText;
+      //   prev_num--;
+      //   votes[i - 1].innerHTML = "<i class='fas fa-arrow-up'></i> " + prev_num;
+      // }
     }
+
+    this.classList.toggle("voted");
 
   };
 }
