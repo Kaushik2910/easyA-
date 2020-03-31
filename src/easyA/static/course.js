@@ -112,7 +112,6 @@ for (var i = 0; i < votes.length; i++) {
     if (this.classList.contains("upvote")) {
       this.innerHTML = "<i class='fas fa-arrow-up'></i> " + num;
       this.parentElement.action = "/upvote";
-      this.parentElement.action = "";
       // if (votes[i + 1].classList.contains("voted")) {
       //   var num_next = votes[i + 1].innerText;
       //   num_next--;
@@ -121,7 +120,6 @@ for (var i = 0; i < votes.length; i++) {
     } else {
       this.innerHTML = "<i class='fas fa-arrow-down'></i> " + num;
       this.parentElement.action = "/downvote";
-      this.parentElement.action = "";
       // if (votes[i - 1].classList.contains("voted")) {
       //   var prev_num = votes[i - 1].innerText;
       //   prev_num--;
