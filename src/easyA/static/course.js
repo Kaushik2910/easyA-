@@ -109,22 +109,29 @@ for (var i = 0; i < votes.length; i++) {
     } else {
       num++;
     }
+    var form = this.parentElement;
     if (this.classList.contains("upvote")) {
       this.innerHTML = "<i class='fas fa-arrow-up'></i> " + num;
-      this.parentElement.action = "/upvote";
-      // if (votes[i + 1].classList.contains("voted")) {
-      //   var num_next = votes[i + 1].innerText;
-      //   num_next--;
-      //   votes[i + 1].innerHTML = "<i class='fas fa-arrow-down'></i> " + num_next;
-      // }
+      form.action = "/upvote";
+
+      var other_vote = form.getElementsByClassName("downvote")[0];
+
+      if (other_vote.classList.contains("voted")) {
+        var num_next = other_vote.innerText;
+        num_next--;
+        other_vote.innerHTML = "<i class='fas fa-arrow-down'></i> " + num_next;
+        other_vote.classList.toggle("voted");
+      }
     } else {
       this.innerHTML = "<i class='fas fa-arrow-down'></i> " + num;
-      this.parentElement.action = "/downvote";
-      // if (votes[i - 1].classList.contains("voted")) {
-      //   var prev_num = votes[i - 1].innerText;
-      //   prev_num--;
-      //   votes[i - 1].innerHTML = "<i class='fas fa-arrow-up'></i> " + prev_num;
-      // }
+      form.action = "/downvote";
+      var other_vote = form.getElementsByClassName("upvote")[0];
+      if (other_vote.classList.contains("voted")) {
+        var num_next = other_vote.innerText;
+        num_next--;
+        other_vote.innerHTML = "<i class='fas fa-arrow-up'></i> " + num_next;
+        other_vote.classList.toggle("voted");
+      }
     }
 
     this.classList.toggle("voted");
