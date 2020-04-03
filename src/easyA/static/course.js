@@ -74,8 +74,11 @@ function filter_reviews() {
         tags_filter = tags_filter || tags.includes(review_tags[j]);
       }
     }
+    var text_search = document.getElementById("text_search").value.toLowerCase();
+    var review_body = reviews[i].getElementsByClassName("review-body")[0].innerText.toLowerCase();
+    var text_check = review_body.includes(text_search);
 
-    if (prof_filter && tags_filter) {
+    if (prof_filter && tags_filter && text_check) {
       reviews[i].style.display = "block";
     } else {
       reviews[i].style.display = "none";
@@ -88,6 +91,8 @@ var checkboxes = document.getElementsByClassName("filter_check");
 for (var i = 0; i < checkboxes.length; i++) {
   checkboxes[i].addEventListener( 'change', filter_reviews);
 }
+
+document.getElementById("text_search").addEventListener( 'input', filter_reviews);
 
 var sort_btns = document.getElementsByClassName("sort_btn");
 var sort_input = document.getElementById("sort_input");
