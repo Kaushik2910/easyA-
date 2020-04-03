@@ -307,9 +307,9 @@
                     <div class="col-6">
                         {% if 'email' in session %}
                         <!-- Upvoting/Downvoting is here -->
-                        <form id="{{ post['post_ID'] }}" action="" method="POST">
+                        <form action="" method="POST">
                             <input class="vote_input" name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                            <input name="sort" type="hidden" value="{{ sort_value }}"></input>
+                            <input class="sort_input" name="sort" type="hidden" value="{{ sort_value }}"></input>
                             {% if post['post_ID'] in upvoted %}
                             <!-- Show bright upvotes-->
                             <button type="submit" name="button" class="voted review-votes upvote mx-2">
