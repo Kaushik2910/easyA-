@@ -40,18 +40,20 @@ function show_suggestions(){
 
   var error_btn = document.getElementById("no_class");
   var error_str = error_btn.innerText.toUpperCase();
+
   for (var i = 0; i < sugs.length; i++) {
-    if (!sugs[i].innerText.includes(search_str) || i >= 6 || search_str == "") {
-      sugs[i].style.display = "none";
+    var sug_text = sugs[i].getElementsByTagName("p")[0].innerText;
+    if (!sug_text.includes(search_str) || i >= 6 || search_str == "") {
+      sugs[i].setAttribute('style', 'display:none !important');
     } else if (!sugs[i].innerText.includes(error_str)) {
       sugs[i].style.display = "";
       sug_number++;
     }
   }
-  
+
   var sug_div = document.getElementById('suggestions');
   var sbar = document.getElementById("cover");
-  
+
   if (search_str == "" && sug_number == 0) {
     sug_div.style.display = "none";
     error_btn.style.display = "none";

@@ -7,14 +7,25 @@
 	height: 262px;
 }
 
+.modal-dialog{
+	height: 65%;
+}
+
+.modal-content{
+	height: 65%;
+	background-color: #292929;
+}
+
+#suggestions p{
+	font-size: 2rem;
+}
+#suggestions small{
+	font-size: 1.5rem;
+}
+
  h1 { /* easy */
-	/* top: 59px;
-	left: 0px;
-	width: 339px;
-	height: 178px; */
 	font-family: STHeitiTC-Medium;
 	font-size: 8rem;
-	/* text-align: center; */
 	color:#ffffff;
 }
 

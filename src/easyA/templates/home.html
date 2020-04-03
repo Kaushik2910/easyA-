@@ -37,10 +37,10 @@
     </div>
 
     <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog" style="height: 65%;">
-            <div class="modal-content" style="height: 65%; background-color: #292929;">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color:white">Login</h5>
+                    <h5 class="modal-title text-white">Login</h5>
                 </div>
                 <div class="modal-body">
                     <form action="{{ url_for('login') }}" method="POST">
@@ -90,11 +90,11 @@
             <hr>
             <div class="d-flex flex-column">
                 {% for course in course_list %}
-                <button type="button" class="btn suggestion"
-                    onclick="window.location.href = 'course/{{ course['course_id'] }}';">{{ course['course_id'] }} - {{ course['post_count'] }}</button>
+                <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
+                  <p>{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
+                </div>
                 {% endfor %}
-
-                <button id="no_class" type="button" class="btn suggestion" style="color: red; display: none;">No course found!</button>
+                <p id="no_class" type="button" class="btn text-danger" style="display: none;">No course found!</p>
             </div>
 
         </div>
