@@ -136,16 +136,21 @@ for (var i = 0; i < votes.length; i++) {
 
     this.classList.toggle("voted");
 
-    // form.addEventListener('submit', function(){
-    //   var input = form.getElementsByClassName("vote_input")[0];
-    //   event.preventDefault();
-    //   $.ajax({
-    //     data: $(this).serialize(),
-    //     type: "POST",
-    //     url: input.formAction,
-    //     success: console.log("success")
-    //   });
-    // });
+    form.addEventListener('submit', function(){
+      event.preventDefault();
+      var vote_input = form.getElementsByClassName("vote_input")[0];
+      var sort_input = form.getElementsByClassName("sort_input")[0];
+      $.ajax({
+        data:{
+          post_ID: vote_input.value,
+          sort: sort_input.value
+        },
+        type: "POST",
+        url: form.action,
+      });
 
+    });
   }
+
+
 }

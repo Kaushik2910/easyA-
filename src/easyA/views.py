@@ -24,9 +24,9 @@ def index():
         tempDict['post_count'] = 0
         for post in post_ref:
             tempDict['post_count'] = tempDict['post_count'] + 1
-        
+
         course_list.append(tempDict)
-        
+
 
 
     return render_template('home.html', course_list=course_list)
@@ -145,7 +145,7 @@ def course_page(course_id, get_info=False):
                     for tag in post_tags:
                         if tag and tag not in current_profs:
                             current_tags.append(tag)
-                
+
                 #Collect logged in user's posts
                 if 'email' in session and tempDict['author'] == user.reference:
                     user_posts.append(tempDict)
@@ -174,7 +174,7 @@ def course_page(course_id, get_info=False):
             sort_function = session.pop('sort', None)
         else:
             sort_function = "chronological_old"
-        
+
         if sort_function == 'most_upvotes':
             sorted_posts = sorted(sorted_posts, key = lambda i: (i['upvotes']), reverse=True)
         elif sort_function == 'least_upvotes':
@@ -254,7 +254,7 @@ def post_report():
 def post_contact():
 
     if request.method == 'POST':
-    
+
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
 
         post_dict = post.to_dict()
@@ -482,7 +482,7 @@ def do_upvote():
             if author.to_dict()['upvoted'] != "[]":
                 upvoted = author.to_dict()['upvoted'].strip("[]").replace('\'', '').split(", ")
 
-        
+
         if 'downvoted' in author.to_dict():
             #Grab array of downvoted posts
             if author.to_dict()['downvoted'] != "[]":
@@ -491,7 +491,7 @@ def do_upvote():
         if request.form['post_ID'] in upvoted:
             #Undo upvote
             upvotes = post.to_dict()['upvotes'] - 1
-            
+
             upvoted.remove(request.form['post_ID'])
 
             #Update database
@@ -504,7 +504,7 @@ def do_upvote():
             upvotes = post.to_dict()['upvotes'] + 1
 
             downvotes = post.to_dict()['downvotes'] - 1
-            
+
             downvoted.remove(request.form['post_ID'])
             upvoted.append(request.form['post_ID'])
 
@@ -523,12 +523,12 @@ def do_upvote():
 
             #Upvote
             upvotes = post.to_dict()['upvotes'] + 1
-            
+
             #Update database
             author.reference.update({
                 "upvoted": str(upvoted),
             })
-        
+
 
         post.reference.update({
             "upvotes": int(upvotes)
@@ -559,7 +559,7 @@ def do_downvote():
             if author.to_dict()['upvoted'] != "[]":
                 upvoted = author.to_dict()['upvoted'].strip("[]").replace('\'', '').split(", ")
 
-        
+
         if 'downvoted' in author.to_dict():
             #Grab array of downvoted posts
             if author.to_dict()['downvoted'] != "[]":
@@ -569,7 +569,7 @@ def do_downvote():
         if request.form['post_ID'] in downvoted:
             #Undo downvote
             downvotes = post.to_dict()['downvotes'] - 1
-            
+
             downvoted.remove(request.form['post_ID'])
 
             #Update database
@@ -581,9 +581,9 @@ def do_downvote():
             downvotes = post.to_dict()['downvotes'] + 1
 
             upvotes = post.to_dict()['upvotes'] - 1
-            
+
             #Switch from upvotes to downvotes
-            
+
             upvoted.remove(request.form['post_ID'])
             downvoted.append(request.form['post_ID'])
 
@@ -602,12 +602,12 @@ def do_downvote():
 
             #Include in downvote array
             downvoted.append(request.form['post_ID'])
-            
+
             #Update database
             author.reference.update({
                 "downvoted": str(downvoted),
             })
-        
+
 
         post.reference.update({
             "downvotes": int(downvotes)
