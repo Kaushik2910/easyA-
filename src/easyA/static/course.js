@@ -136,5 +136,16 @@ for (var i = 0; i < votes.length; i++) {
 
     this.classList.toggle("voted");
 
-  };
+    form.addEventListener('submit', function(){
+      var input = form.getElementsByClassName("vote_input")[0];
+      event.preventDefault();
+      $.ajax({
+        data: $(this).serialize(),
+        type: "POST",
+        url: input.formAction,
+        success: console.log("success")
+      });
+    });
+
+  }
 }

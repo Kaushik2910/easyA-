@@ -2,192 +2,183 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="StyleSheet" href="{{ url_for('static', filename='new_review.css') }}" />
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
-    <title>easyA - New Review</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="StyleSheet" href="{{ url_for('static', filename='new_review.css') }}" />
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
+  <title>easyA - New Review</title>
 </head>
 
 <body>
-    <!-- class="fixed-top" -->
-    <div id="class-header">
-        <div class="container mb-0">
-            <div id="row1" class="row  my-3">
-                <div class="col-3">
-                    <div class="container text-center">
-                        <a href="{{ url_for('index') }}" id="logo">easy<span>A</span></a>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <!-- <div id="cover">
-              <div class="tb">
-                <div class="td"><input type="text" placeholder="{{ course_id }}" required></div>
-                <div class="td" id="s-cover">
-                  <button id=submit_btn type="submit">
-                    <div id="s-circle"></div>
-                    <span></span>
-                  </button>
-                </div>
-              </div>
-          </div> -->
-                </div>
-                <div class="col-3">
-                    <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
-                        {% if 'email' in session %}
-                        <div class="btn-group">
-                            <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
-                                {{ session['email'] }}</button>
-                            <div class="dropdown-menu pull-right">
-                                <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
-                                <a class="dropdown-item"
-                                    onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
-                            </div>
-                        </div>
-                        {% else %}
-                        <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';"
-                            type="button" class="btn btn-outline-light mx-2">Log in</button>
-                        <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';"
-                            type="button" class="btn btn-outline-warning mx-2">Sign up</button>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div id='row2' class="d-flex justify-content-around align-items-center">
-                <h1 id="name">{{ course_id }}</h1>
-                <h2 class="align-bottom">{{ course_name }}</h2>
-            </div>
+  <!-- class="fixed-top" -->
+  <div id="class-header">
+    <div class="container mb-0">
+      <div id="row1" class="row my-3 d-flex justify-content-between">
+        <div>
+          <div class="container text-center">
+            <a href="{{ url_for('index') }}" id="logo">easy<span>A</span></a>
+          </div>
         </div>
-        <hr>
+        <div>
+          <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
+            {% if 'email' in session %}
+            <div class="btn-group">
+              <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
+              {{ session['email'] }}</button>
+              <div class="dropdown-menu pull-right">
+                <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
+                <a class="dropdown-item"
+                onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
+              </div>
+            </div>
+            {% else %}
+            <button id="login_check2" onclick="window.location.href = '{{ url_for('login') }}';"
+            type="button" class="btn btn-outline-light mx-2">Log in</button>
+            <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';"
+            type="button" class="btn btn-outline-warning mx-2">Sign up</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div id='row2' class="d-flex justify-content-around align-items-center">
+        <h1 id="name">{{ course_id }}</h1>
+        <h2 class="align-bottom">{{ course_name }}</h2>
+      </div>
     </div>
+    <hr>
+  </div>
 
-    <div id="new_review" class="container">
-        <h2>It’s your turn to grade the class!</h2>
-        <form action="/course/{{course_id}}/new_review" method="POST">
-            <div class="form-row">
-                <div class="col-10">
-                    <label for="new_review_professor" style="color: #F5F5F5;">Professor: </label>
-                    <select name="professor" id="new_review_professor" class="form-control new_review_input" required>
-                      <option value="">Professor</option>
-                      {% for professor in professors %}
-                      <option value="{{ professor['professor_name'] }}">{{ professor['professor_name'] }}</option>
-                      {% endfor %}
-                    </select>
-                </div>
-                <div class="col-2">
-                    <label for="new_review_grade" style="color: #F5F5F5;">Grade: </label>
-                    <select name="grade" id="new_review_grade" class="form-control new_review_input">
-                        <option>A+</option>
-                        <option>A</option>
-                        <option>A-</option>
-                        <option>B+</option>
-                        <option>B</option>
-                        <option>B-</option>
-                        <option>C+</option>
-                        <option>C</option>
-                        <option>C-</option>
-                        <option>D+</option>
-                        <option>D</option>
-                        <option>D-</option>
-                        <option>F</option>
-                        <option>Prefer not to mention</option>
-                    </select>
-                </div>
+  <div id="new_review" class="container">
+    <h2>It’s your turn to grade the class!</h2>
+    <form action="/course/{{course_id}}/new_review" method="POST">
+      <div class="form-row">
+        <div class="col-10">
+          <label for="new_review_professor">Professor: </label>
+          <select name="professor" id="new_review_professor" class="form-control new_review_input" required>
+            <option value="">Professor</option>
+            {% for professor in professors %}
+            <option value="{{ professor['professor_name'] }}">{{ professor['professor_name'] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-2">
+          <label for="new_review_grade">Grade: </label>
+          <select name="grade" id="new_review_grade" class="form-control new_review_input">
+            <option value="">Grade</option>
+            <option value="A+">A+</option>
+            <option value="A">A</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B">B</option>
+            <option value="B-">B-</option>
+            <option value="C+">C+</option>
+            <option value="C">C</option>
+            <option value="C-">C-</option>
+            <option value="D+">D+</option>
+            <option value="D">D</option>
+            <option value="D-">D-</option>
+            <option value="F">F</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row container mt-3 px-0">
+        <div class="col-4 d-flex flex-column">
+          <label for="new_review_attendance">Attendance:</label>
+          <select name="attendance" id="new_review_attendance" class="form-control new_review_input">
+            <option value="">Attendance</option>
+            <option value="Mandatory">Mandatory</option>
+            <option value="Optional">Optional</option>
+            <option value="Online">Online</option>
+          </select>
+        </div>
+        <div class="col-4 d-flex flex-column">
+          <label for="new_review_textbook">Textbook:</label>
+          <select name="textbook" id="new_review_textbook" class="form-control new_review_input">
+            <option value="">Textbook</option>
+            <option value="Mandatory">Used</option>
+            <option value="Optional">Never Used</option>
+          </select>
+        </div>
+        <div class="col-4">
+          <div class="row">
+            <div class="col-8 d-flex flex-column">
+              <label for="new_review_semester_taken">Semester:</label>
+              <select name="semester_taken" id="new_review_semester_taken" class="form-control new_review_input">
+                <option value="">Semester</option>
+                <option value="Fall">Fall</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+              </select>
             </div>
-            <div class="form-row">
-                <div class="col-3">
-                    <label for="new_review_attendance" style="color: #F5F5F5;">Attendance: </label>
-                    <select name="attendance" id="new_review_attendance" class="form-control new_review_input">
-                        <option>Mandatory</option>
-                        <option>Optional</option>
-                        <option>Online</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <label for="new_review_textbook" style="color: #F5F5F5;">Textbook: </label>
-                    <select name="textbook" id="new_review_textbook" class="form-control new_review_input">
-                        <option>Mandatory</option>
-                        <option>Optional</option>
-                        <option>Online</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <label for="new_review_semester_taken" style="color: #F5F5F5;">Semester taken: </label>
-                    <select name="semester_taken" id="new_review_semester_taken" class="form-control new_review_input">
-                        <option>Prefer not to mention</option>
-                        <option>Fall</option>
-                        <option>Spring</option>
-                        <option>Summer</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <label for="new_review_year_taken" style="color: #F5F5F5;">Year: </label>
-                    <button type="button" class="btn btn-outline-warning tag"><input name="semester_taken_year" type="number" min="1900" max="2020" step="1" value="2020" /></button>
-                </div>
+            <div class="col-4 d-flex flex-column">
+              <label for="new_review_year_taken">Year:</label>
+              <input class="rounded" type="number" name="semester_taken_year" min="1900" max="2020" step="1" value="" placeholder="2020" /></input>
             </div>
-            <div class="d-flex flex-wrap justify-content-center m-2">
-                <button type="button" class="btn btn-outline-warning tag">Would take the class again</button>
-                <button type="button" class="btn btn-outline-warning tag">Mandatory attendance</button>
-                <button type="button" class="btn btn-outline-warning tag">Will make you cry</button>
-                <button type="button" class="btn btn-outline-warning tag">Text book used</button>
-                <button type="button" class="btn btn-outline-warning tag">Skip class? Won’t pass</button>
-                <button type="button" class="btn btn-outline-warning tag">Lots of homework</button>
-                <button type="button" class="btn btn-outline-warning tag">Group projects</button>
-                <button type="button" class="btn btn-outline-warning tag">Elective</button>
-                <button type="button" class="btn btn-outline-warning tag">Help outside class</button>
-                <button type="button" class="btn btn-outline-warning tag">Pop quizes</button>
-                <button type="button" class="btn btn-outline-warning tag">Boring lectures</button>
-                <button type="button" class="btn btn-outline-warning tag">Amazing lectures</button>
-                <button type="button" class="btn btn-outline-warning tag">Extra credit</button>
-            </div>
-            <input name="tags" type="hidden" id="tags" value="">
-            <div class="form-group">
-                <textarea name="text" class="form-control" id="new_review_body" placeholder="Here. Vent out!"
-                    rows="10"></textarea>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div id="new_review_rating" class="col-10">
-                        <button id="1" class="star_btn" type="button" name="button"><i
-                                class="star far fa-star"></i></button>
-                        <button id="2" class="star_btn" type="button" name="button"><i
-                                class="star far fa-star"></i></button>
-                        <button id="3" class="star_btn" type="button" name="button"><i
-                                class="star far fa-star"></i></button>
-                        <button id="4" class="star_btn" type="button" name="button"><i
-                                class="star far fa-star"></i></button>
-                        <button id="5" class="star_btn" type="button" name="button"><i
-                                class="star far fa-star"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-center m-2">
+        <button type="button" class="btn btn-outline-warning tag">Would take the class again</button>
+        <button type="button" class="btn btn-outline-warning tag">Will make you cry</button>
+        <button type="button" class="btn btn-outline-warning tag">Skip class? Won’t pass</button>
+        <button type="button" class="btn btn-outline-warning tag">Lots of homework</button>
+        <button type="button" class="btn btn-outline-warning tag">Group projects</button>
+        <button type="button" class="btn btn-outline-warning tag">Elective</button>
+        <button type="button" class="btn btn-outline-warning tag">Help outside class</button>
+        <button type="button" class="btn btn-outline-warning tag">Pop quizes</button>
+        <button type="button" class="btn btn-outline-warning tag">Boring lectures</button>
+        <button type="button" class="btn btn-outline-warning tag">Amazing lectures</button>
+        <button type="button" class="btn btn-outline-warning tag">Extra credit</button>
+      </div>
+      <input name="tags" type="hidden" id="tags" value="">
+      <div class="form-group">
+        <textarea name="text" class="form-control" id="new_review_body" placeholder="Here. Vent out!"
+        rows="10"></textarea>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div id="new_review_rating" class="col-10">
+            <button id="1" class="star_btn" type="button" name="button"><i
+              class="star far fa-star"></i></button>
+              <button id="2" class="star_btn" type="button" name="button"><i
+                class="star far fa-star"></i></button>
+                <button id="3" class="star_btn" type="button" name="button"><i
+                  class="star far fa-star"></i></button>
+                  <button id="4" class="star_btn" type="button" name="button"><i
+                    class="star far fa-star"></i></button>
+                    <button id="5" class="star_btn" type="button" name="button"><i
+                      class="star far fa-star"></i></button>
                     </div>
-                    <input type="hidden" id="rating" name="rating" required>
+                    <input type="hidden" id="rating" name="rating" value="" required>
                     <div class="col">
-                        <button type="submit" class="btn btn-warning">Submit</button>
+                      <button type="submit" class="btn btn-warning">Submit</button>
                     </div>
+                  </div>
                 </div>
+              </form>
             </div>
-        </form>
-    </div>
+            <br>
 
 
-    <!-- Optional JavaScript -->
-    <script src="{{ url_for('static', filename='new_review.js') }}"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-</body>
+            <!-- Optional JavaScript -->
+            <script src="{{ url_for('static', filename='new_review.js') }}"></script>
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+          </body>
 
-</html>
+          </html>

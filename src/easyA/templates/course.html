@@ -11,7 +11,7 @@
     <link rel="StyleSheet" href="{{ url_for('static', filename='course.css') }}" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
-    <title>easyA - {{ course_id }}</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -287,21 +287,28 @@
                         <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
                     </div>
                 </div>
-                <p class="review-tags"> <span>Attendance:</span> {{ post['attendance'] }} <span>Textbook:</span>
-                    {{ post['textbook'] }} <span>Grade:</span> {{ post['grade'] }}
-
-                    {% if post['semester_taken'] %}
-                    <span>Semester:</span> {{ post['semester_taken'] }}</p>
-                {% endif %}
-
+                <p class="review-tags">
+                    {% if post['attendance'] %}
+                    <span> Attendance:</span> {{ post['attendance'] }}
+                    {% endif %}
+                    {% if post['grade'] %}
+                    <span> Grade:</span> {{ post['grade'] }}
+                    {% endif %}
+                    {% if post['textbook'] %}
+                    <span> Textbook:</span> {{ post['textbook'] }}
+                    {% endif %}
+                    {% if post['semester_taken']%}
+                    <span> Semester:</span> {{ post['semester_taken'] }}
+                    {% endif %}
+                </p>
                 <p class="review-body">{{ post['text'] }}</p>
 
                 <div class="row">
                     <div class="col-6">
                         {% if 'email' in session %}
                         <!-- Upvoting/Downvoting is here -->
-                        <form action="" method="POST">
-                            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                        <form id="{{ post['post_ID'] }}" action="" method="POST">
+                            <input class="vote_input" name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                             <input name="sort" type="hidden" value="{{ sort_value }}"></input>
                             {% if post['post_ID'] in upvoted %}
                             <!-- Show bright upvotes-->
@@ -329,9 +336,9 @@
                         </form>
 
                         {% else %}
-                        <button type="button" name="button" class="review-votes upvote mx-2"><i class="fas fa-arrow-up"
+                        <button type="button" name="button" class="upvote mx-2"><i class="fas fa-arrow-up"
                                 data-toggle="modal" data-target="#myModal"></i>{{ post['upvotes'] }}</button>
-                        <button type="button" name="button" class="review-votes downvote mx-2"><i
+                        <button type="button" name="button" class="downvote mx-2"><i
                                 class="fas fa-arrow-down" data-toggle="modal"
                                 data-target="#myModal"></i>{{ post['downvotes'] }}</button>
                         {% endif %}
@@ -363,9 +370,10 @@
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='course.js') }}"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
