@@ -67,10 +67,10 @@
             {% endif %}
 
             <div class="modal fade" id="myModal" role="dialog">
-              <div class="modal-dialog" style="height: 65%;">
-                <div class="modal-content" style="height: 65%; background-color: #292929;">
+              <div class="modal-dialog">
+                <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" style="color:white">Login</h5>
+                    <h5 class="modal-title">Login</h5>
                   </div>
                   <div class="modal-body">
                     <form action="{{ url_for('login') }}" method="POST">
@@ -186,10 +186,10 @@
                         {% endfor %}
                       </div>
                     </div>
+                    <input id="text_search" type="text" class="form-control d-inline" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search for an specific review">
 
-                    <div class="input-group mb-3">
-                      <input id="text_search" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search for an specific review">
-                    </div>
+
+                    <!-- <div class="input-group mb-3"> </div> -->
 
                   </div>
                 </div>

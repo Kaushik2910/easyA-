@@ -63,21 +63,9 @@ input, button
     transform: scale(0.6);
 }
 
-input[type="text"]
-{
-    width: 100%;
-		padding-top: auto;
-		padding-left: 5px;
-    height: 60;
-    font-size: 1.5rem;
-    line-height: 1;
-}
 
-input[type="text"]::placeholder
-{
+input[type="text"]::placeholder{
     color: #8E8E8E;
-    /* color: FBB03B #; */
-
 }
 
 #s-cover
@@ -239,7 +227,6 @@ ul {
 } */
 
 #row4, #row4 .btn {
-	font-size: 1.2rem;
 	color: rgba(235,235,235, .7);
 }
 
@@ -266,4 +253,21 @@ ul {
 
 .voted{
 	color: white;
+}
+
+.modal-dialog{
+	height: 65%;
+}
+
+.modal-content{
+	height: 65%;
+	background-color: #292929;
+}
+
+#text_search{
+	width: 25rem;
+}
+
+#search_bar{
+	font-size: 1.5rem;
 }
