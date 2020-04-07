@@ -35,9 +35,9 @@ def index():
 def not_found(e):
   return render_template("not_found.html")
 
-@app.route('/contact_us')
-def contact_us():
-    return render_template('contact_us.html')
+# @app.route('/contact_us')
+# def contact_us():
+#     return render_template('contact_us.html')
 
 # App route for contact page
 @app.route('/contact', methods=['POST', 'GET'])
@@ -94,15 +94,7 @@ def signup(errorMessage="", requestTrigger=True):
 # App route for contact adminstrator page
 @app.route('/contact_admin', methods=['POST', 'GET'])
 def contact_admin():
-    #Check for logged in or not
-    if 'email' not in session:
-        return redirect(url_for('index'))
-
-    if request.method == 'POST':
-        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
-        return render_template('contact_admin.html', post_ID=request.form['post_ID'], post=post.to_dict())
-
-    return redirect(url_for('index'))
+    return render_template('contact_us.html')
 
 @app.route( '/course/')
 @app.route('/course/<course_id>', methods=['POST', 'GET'])
@@ -295,25 +287,17 @@ def post_contact_admin():
 
     if request.method == 'POST':
 
-        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
-
-        post_dict = post.to_dict()
-        author_dict = post_dict['author'].get().to_dict()
-        author_email = author_dict['email']
-        user_email = session['email']
-
-        message = request.form['message']
-        subject = request.form['subject']
         first_name = request.form['first_name']
         last_name = request.form['last_name']
+        user_email = request.form['email']
+        subject = request.form['subject']
+        message = request.form['message']
 
         name = first_name + " " + last_name
         message_body = "A user sent you the following message:\n\n" + "Name: " + name + "\nSubject: " + subject + "\nMeassage: " + message + "\nSent by: " + user_email
 
-        msg = Message(body=message_body, subject="easyA: Someone would like to contact you!", recipients=[author_email])
+        msg = Message(body=message_body, subject="Admin: A user wants to contact you", recipients=['easyApurdue@gmail.com'])
         mail.send(msg)
-
-        return redirect('/course/' + str(post.to_dict()['course'].get().to_dict()['course_id']))
 
     return redirect(url_for('index'))
 
