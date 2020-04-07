@@ -33,3 +33,26 @@ for (var i = 0; i < star_btns.length; i++) {
     document.getElementById("rating").value = this.id;
 });
 }
+
+function show_suggestions(){
+  var sugs = document.getElementsByClassName("prof_suggestion");
+  var sug_number = 0;
+  var prof_input = document.getElementById("professor_input").value.toLowerCase();
+  if (prof_input == null) {
+      prof_input = "";
+  }
+
+  var sug_number = 0;
+  for (var i = 0; i < sugs.length; i++) {
+    var sug_text = sugs[i].innerText.toLowerCase();
+    if (!sug_text.includes(prof_input) || sug_number >= 3 || prof_input == "") {
+      sugs[i].setAttribute('style', 'display:none !important');
+    } else {
+      sugs[i].style.display = "";
+      sug_number++;
+    }
+  }
+}
+
+var prof_input = document.getElementById("professor_input");
+prof_input.addEventListener("input", show_suggestions);
