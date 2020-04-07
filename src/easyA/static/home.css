@@ -31,13 +31,8 @@
 
 
 #a {
-	/* top: 0px;
-	left: 338px;
-	width: 129px;
-	height: 295px; */
 	font-family: Noteworthy-Bold;
 	font-size: 110%;
-	/* text-align: center; */
 	color:#fbb03b;
 }
 
@@ -79,22 +74,20 @@ input, button
 
 
 
-#header
-{
+#header{
     padding-top: 0%;
 
 }
 
 
 
-#cover
-{
+#cover{
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
     /* min-width: 800px; */
-    /* position: relative; */
+    position: relative;
     padding: 5px;
     /* margin: -83px auto 0 auto; */
 		margin-top: -1rem;
@@ -217,9 +210,6 @@ button span:before, button span:after
     background-color: #FBB03B;
 }
 
-#suggestions {
-	/* display: none; */
-}
 
 #suggestions button {
 	text-align: left;
