@@ -16,8 +16,12 @@
 
 <body>
   <!-- class="fixed-top" -->
+
   <div id="class-header">
+
     <div class="container mb-0">
+      <small class="form-text pr-3 text-right"><a class="text-muted" href="{{ url_for('contact_us') }}">Contact Us</a></small>
+
       <div id="row1" class="row  my-3">
         <div class="col-3">
           <div class="container text-center">
@@ -73,11 +77,11 @@
                       <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
                       <div class="form-group mb-4">
                         <input name="u_email" type="email" class="form-control"
-                        aria-describedby="emailHelp" placeholder="Enter email">
+                        aria-describedby="emailHelp" placeholder="Enter email" autocomplete="on">
                       </div>
                       <div class="form-group">
                         <input name="u_password" type="password" class="form-control" id="pwd"
-                        placeholder="Password">
+                        placeholder="Password" autocomplete="on">
                         <small id="pwdHelp" class="form-text text-muted pl-2"></small>
                         <small class="form-text text-muted pl-2 text-right"><a
                           href="/forgot_pwd">Forgot password?</a></small>

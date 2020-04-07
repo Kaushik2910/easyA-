@@ -48,10 +48,6 @@ input{
 		background-color: #1F1F1F;
 }
 
-form
-{
-    height: 60px;
-}
 
 input[type="text"]{
     width: 100%;

@@ -35,9 +35,9 @@ def index():
 def not_found(e):
   return render_template("not_found.html")
 
-@app.route('/verified_user')
-def display():
-    return render_template('verified_user.html')
+@app.route('/contact_us')
+def contact_us():
+    return render_template('contact_us.html')
 
 # App route for contact page
 @app.route('/contact', methods=['POST', 'GET'])

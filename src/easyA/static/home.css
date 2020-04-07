@@ -97,10 +97,10 @@ input, button
     transform: scale(0.6);
 }
 
-form
+/* form
 {
     height: 96px;
-}
+} */
 
 input[type="text"]
 {
@@ -253,8 +253,14 @@ button span:before, button span:after
   min-width: 12rem;
 }
 
-.dropdown-content a:hover {background-color: #FBB03B;}
+.dropdown-content a:hover {
+	background-color: #FBB03B;
+}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+	display: block;
+}
 
-.dropdown:hover .dropbtn {background-color: #FBB03B;}
+.dropdown:hover .dropbtn {
+	background-color: #FBB03B;
+}
