@@ -294,8 +294,20 @@ def post_contact_admin():
         message = request.form['message']
 
         name = first_name + " " + last_name
+
+        data = {
+            "name": name,
+            "email": user_email,
+            "subject": subject,
+            "message": message,
+        }
+
+        #Add the inquiry to the database
+        firestore_database.collection('inquiries').add(data)
+        
         message_body = "A user sent you the following message:\n\n" + "Name: " + name + "\nSubject: " + subject + "\nMeassage: " + message + "\nSent by: " + user_email
 
+        # Send mail
         msg = Message(body=message_body, subject="Admin: A user wants to contact you", recipients=['easyApurdue@gmail.com'])
         mail.send(msg)
 
