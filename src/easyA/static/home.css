@@ -9,21 +9,7 @@
 
 
 
-@media screen and (min-width: 601px) {
-	h1 { /* easy */
-		font-family: STHeitiTC-Medium;
-		font-size: 8rem;
-		color:#ffffff;
-	}
-}
 
-@media screen and (max-width: 600px) {
-	h1 { /* easy */
-		font-family: STHeitiTC-Medium;
-		font-size: 6rem;
-		color:#ffffff;
-	}
-}
 
 #a {
 	font-family: Noteworthy-Bold;
@@ -62,7 +48,8 @@ input, button
 
 #search_bar{
 	background-color: rgba(0, 0, 0, 0);
-	margin: auto auto;
+	color: #c2c2c2 !important;
+	margin: 0;
 	border: 0;
 }
 
@@ -75,16 +62,37 @@ input, button
 #suggestions{
 	margin: 0 auto;
 	width: auto;
-	background-color: #F5F5F5;
+	border-radius: 1rem;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+	font-family: STHeitiTC-Medium;
+	color:#ffffff;
+}
+
+.suggestion p{
+	color: rgba(194, 194, 194, 0.3);
+}
+
+#suggestions hr{
+	border-color: #c2c2c2 !important;
+}
+
+.selected {
+	background: rgba(0, 0, 0, 0.7);
 	border-radius: 1rem;
 }
 
-
-
-
-
+.selected p{
+	color: rgba(194, 194, 194, 0.8) !important;
+}
 
 @media screen and (min-width: 601px) {
+	h1{
+		font-size: 8rem;
+	}
+
 	#suggestions{
 		width: 40rem;
 		font-size: 2.5rem;
@@ -92,7 +100,7 @@ input, button
 
 	#search_bar{
 		width: 32rem;
-		font-size: 2.5rem;
+		font-size: 2rem;
 	}
 
 	#submit_phone{
@@ -105,15 +113,18 @@ input, button
 	}
 
 	.suggestion p{
-		color: #495057;
-		font-size: 2rem;
+		font-size: 1.5rem;
 	}
 	.suggestion small{
-		font-size: 1.5rem;
+		font-size: 1rem;
 	}
 }
 
 @media screen and (max-width: 600px) {
+	h1{
+		font-size: 6rem;
+	}
+
 	#user{
 		margin-bottom: 5rem;
 	}
@@ -125,12 +136,12 @@ input, button
 
 	#suggestions{
 		width: 22rem;
-		font-size: 2rem;
+		font-size: 1.5rem;
 	}
 
 	#search_bar{
 		width: 18rem;
-		font-size: 2rem;
+		font-size: 1.5rem;
 	}
 
 	#s-cover{
@@ -143,11 +154,10 @@ input, button
 	}
 
 	.suggestion p{
-		color: #495057;
-		font-size: 1.5rem;
+		font-size: 1rem;
 	}
 	.suggestion small{
-		font-size: 1rem;
+		font-size: .7rem;
 	}
 }
 
@@ -175,11 +185,11 @@ input[type="text"]::placeholder{
 	position: relative;
 	top: -8px;
 	left: 0;
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
 	margin-top: 0;
-	border-width: 12px;
-	border: 12px solid #FBB03B;
+	border-width: 10px;
+	border: 10px solid #FBB03B;
 	background-color: transparent;
 	border-radius: 50%;
 	transition: 0.5s ease all;
@@ -188,10 +198,10 @@ input[type="text"]::placeholder{
 button span
 {
 	position: absolute;
-	top: 70px;
-	left: 36px;
+	top: 65px;
+	left: 35px;
 	display: block;
-	width: 30px;
+	width: 10px;
 	height: 8px;
 	background-color: transparent;
 	border-radius: 10px;
@@ -205,8 +215,8 @@ button span:before, button span:after
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	width: 45px;
-	height: 15px;
+	width: 30px;
+	height: 12px;
 	background-color: #FBB03B;
 	border-radius: 10px;
 	transform: rotateZ(0);
@@ -215,9 +225,9 @@ button span:before, button span:after
 
 #s-cover:hover #s-circle
 {
-	top: -1px;
-	width: 67px;
-	height: 15px;
+	top: 0px;
+	width: 69px;
+	height: 12px;
 	border-width: 0;
 	background-color: #FBB03B;
 	border-radius: 20px;

@@ -77,9 +77,8 @@
   </div>
 
 
-  <div id="suggestions" class="input-group">
+  <div id="suggestions" class="input-group mt-5">
     <form method="get" action="#" id="search_bar_form" onsubmit="return validateSearch()">
-
       <div class="input-group">
         <input id="search_bar" type="text" class="form-control" placeholder="Search" required>
         <div id="s-cover" class="input-group-append">
@@ -92,16 +91,18 @@
           <button type="submit"><i class="fas fa-search"></i></button>
         </div>
       </div>
-
-      <div id="sug_list" class="d-flex flex-column">
-        {% for course in course_list %}
-        <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
-          <p>{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
-        </div>
-        {% endfor %}
-        <small id="no_class" type="button" class="btn text-danger" style="display: none;">No course found!</small>
-      </div>
     </form>
+
+    <div id="sug_list" class="d-flex flex-column">
+      <hr class="m-0" id="sug_hr">
+      {% for course in course_list %}
+      <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
+        <p>{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
+      </div>
+      {% endfor %}
+      <small id="no_class" type="button" class="btn text-danger" style="display: none;">No course found!</small>
+    </div>
+
   </div>
 
 
