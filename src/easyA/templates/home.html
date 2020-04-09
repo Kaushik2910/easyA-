@@ -23,103 +23,104 @@
       <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
       {{ session['email'] }}
-      </button>
-      <div class="dropdown-menu pull-right">
-        <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
-        <a class="dropdown-item" onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
+    </button>
+    <div class="dropdown-menu pull-right">
+      <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
+      <a class="dropdown-item" onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
+    </div>
+  </div>
+  {% else %}
+  <button type="submit" class="btn btn-outline-light mx-2" data-toggle="modal" data-target="#myModal">
+    Log in
+  </button>
+  <form class="" action="{{ url_for('signup') }}" method="get">
+    <button type="submit" class="btn btn-outline-warning mx-2">Sign up</button>
+  </form>
+  {% endif %}
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-white">Login</h5>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('login') }}" method="POST">
+          <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
+          <div class="form-group mb-4">
+            <input name="u_email" type="email" class="form-control" aria-describedby="emailHelp"
+            placeholder="Enter email" autocomplete="on">
+          </div>
+          <div class="form-group">
+            <input name="u_password" type="password" class="form-control" id="pwd"
+            placeholder="Password" autocomplete="on">
+            <small id="pwdHelp" class="form-text text-muted pl-2"></small>
+            <small class="form-text text-muted pl-2 text-right"><a href="./forgot_pwd">Forgot
+              password?</a></small>
+            </div>
+            <div id="log_in" class="d-flex justify-content-center text-center">
+              <p style="color:white">Do not have an account? <a href="./signup">Sign Up!</a></p>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-warning">Log in</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-    {% else %}
-    <button type="submit" class="btn btn-outline-light mx-2" data-toggle="modal" data-target="#myModal">
-      Log in
-    </button>
-    <form class="" action="{{ url_for('signup') }}" method="get">
-      <button type="submit" class="btn btn-outline-warning mx-2">Sign up</button>
-    </form>
-    {% endif %}
   </div>
 
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-white">Login</h5>
+  <div id="header" class="container text-center">
+    <h1>easy<span id="a">A</span></h1>
+    <p id="slogan">Made by Boilermakers for Boilermakers!</p>
+  </div>
+
+
+  <div id="suggestions" class="input-group">
+    <form method="get" action="#" id="search_bar_form" onsubmit="return validateSearch()">
+
+      <div class="input-group">
+        <input id="search_bar" type="text" class="form-control" placeholder="Search" required>
+        <div id="s-cover" class="input-group-append">
+          <button id=submit_btn type="submit">
+            <div id="s-circle"></div>
+            <span></span>
+          </button>
         </div>
-        <div class="modal-body">
-          <form action="{{ url_for('login') }}" method="POST">
-            <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
-            <div class="form-group mb-4">
-              <input name="u_email" type="email" class="form-control" aria-describedby="emailHelp"
-              placeholder="Enter email" autocomplete="on">
-            </div>
-            <div class="form-group">
-              <input name="u_password" type="password" class="form-control" id="pwd"
-              placeholder="Password" autocomplete="on">
-              <small id="pwdHelp" class="form-text text-muted pl-2"></small>
-              <small class="form-text text-muted pl-2 text-right"><a href="./forgot_pwd">Forgot
-                password?</a></small>
-              </div>
-              <div id="log_in" class="d-flex justify-content-center text-center">
-                <p style="color:white">Do not have an account? <a href="./signup">Sign Up!</a></p>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-warning">Log in</button>
-              </div>
-            </form>
-          </div>
+        <div id="submit_phone" class="input-group-append">
+          <button type="submit"><i class="fas fa-search"></i></button>
         </div>
       </div>
-    </div>
 
-    <div id="header" class="container text-center">
-      <h1>easy<span id="a">A</span></h1>
-      <p id="slogan">Made by Boilermakers for Boilermakers!</p>
-    </div>
-    <div id="cover">
-      <form method="get" action="#" id="search_bar_form" onsubmit="return validateSearch()">
-        <div class="tb">
-          <div class="td">
-            <input id="search_bar" type="text" placeholder="Search" oninput="show_suggestions()" required>
-          </div>
-          <div class="td" id="s-cover">
-            <button id=submit_btn type="submit">
-              <div id="s-circle"></div>
-              <span></span>
-            </button>
-          </div>
+      <div id="sug_list" class="d-flex flex-column">
+        {% for course in course_list %}
+        <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
+          <p>{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
         </div>
-      </form>
-      <div id="suggestions">
-        <hr>
-        <div class="d-flex flex-column">
-          {% for course in course_list %}
-          <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
-            <p>{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
-          </div>
-          {% endfor %}
-          <p id="no_class" type="button" class="btn text-danger" style="display: none;">No course found!</p>
-        </div>
-
+        {% endfor %}
+        <small id="no_class" type="button" class="btn text-danger" style="display: none;">No course found!</small>
       </div>
-    </div>
+    </form>
+  </div>
 
 
 
-    <!-- Optional JavaScript -->
-    <script src="{{ url_for('static', filename='home.js') }}"></script>
-    <script type="text/javascript">
-    show_suggestions()
-    </script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  </body>
+  <!-- Optional JavaScript -->
+  <script src="{{ url_for('static', filename='home.js') }}"></script>
+  <script type="text/javascript">
+  show_suggestions()
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"></script>
+</body>
 
-  </html>
+</html>

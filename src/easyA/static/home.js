@@ -32,8 +32,7 @@ function validateSearch() {
 function show_suggestions(){
   var sugs = document.getElementsByClassName("suggestion");
   var sug_number = 0;
-  var search_bar = document.getElementById("search_bar");
-  var search_str = search_bar.value.toUpperCase().replace(/ /g, "");
+  var search_str = document.getElementById("search_bar").value.toUpperCase().replace(/ /g, "");
   if (search_str == null) {
       search_str = "";
   }
@@ -53,20 +52,15 @@ function show_suggestions(){
     }
   }
 
-  var sug_div = document.getElementById('suggestions');
   var sbar = document.getElementById("cover");
 
-  if (search_str == "" && sug_number == 0) {
-    sug_div.style.display = "none";
+  if (search_str == "") {
     error_btn.style.display = "none";
-    sbar.style.marginTop = "-1rem"
   } else if (sug_number == 0) {
     error_btn.style.display = "";
-    sug_div.style.display = "";
-    sbar.style.marginTop = "-1rem"
   } else {
     error_btn.style.display = "none";
-    sug_div.style.display = "";
-    sbar.style.marginTop = "-"+sug_number+"rem"
   }
 }
+
+document.getElementById("search_bar").addEventListener("input", show_suggestions);
