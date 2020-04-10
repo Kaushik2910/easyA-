@@ -283,14 +283,15 @@
                   <div class="row">
                     <div class="col-8">
                       {% if post in user_posts %}
-                      <p class="review-professor"><span>Your post</span></p>
+                      <p><span>Your post</span></p>
                       {% else %}
                       {% endif %}
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-8">
+                    <div class="col-8 professor_div">
                       <p class="review-professor"><span>Professor:</span> {{ post['professor'] }}</p>
+                      <a href="#">{{ post['professor'] }}'s Rating</a>
                     </div>
                     <div class="col text-right">
                       <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
