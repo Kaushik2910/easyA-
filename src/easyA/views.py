@@ -15,7 +15,7 @@ firestore_database, realtime_database, firebase_wrapper, admin_auth = db.init_db
 auth = firebase_wrapper.auth()
 
 @app.route('/')
-def index():
+def index(get_info=False):
     courses_ref = firestore_database.collection('courses').stream()
     course_list = []
     for course in courses_ref:
@@ -27,7 +27,8 @@ def index():
 
         course_list.append(tempDict)
 
-
+    if get_info:
+        return course_list
 
     return render_template('home.html', course_list=course_list)
 
@@ -71,6 +72,7 @@ def forgot_pwd(errorMessage="", requestTrigger=True):
 @app.route('/signout')
 def signout():
     session.pop('email', None)
+    session.pop('group', None)
     return redirect(request.environ['HTTP_REFERER'])
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -189,8 +191,10 @@ def course_page(course_id, get_info=False):
         elif sort_function == 'chronological_old':
             sorted_posts = sorted(posts, key = lambda i: (time.mktime(datetime.datetime.strptime(i['posted_date'][:19], "%Y-%m-%dT%H:%M:%S").timetuple())))
 
+        #Get the course list and post count from the index function
+        course_list = index(get_info=True)
 
-        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted, sort_value=sort_function)
+        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted, sort_value=sort_function, course_list=course_list)
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
@@ -388,6 +392,19 @@ def do_login():
             return login("Email is not verified! Please verify your email!", False)
 
         session['email'] = email
+        career_id = email.split('@', 2)[0]
+        user_ref = firestore_database.collection('users').document(career_id)
+        user_dict =  user_ref.get().to_dict()
+
+        if 'group' not in user_dict:
+            #Add the group to the user if doesn't have a group
+            user_ref.update({
+                "group": "student",
+            })
+
+        user_dict =  user_ref.get().to_dict()
+        session['group'] = user_dict['group']
+        
 
         print("User logged in successfully")
         return redirect(request.environ['HTTP_REFERER'])
@@ -433,6 +450,7 @@ def do_signup():
             #Record the user in the database
             data = {
                 "email": email,
+                "group": "student"
             }
             firestore_database.collection('users').document(career_id).set(data)
 
