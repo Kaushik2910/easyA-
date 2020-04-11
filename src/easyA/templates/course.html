@@ -59,7 +59,14 @@
           <div class="btn-group">
             <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
-            {{ session['email'] }}</button>
+            {% if session['group'] == 'banned' %}
+                {{ session['email'] }} - BANNED
+            {% elif session['group'] == 'admin' %}
+                {{ session['email'] }} - ADMIN
+            {% else %}
+                {{ session['email'] }}
+            {% endif %}
+            </button>
             <div class="dropdown-menu pull-right">
               <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
               <a class="dropdown-item" onclick="window.location.href = '{{ url_for('signout') }}';">Log

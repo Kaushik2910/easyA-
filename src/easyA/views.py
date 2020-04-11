@@ -48,6 +48,10 @@ def contact():
         return redirect(url_for('index'))
 
     if request.method == 'POST':
+        #Banned user
+        if session['group'] == "banned":
+            return redirect(request.environ['HTTP_REFERER'])
+
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         return render_template('contact.html', post_ID=request.form['post_ID'], post=post.to_dict())
 
@@ -201,6 +205,10 @@ def new_review(course_id):
     if 'email' not in session:
         return login("Please login to post reviews!", False)
 
+    #Banned user
+    if session['group'] == "banned":
+        return redirect("/course/" + course_id)
+
     professors = []
     course, course_id, course_name, user_posts = course_page(course_id, True)
     if len(user_posts) > 0:
@@ -227,6 +235,10 @@ def report():
         return redirect(url_for('index'))
 
     if request.method == 'POST':
+        #Banned user
+        if session['group'] == "banned":
+            return redirect(request.environ['HTTP_REFERER'])
+        
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         return render_template('report.html', post_ID=request.form['post_ID'], post=post.to_dict())
 
@@ -351,6 +363,10 @@ def delete_review():
         return redirect(url_for('index'))
 
     if request.method == 'POST':
+        #Banned user
+        if session['group'] == "banned":
+            return redirect(request.environ['HTTP_REFERER'])
+        
         career_id = (session['email'].split('@', 2))[0]
         author = firestore_database.collection('users').document(career_id).get()
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
@@ -517,16 +533,20 @@ def do_password_reset():
 
 @app.route('/upvote', methods=['POST', 'GET'])
 def do_upvote():
-    #Check for logged in or not
-    if 'email' not in session:
-        return redirect(url_for('index'))
-
     if request.method == 'POST':
+        #Banned user
+        if session['group'] == "banned":
+            return redirect(request.environ['HTTP_REFERER'])
+        
         career_id = (session['email'].split('@', 2))[0]
         author = firestore_database.collection('users').document(career_id).get()
 
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         post_dict = post.to_dict()
+
+        #Check for logged in or not
+        if 'email' not in session:
+            return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
 
         upvoted = []
         downvoted = []
@@ -595,6 +615,10 @@ def do_upvote():
 @app.route('/downvote', methods=['POST', 'GET'])
 def do_downvote():
     if request.method == 'POST':
+        #Banned user
+        if session['group'] == "banned":
+            return redirect(request.environ['HTTP_REFERER'])
+        
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         post_dict = post.to_dict()
 
