@@ -22,7 +22,7 @@
   </div>
 
   <div id="new_msg" class="container">
-    <form action="{{ url_for('post_contact_admin') }}" method="POST">
+    <form action="{{ url_for('post_contact_admin') }}" method="POST" onsubmit="getPriority()">
       <div class="form-row">
         <div class="col-6">
           <input name = "first_name" type="text" class="form-control" placeholder="First Name">
@@ -34,15 +34,16 @@
       {% if 'email' in session %}
       <input name="email" type="hidden" class="form-control" placeholder="E-mail" value="{{ session['email'] }}">
       {% else %}
-      <input name="email" type="email" class="form-control" placeholder="E-mail*" required>
+      <input name="email" type="email" class="form-control" placeholder="E-mail">
       {% endif %}
-      <select class="form-control" name="subject">
+      <select id="subject" class="form-control" name="subject">
         <option id="default_sjt" value="">Subject</option>
         <option value="professor">Request a professor</option>
         <option value="class">Request a class</option>
         <option value="bad_info">Report inaccuarate information</option>
         <option value="other">Other</option>
       </select>
+      <input id="priority" type="hidden" name="priority" value="">
       <div class="form-group">
         <textarea name="message" required class="form-control" id="new_report_body" placeholder="What would you like to say?*" rows="10"></textarea>
         <small id="emailHelp" class="form-text text-muted pl-2">*required</small>
@@ -56,6 +57,7 @@
 
 
   <!-- Optional JavaScript -->
+  <script src="{{ url_for('static', filename='contact_us.js') }}"></script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
