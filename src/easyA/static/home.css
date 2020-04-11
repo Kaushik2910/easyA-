@@ -80,7 +80,8 @@ h1 {
 }
 
 .selected {
-	background: rgba(0, 0, 0, 0.7);
+	background-color: #292929;
+	border-color: rgba(194, 194, 194, 0.3);
 	border-radius: 1rem;
 }
 
@@ -140,7 +141,7 @@ h1 {
 	}
 
 	#search_bar{
-		width: 18rem;
+		width: 16rem;
 		font-size: 1.5rem;
 	}
 
