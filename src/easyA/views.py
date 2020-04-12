@@ -138,14 +138,16 @@ def course_page(course_id, get_info=False):
             rating = 0
             rating_count = 0
             post_ref = firestore_database.collection('posts').where('course', '==', course.reference).stream()
-            for post in post_ref:
-                tempDict = post.to_dict()
-                tempDict['post_ID'] = post.id
+            if 'group' in session and session['group'] == "admin":
+                for post in post_ref:
+                    tempDict = post.to_dict()
+                    tempDict['author'] = tempDict['author'].get().id
+                    tempDict['post_ID'] = post.id
 
-                #Sum all course rating
-                rating += tempDict['rating']
-                rating_count += 1
-                if tempDict['text'] and not tempDict['text'].isspace():
+                    #Sum all course rating
+                    rating += tempDict['rating']
+                    rating_count += 1
+    
                     posts.append(tempDict)
                     #Build professors array
                     if tempDict['professor'] not in current_profs:
@@ -156,11 +158,31 @@ def course_page(course_id, get_info=False):
                     for tag in post_tags:
                         if tag and tag not in current_profs:
                             current_tags.append(tag)
+            else:
+                for post in post_ref:
+                    tempDict = post.to_dict()
+                    tempDict['post_ID'] = post.id
 
-                #Collect logged in user's posts
-                if 'email' in session and tempDict['author'] == user.reference:
-                    user_posts.append(tempDict)
+                    #Sum all course rating
+                    rating += tempDict['rating']
+                    rating_count += 1
+        
 
+                    if tempDict['text'] and not tempDict['text'].isspace():
+                        posts.append(tempDict)
+                        #Build professors array
+                        if tempDict['professor'] not in current_profs:
+                            current_profs.append(tempDict['professor'])
+
+                        #Build tags array
+                        post_tags = tempDict['tags'].split(",")
+                        for tag in post_tags:
+                            if tag and tag not in current_profs:
+                                current_tags.append(tag)
+
+                    #Collect logged in user's posts
+                    if 'email' in session and tempDict['author'] == user.reference:
+                        user_posts.append(tempDict)
 
             #Calculate average rating
             if rating_count != 0:
@@ -373,7 +395,7 @@ def delete_review():
         post_dict = post.to_dict()
 
         #Make sure the user owns the post
-        if post_dict['author'] != author.reference:
+        if post_dict['author'] != author.reference and not ('group' in session and session['group'] == "admin"):
 
             #TODO: Show error that user cannot delete this post
 
