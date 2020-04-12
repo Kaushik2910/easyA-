@@ -10,6 +10,7 @@ import json
 import time
 import datetime
 import operator
+import pyttsx3
 
 firestore_database, realtime_database, firebase_wrapper, admin_auth = db.init_db()
 auth = firebase_wrapper.auth()
@@ -715,4 +716,11 @@ def do_downvote():
 
         session['sort'] = request.form['sort']
         return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
+    return redirect(url_for('index'))
+
+@app.route('/text_to_speech',methods=['POST', 'GET'])
+def do_text_to_speech():
+    engine = pyttsx3.init()
+    engine.say('Testing')
+    engine.runAndWait()
     return redirect(url_for('index'))

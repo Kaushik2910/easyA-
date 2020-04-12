@@ -389,9 +389,10 @@
                           </p>
 
                       <div class="row">
-                          <button type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-volume-up"></span> Text To Speech
-                          </button>
+                        <form action="/text_to_speech" onsubmit="return validateRequest()" method="GET">
+                          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                          <button type="submit" class="dropdown-item text-light">Text to Speech</button>
+                        </form>
                       </div>
 
                       <!-- Tags Example-->
