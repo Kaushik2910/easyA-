@@ -334,6 +334,7 @@
                     <span> Semester:</span> {{ post['semester_taken'] }}
                     {% endif %}
                   </p>
+
                   <p class="review-body">{{ post['text'] }}</p>
 
                   <div class="row">
@@ -386,8 +387,13 @@
                             <i class="far fa-star"></i>
                             {%endfor%}
                           </p>
-                        </div>
+
+                      <div class="row">
+                          <button type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-volume-up"></span> Text To Speech
+                          </button>
                       </div>
+
                       <!-- Tags Example-->
                       <div class="container tags d-flex flex-wrap justify-content-around">
                         {% for tag in post['tags'].split(",") %}
