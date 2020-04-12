@@ -389,10 +389,19 @@
                           </p>
 
                       <div class="row">
+                        <div class="col-5 text-center">
                         <form action="/text_to_speech" onsubmit="return validateRequest()" method="GET">
                           <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                           <button type="submit" class="dropdown-item text-light">Text to Speech</button>
                         </form>
+                      </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-5 text-center">
+                          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                          <button type="submit" class="dropdown-item text-light">Transalate Text</button>
+                        </div>
                       </div>
 
                       <!-- Tags Example-->
