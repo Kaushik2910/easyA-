@@ -271,7 +271,7 @@
                       <div class="dropdown-menu dropdown-menu-right bg-warning">
                         <!-- <button class="dropdown-item" type="button">Share</button> -->
                         <!-- We have not implemented sharing posts yet (sprint 3) -->
-                        {%if post in user_posts%}
+                        {%if post in user_posts or ('group' in session and session['group'] == "admin") %}
                         <form action="{{ url_for('delete_review') }}" method="POST">
                           <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                           <button type="submit" class="dropdown-item">Delete</button>
@@ -304,9 +304,10 @@
                   </div>
                   <div class="row">
                     <div class="col-8">
-                      {% if post in user_posts %}
+                      {% if 'group' in session and session['group'] == "admin" %}
+                      <p><span>Author: {{ post['author'] }}</span></p>
+                      {% elif post in user_posts %}
                       <p><span>Your post</span></p>
-                      {% else %}
                       {% endif %}
                     </div>
                   </div>
