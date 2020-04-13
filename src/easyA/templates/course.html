@@ -390,7 +390,7 @@
 
                       <div class="row">
                         <div class="col-5 text-center">
-                        <form action="/text_to_speech" onsubmit="return validateRequest()" method="GET">
+                        <form action="/text_to_speech" onsubmit="return validateRequest()" method="POST">
                           <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                           <button type="submit" class="dropdown-item text-light">Text to Speech</button>
                         </form>

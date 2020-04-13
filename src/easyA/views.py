@@ -720,7 +720,15 @@ def do_downvote():
 
 @app.route('/text_to_speech',methods=['POST', 'GET'])
 def do_text_to_speech():
+
     engine = pyttsx3.init()
-    engine.say('Testing')
+
+    post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+
+    post_dict = post.to_dict()
+    
+    engine.say(post_dict['text'])
+    
     engine.runAndWait()
-    return redirect(url_for('index'))
+    
+    return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
