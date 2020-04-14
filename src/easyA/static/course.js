@@ -164,6 +164,10 @@ for (var i = 0; i < votes.length; i++) {
 
     });
     // console.log(votes[i].nodeType);
+    if (other_vote) {
+      other_vote[i].setAttribute('disabled', 'disabled');
+      setTimeout(function(){other_vote[i].removeAttribute('disabled');}, 500);
+    }
     votes[i].setAttribute('disabled', 'disabled');
     setTimeout(function(){votes[i].removeAttribute('disabled');}, 500);
   }
