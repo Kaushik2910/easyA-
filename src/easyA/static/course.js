@@ -113,6 +113,8 @@ var votes = document.getElementsByClassName("review-votes");
 
 for (var i = 0; i < votes.length; i++) {
   votes[i].onclick = function(){
+
+
     var num = this.innerText;
     if (this.classList.contains("voted")) {
       num--;
@@ -120,27 +122,28 @@ for (var i = 0; i < votes.length; i++) {
       num++;
     }
     var form = this.parentElement;
+    var other_vote;
     if (this.classList.contains("upvote")) {
       this.innerHTML = "<i class='fas fa-arrow-up'></i> " + num;
       form.action = "/upvote";
 
-      var other_vote = form.getElementsByClassName("downvote")[0];
+      other_vote = form.getElementsByClassName("downvote")[0];
 
       if (other_vote.classList.contains("voted")) {
         var num_next = other_vote.innerText;
         num_next--;
         other_vote.innerHTML = "<i class='fas fa-arrow-down'></i> " + num_next;
-        other_vote.classList.toggle("voted");
+        other_vote.classList.remove("voted");
       }
     } else {
       this.innerHTML = "<i class='fas fa-arrow-down'></i> " + num;
       form.action = "/downvote";
-      var other_vote = form.getElementsByClassName("upvote")[0];
+      other_vote = form.getElementsByClassName("upvote")[0];
       if (other_vote.classList.contains("voted")) {
         var num_next = other_vote.innerText;
         num_next--;
         other_vote.innerHTML = "<i class='fas fa-arrow-up'></i> " + num_next;
-        other_vote.classList.toggle("voted");
+        other_vote.classList.remove("voted");
       }
     }
 
@@ -160,6 +163,9 @@ for (var i = 0; i < votes.length; i++) {
       });
 
     });
+    // console.log(votes[i].nodeType);
+    votes[i].setAttribute('disabled', 'disabled');
+    setTimeout(function(){votes[i].removeAttribute('disabled');}, 500);
   }
 }
 
@@ -301,13 +307,13 @@ window.onscroll = function() {
     $("#logo").css("fontSize", "2rem");
     $("#review_label").show();
 
-    console.log("You scrolled down");
+    // console.log("You scrolled down");
 
   } else {
     $("#review_label").hide();
     $(".scroll_hide").show();
     $("#course_id").removeClass("id_scrolled my-0 py-0");
     $("#logo").css("fontSize", "3rem");
-    console.log("You scrolled up");
+    // console.log("You scrolled up");
   }
 };
