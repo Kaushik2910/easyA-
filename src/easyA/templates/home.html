@@ -100,10 +100,10 @@
     </form>
 
     <div id="sug_list" class="d-flex flex-column">
-      <hr class="m-0" id="sug_hr">
+      <hr class="mt-0 mx-0 mb-1" id="sug_hr">
       {% for course in course_list %}
       <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
-        <p>{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
+        <p class="m-0">{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
       </div>
       {% endfor %}
       <small id="no_class" type="button" class="btn text-danger" style="display: none;">No course found!</small>

@@ -44,7 +44,7 @@
               <hr class="m-0" id="sug_hr">
               {% for course in course_list %}
               <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
-                <p>{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
+                <p class="m-0">{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
               </div>
               {% endfor %}
               <small id="no_class" type="button" class="btn text-danger" style="display: none;">No course found!</small>
@@ -311,9 +311,9 @@
                       {% endif %}
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row mb-1">
                     <div class="col-8 professor_div">
-                      <p class="review-professor"><span>Professor:</span> {{ post['professor'] }}</p>
+                      <p class="review-professor my-0"><span>Professor:</span> {{ post['professor'] }}</p>
                       <a href="#">{{ post['professor'] }}'s Rating</a>
                     </div>
                     <div class="col text-right">
