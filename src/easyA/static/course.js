@@ -1,12 +1,10 @@
+
+var userID = document.getElementById("userID");
+
 if (userID.value == "user") {
-  if ($(window).width() <= 600) {
-    var user = document.getElementById("user");
-    user.innerHTML = "<i class='fas fa-user-circle'></i>";
-  } else {
-    var user = document.getElementById("user");
-    var fixed_user = user.innerHTML;
-    user.innerHTML =  fixed_user.replace("@purdue.edu", "");
-  }
+  var user = document.getElementById("user");
+  var fixed_user = user.innerHTML;
+  user.innerHTML =  fixed_user.replace("@purdue.edu", "");
 }
 
 function validateSearch() {
@@ -203,7 +201,7 @@ function validateSearch() {
     course += "0";
   }
   course += temp;
-  search_bar_form.action = "course/" + course;
+  search_bar_form.action = course;
 
   return true;
 }
@@ -213,7 +211,7 @@ function show_suggestions(){
   var sug_number = 0;
   var search_str = document.getElementById("search_bar").value.toUpperCase().replace(/ /g, "");
   if (search_str == null) {
-      search_str = "";
+    search_str = "";
   }
 
   var error_btn = document.getElementById("no_class");
@@ -268,7 +266,7 @@ document.addEventListener("keydown",function(e){
     for (var i = 0; i < disp_sugs.length; i++) {
       if (disp_sugs[i].classList.contains("selected")) {
         var search_bar_form = document.getElementById("search_bar_form");
-        search_bar_form.action = "course/" + disp_sugs[i].getElementsByTagName("p")[0].innerText;
+        search_bar_form.action = disp_sugs[i].getElementsByTagName("p")[0].innerText;
         search_bar_form.submit();
       }
     }
@@ -303,6 +301,7 @@ for (var i = 0; i < profs_divs.length; i++) {
   prof_name = prof_name.replace(/ /g,"+");
   profs_divs[i].getElementsByTagName("a")[0].href = rating_link + prof_name;
 }
+
 $("#review_label").hide();
 window.onscroll = function() {
   if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
@@ -321,3 +320,66 @@ window.onscroll = function() {
     // console.log("You scrolled up");
   }
 };
+
+
+var year;
+var month;
+var day;
+var date = $(".review-date");
+for (var i = 0; i < date.length; i++) {
+  console.log(date[i].innerText);
+  year = date[i].innerText.substring(0, 4);
+  switch (parseInt(date[i].innerText.substring(5, 7))) {
+    case 1:
+    month = "January";
+    break;
+    case 2:
+    month = "February";
+    break;
+    case 3:
+    month = "March";
+    break;
+    case 4:
+    month = "April";
+    break;
+    case 5:
+    month = "May";
+    break;
+    case 6:
+    month = "June";
+    break;
+    case 7:
+    month = "July";
+    break;
+    case 8:
+    month = "August";
+    break;
+    case 9:
+    month = "September";
+    break;
+    case 10:
+    month = "October";
+    break;
+    case 11:
+    month = "November";
+    break;
+    case 12:
+    month = "December";
+    break;
+  }
+  day = date[i].innerText.substring(8, 10);
+  switch (parseInt(day) % 10) {
+    case 1:
+      day +="st";
+      break;
+    case 2:
+      day +="nd";
+      break;
+    case 3:
+      day +="rd";
+      break;
+    default:
+    day +="th";
+  }
+  date[i].innerText = month + ' ' + day + ', ' + year;
+}

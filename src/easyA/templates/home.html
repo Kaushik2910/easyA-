@@ -16,11 +16,10 @@
 </head>
 
 <body>
-  <small class="form-text pr-3 text-right"><a class="text-muted" href="{{ url_for('contact_admin') }}">Contact Us</a></small>
   <div id="buttons" class="d-flex log_in justify-content-end pt-2 px-2 align-items-start">
     {% if 'email' in session %}
     <div class="btn-group">
-      <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown"
+      <button id="user" type="button" class="btn btn-outline-warning mr-2 mt-2" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
       {% if session['group'] == 'banned' %}
         {{ session['email'] }} - BANNED
@@ -32,7 +31,8 @@
     </button>
     <div class="dropdown-menu pull-right">
       <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
-      <a class="dropdown-item" onclick="window.location.href = '{{ url_for('signout') }}';">Log Out</a>
+      <a class="dropdown-item" href="{{ url_for('signout') }}">Log Out</a>
+      <a class="dropdown-item" href="{{ url_for('contact_admin') }}">Contact Us</a>
     </div>
   </div>
   {% else %}

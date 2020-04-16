@@ -20,8 +20,6 @@
   <div id="class-header">
 
     <div class="container mb-0">
-      <small class="form-text pr-3 text-right"><a class="text-muted" href="{{ url_for('contact_admin') }}">Contact Us</a></small>
-
       <div id="row1" class="d-flex align-self-center justify-content-between mb-3">
         <div>
           <div class="text-center">
@@ -43,7 +41,7 @@
             <div id="sug_list" class="d-flex flex-column">
               <hr class="m-0" id="sug_hr">
               {% for course in course_list %}
-              <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = 'course/{{ course['course_id'] }}';">
+              <div class="d-flex justify-content-between btn suggestion" onclick="window.location.href = '{{ course['course_id'] }}';">
                 <p class="m-0">{{ course['course_id'] }}</p><small class="text-muted">{{ course['post_count'] }} reviews</small>
               </div>
               {% endfor %}
@@ -57,195 +55,342 @@
           {% if 'email' in session %}
           <input id="userID" type="text" name="" hidden value="user">
           <div class="btn-group">
-            <button id="user" type="button" class="btn btn-outline-warning mx-2" data-toggle="dropdown"
+            <button id="user" type="button" class="btn btn-outline-warning mr-2" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
-            {% if session['group'] == 'banned' %}
-                {{ session['email'] }} - BANNED
-            {% elif session['group'] == 'admin' %}
-                {{ session['email'] }} - ADMIN
-            {% else %}
-                {{ session['email'] }}
-            {% endif %}
-            </button>
-            <div class="dropdown-menu pull-right">
-              <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
-              <a class="dropdown-item" onclick="window.location.href = '{{ url_for('signout') }}';">Log
-                Out</a>
-              </div>
-            </div>
-            {% else %}
-            <input id="userID" type="text" name="" hidden value="guest">
-            <button id="login_check2" type="submit" class="btn btn-outline-light mx-2 scrolled scroll_hide" data-toggle="modal"
-            data-target="#myModal">Log in</button>
-            <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
-            class="btn btn-outline-warning mx-2 scrolled scroll_hide">Sign up</button>
-            {% endif %}
+            <span class="d-none d-md-inline">
+              {% if session['group'] == 'banned' %}
+              {{ session['email'] }} - BANNED
+              {% elif session['group'] == 'admin' %}
+              {{ session['email'] }} - ADMIN
+              {% else %}
+              {{ session['email'] }}
+              {% endif %}
+            </span>
+          </button>
+          <div class="dropdown-menu pull-right">
+            <a class="dropdown-item" href="{{ url_for('reset_pwd') }}">Password Change</a>
+            <a class="dropdown-item" href="{{ url_for('signout') }}">Log Out</a>
+            <a class="dropdown-item" href="{{ url_for('contact_admin') }}">Contact Us</a>
+          </div>
+        </div>
+        {% else %}
+        <input id="userID" type="text" name="" hidden value="guest">
+        <button id="login_check2" type="submit" class="btn btn-outline-light mx-2 scrolled scroll_hide" data-toggle="modal"
+        data-target="#myModal">Log in</button>
+        <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
+        class="btn btn-outline-warning mx-2 scrolled scroll_hide">Sign up</button>
+        {% endif %}
 
-            <div class="modal fade" id="myModal" role="dialog">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Login</h5>
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+              </div>
+              <div class="modal-body">
+                <form action="{{ url_for('login') }}" method="POST">
+                  <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
+                  <div class="form-group mb-4">
+                    <input name="u_email" type="email" class="form-control"
+                    aria-describedby="emailHelp" placeholder="Enter email" autocomplete="on">
                   </div>
-                  <div class="modal-body">
-                    <form action="{{ url_for('login') }}" method="POST">
-                      <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
-                      <div class="form-group mb-4">
-                        <input name="u_email" type="email" class="form-control"
-                        aria-describedby="emailHelp" placeholder="Enter email" autocomplete="on">
-                      </div>
-                      <div class="form-group">
-                        <input name="u_password" type="password" class="form-control" id="pwd"
-                        placeholder="Password" autocomplete="on">
-                        <small id="pwdHelp" class="form-text text-muted pl-2"></small>
-                        <small class="form-text text-muted pl-2 text-right"><a
-                          href="/forgot_pwd">Forgot password?</a></small>
-                        </div>
-                        <div id="log_in" class="d-flex justify-content-center text-center">
-                          <p style="color:white">Do not have an account? <a href="/signup">Sign
-                            Up!</a></p>
-                          </div>
-                          <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-warning">Log in</button>
-                          </div>
-                        </form>
-                      </div>
+                  <div class="form-group">
+                    <input name="u_password" type="password" class="form-control" id="pwd"
+                    placeholder="Password" autocomplete="on">
+                    <small id="pwdHelp" class="form-text text-muted pl-2"></small>
+                    <small class="form-text text-muted pl-2 text-right"><a
+                      href="/forgot_pwd">Forgot password?</a></small>
                     </div>
+                    <div id="log_in" class="d-flex justify-content-center text-center">
+                      <p style="color:white">Do not have an account? <a href="/signup">Sign
+                        Up!</a></p>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-warning">Log in</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
-            <div id='row2' class="row">
-              <div class="col-6">
-                <div class="container d-flex flex-column text-right">
-                  <h1 class="scrolled" id="course_id">{{ course_id }}</h1>
-                  <div id="rating" class="scroll_hide scrolled">
-                    <h3>
-                      {%for i in range(0, rating)%}
-                      <i class="fas fa-star"></i>
-                      {%endfor%}
-                      {%for i in range(0, (5 - rating))%}
-                      <i class="far fa-star"></i>
-                      {%endfor%}
-                    </h3>
-                    <h4>Based on {{ rating_count }} ratings.</h4>
-                  </div>
-                </div>
+          </div>
+        </div>
+        <div id='row2' class="row">
+          <div class="col-6">
+            <div class="container d-flex flex-column text-right">
+              <h1 class="scrolled" id="course_id">{{ course_id }}</h1>
+              <div id="rating" class="scroll_hide scrolled">
+                <h3>
+                  {%for i in range(0, rating)%}
+                  <i class="fas fa-star"></i>
+                  {%endfor%}
+                  {%for i in range(0, (5 - rating))%}
+                  <i class="far fa-star"></i>
+                  {%endfor%}
+                </h3>
+                <h4>Based on {{ rating_count }} ratings.</h4>
               </div>
-              <div class="col-6 flex-column d-flex align-items-end m-0">
-                <div class="scroll_hide scrolled">
-                  <h2 class="align-bottom">{{ course_name }}</h2>
-                  <p class="align-bottom">{{ description }}</p>
-                </div>
+            </div>
+          </div>
+          <div class="col-6 flex-column d-flex align-items-end m-0">
+            <div class="scroll_hide scrolled">
+              <h2 class="align-bottom">{{ course_name }}</h2>
+              <p class="align-bottom">{{ description }}</p>
+            </div>
+            {% if 'email' in session %}
+            <!-- You show the logged in user button -->
+            <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light">
+              Write a review
+            </button>
+            {% else %}
+            <!-- You show the unlogged in user button -->
+            <!-- The popup log in should be here -->
+            <button id="review_button" type="submit" class="btn btn-light" data-toggle="modal" data-target="#myModal">
+              Write a review
+            </button>
+            {% endif %}
+          </div>
+        </div>
+        <!-- <div id='row3' class="row">
+        <div class="col-6 text-right">
+
+      </div>
+      <div class="col-6">
+
+    </div>
+
+  </div> -->
+  <div id='row4' class="row">
+    <p id="review_label" class="align-bottom m-0 p-0 text-muted scrolled">Student Reviews</p>
+    <div id="filter" class="scroll_hide scrolled">
+      <div class="btn-group">
+        <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
+        <div id="sort_options" class="dropdown-menu bg-warning text-light">
+          <form id="sort_form" class="d-none" action="/course/{{course_id}}" method="POST">
+            <input id="sort_input" name="sort" type="hidden" value=""></input>
+          </form>
+          <small>Chronological</small>
+          <button id="chronological_new" type="button"
+          class="dropdown-item sort_btn text-light">Newest Posts</button>
+          <button id="chronological_old" type="button"
+          class="dropdown-item sort_btn text-light">Oldest Posts</button>
+          <div class="dropdown-divider"></div>
+          <small>Upvotes</small>
+          <button id="most_upvotes" type="button" class="dropdown-item sort_btn text-light">Most
+            Upvotes</button>
+            <button id="least_upvotes" type="button" class="dropdown-item sort_btn text-light">Least
+              Upvotes</button>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
+            <div class="dropdown-menu bg-warning text-light">
+              {% for professor in current_profs %}
+              <input class="prof_check filter_check" type="checkbox" value="{{ professor }}">
+              {{ professor }}</input>
+              <br>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
+            <div class="dropdown-menu bg-warning text-light">
+              {% for tag in current_tags %}
+              <input class="tag_check filter_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
+              <br>
+              {% endfor %}
+            </div>
+          </div>
+          <input id="text_search" type="text" class="form-control d-inline" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search for an specific review">
+
+
+
+          <!-- <div class="input-group mb-3"> </div> -->
+
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <ul>
+    {%for post in user_posts%}
+    {%if not post['text'] or post['text'].isspace()%}
+    <li class="review_li">
+      <div class="container review">
+        <div class="d-flex justify-content-end">
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-right bg-warning">
+              <!-- <button class="dropdown-item" type="button">Share</button> -->
+              <!-- We have not implemented sharing posts yet (sprint 3) -->
+              <form action="{{ url_for('delete_review') }}" method="POST">
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="dropdown-item">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <p id="user_post"><span>Your empty post</span></p>
+          </div>
+          <div class="col text-right">
+            <small class="review-date text-right text-muted">{{ post['posted_date'] }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-right">
+            <p class="text-right">
+              {%for i in range(0, post['rating'])%}
+              <i class="fas fa-star"></i>
+              {%endfor%}
+              {%for i in range(0, (5 - post['rating']))%}
+              <i class="far fa-star"></i>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
+      </div>
+    </li>
+    {%endif%}
+    {%endfor%}
+
+    {%for post in posts%}
+    <li class="review_li">
+      <div class="container review">
+
+        <div class="row">
+          <div class="col-8">
+            {% if 'group' in session and session['group'] == "admin" %}
+            <p><span>Author: {{ post['author'] }}</span></p>
+            {% elif post in user_posts %}
+            <p><span>Your post</span></p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-7 professor_div">
+            <p class="review-professor my-0"><span>Professor:</span> {{ post['professor'] }}</p>
+            <a href="#">{{ post['professor'] }}'s Rating</a>
+          </div>
+          <div class="col-4 text-right">
+            <small class="review-date text-right text-muted">{{ post['posted_date'] }}</small>
+          </div>
+          <div class="col-1">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm text_fucntion_btn dropdown-toggle" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"></button>
+              <div class="dropdown-menu dropdown-menu-right bg-warning">
+                <!-- <button class="dropdown-item" type="button">Share</button> -->
+                <!-- We have not implemented sharing posts yet (sprint 3) -->
+                {%if post in user_posts or ('group' in session and session['group'] == "admin") %}
+                <form action="{{ url_for('delete_review') }}" method="POST">
+                  <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                  <button type="submit" class="dropdown-item">Delete</button>
+                </form>
+                {%else%}
                 {% if 'email' in session %}
                 <!-- You show the logged in user button -->
-                <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light">
-                  Write a review
-                </button>
+                <form action="{{ url_for('contact') }}" onsubmit="return validateRequest()" method="POST">
+                  <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                  <button type="submit" class="dropdown-item text-light">Contact</button>
+                </form>
+                <form action="{{ url_for('report') }}" onsubmit="return validateRequest()" method="POST">
+                  <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                  <button type="submit" class="dropdown-item text-light">Report</button>
+                </form>
                 {% else %}
                 <!-- You show the unlogged in user button -->
                 <!-- The popup log in should be here -->
-                <button id="review_button" type="submit" class="btn btn-light" data-toggle="modal" data-target="#myModal">
-                  Write a review
-                </button>
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="dropdown-item text-light" data-toggle="modal"
+                data-target="#myModal">Contact</button>
+
+                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+                <button type="submit" class="dropdown-item text-light" data-toggle="modal"
+                data-target="#myModal">Report</button>
+                {% endif %}
+                {%endif%}
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="review-tags">
+          {% if post['attendance'] %}
+          <span> Attendance:</span> {{ post['attendance'] }}
+          {% endif %}
+          {% if post['grade'] %}
+          <span> Grade:</span> {{ post['grade'] }}
+          {% endif %}
+          {% if post['textbook'] %}
+          <span> Textbook:</span> {{ post['textbook'] }}
+          {% endif %}
+          {% if post['semester_taken']%}
+          <span> Semester:</span> {{ post['semester_taken'] }}
+          {% endif %}
+        </p>
+
+        <p class="review-body">{{ post['text'] }}</p>
+        <div class="d-flex flex-row-reverse">
+          <form id="text_to_speech" action="/text_to_speech" onsubmit="return validateRequest()" method="POST">
+            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+            <button type="submit" class="btn text_fucntion_btn"><i class="fas fa-volume-up"></i></button>
+          </form>
+
+          <form id="translae_text" action="/translae_text" onsubmit="return validateRequest()" method="POST">
+            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+            <button type="submit" class="btn text_fucntion_btn"><i class="fas fa-language"></i></button>
+          </form>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            {% if 'email' in session %}
+            <!-- Upvoting/Downvoting is here -->
+            <form action="" method="POST">
+              <input class="vote_input" name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+              <input class="sort_input" name="sort" type="hidden" value="{{ sort_value }}"></input>
+              {% if post['post_ID'] in upvoted %}
+              <!-- Show bright upvotes-->
+              <button type="submit" name="button" class="voted review-votes upvote mx-2">
+                <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
+              </button>
+              {% else %}
+              <!-- Default color-->
+              <button type="submit" name="button" class="review-votes upvote mx-2">
+                <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
+              </button>
+              {% endif %}
+
+              {% if post['post_ID'] in downvoted %}
+              <!-- Show bright downvotes-->
+              <button type="submit" name="button" class="voted review-votes downvote mx-2">
+                <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
+              </button>
+              {% else %}
+              <!-- Default color-->
+              <button type="submit" name="button" class="review-votes downvote mx-2">
+                <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
+              </button>
+              {% endif %}
+            </form>
+
+            {% else %}
+            <button type="button" name="button" class="upvote mx-2"><i class="fas fa-arrow-up"
+              data-toggle="modal" data-target="#myModal"></i>{{ post['upvotes'] }}</button>
+              <button type="button" name="button" class="downvote mx-2"><i
+                class="fas fa-arrow-down" data-toggle="modal"
+                data-target="#myModal"></i>{{ post['downvotes'] }}</button>
                 {% endif %}
               </div>
-            </div>
-            <!-- <div id='row3' class="row">
-            <div class="col-6 text-right">
+              <div class="col-6 text-right">
 
-          </div>
-          <div class="col-6">
-
-        </div>
-
-      </div> -->
-      <div id='row4' class="row">
-        <p id="review_label" class="align-bottom m-0 p-0 text-muted scrolled">Student Reviews</p>
-        <div id="filter" class="scroll_hide scrolled">
-          <div class="btn-group">
-            <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
-            <div id="sort_options" class="dropdown-menu bg-warning text-light">
-              <form id="sort_form" class="d-none" action="/course/{{course_id}}" method="POST">
-                <input id="sort_input" name="sort" type="hidden" value=""></input>
-              </form>
-              <small>Chronological</small>
-              <button id="chronological_new" type="button"
-              class="dropdown-item sort_btn text-light">Newest Posts</button>
-              <button id="chronological_old" type="button"
-              class="dropdown-item sort_btn text-light">Oldest Posts</button>
-              <div class="dropdown-divider"></div>
-              <small>Upvotes</small>
-              <button id="most_upvotes" type="button" class="dropdown-item sort_btn text-light">Most
-                Upvotes</button>
-                <button id="least_upvotes" type="button" class="dropdown-item sort_btn text-light">Least
-                  Upvotes</button>
-                </div>
-              </div>
-
-              <div class="btn-group">
-                <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
-                <div class="dropdown-menu bg-warning text-light">
-                  {% for professor in current_profs %}
-                  <input class="prof_check filter_check" type="checkbox" value="{{ professor }}">
-                  {{ professor }}</input>
-                  <br>
-                  {% endfor %}
-                </div>
-              </div>
-
-              <div class="btn-group">
-                <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
-                <div class="dropdown-menu bg-warning text-light">
-                  {% for tag in current_tags %}
-                  <input class="tag_check filter_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
-                  <br>
-                  {% endfor %}
-                </div>
-              </div>
-              <input id="text_search" type="text" class="form-control d-inline" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search for an specific review">
-
-
-
-              <!-- <div class="input-group mb-3"> </div> -->
-
-            </div>
-          </div>
-        </div>
-        <hr>
-      </div>
-      <ul>
-        {%for post in user_posts%}
-        {%if not post['text'] or post['text'].isspace()%}
-        <li class="review_li">
-          <div class="container review">
-            <div class="d-flex justify-content-end">
-              <div class="btn-group">
-                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"></button>
-                <div class="dropdown-menu dropdown-menu-right bg-warning">
-                  <!-- <button class="dropdown-item" type="button">Share</button> -->
-                  <!-- We have not implemented sharing posts yet (sprint 3) -->
-                  <form action="{{ url_for('delete_review') }}" method="POST">
-                    <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                    <button type="submit" class="dropdown-item">Delete</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-8">
-                <p id="user_post"><span>Your empty post</span></p>
-              </div>
-              <div class="col text-right">
-                <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-right">
                 <p class="text-right">
                   {%for i in range(0, post['rating'])%}
                   <i class="fas fa-star"></i>
@@ -255,181 +400,37 @@
                   {%endfor%}
                 </p>
               </div>
+
+
+
+              <!-- Tags Example-->
+              <div class="container tags d-flex flex-wrap justify-content-around">
+                {% for tag in post['tags'].split(",") %}
+                {% if tag %}
+                <p class="text-warning review_tag">{{ tag }}</p>
+                {% endif %}
+                {% endfor %}
+              </div>
             </div>
-          </div>
-        </li>
-        {%endif%}
-        {%endfor%}
+          </li>
+          {%endfor%}
+        </ul>
+        <!-- Optional JavaScript -->
+        <script src="{{ url_for('static', filename='course.js') }}"></script>
+        <script type="text/javascript">show_suggestions()</script>
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" 
+        ntegrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+      </body>
 
-              {%for post in posts%}
-              <li class="review_li">
-                <div class="container review">
-                  <div class="d-flex justify-content-end">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false"></button>
-                      <div class="dropdown-menu dropdown-menu-right bg-warning">
-                        <!-- <button class="dropdown-item" type="button">Share</button> -->
-                        <!-- We have not implemented sharing posts yet (sprint 3) -->
-                        {%if post in user_posts or ('group' in session and session['group'] == "admin") %}
-                        <form action="{{ url_for('delete_review') }}" method="POST">
-                          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                          <button type="submit" class="dropdown-item">Delete</button>
-                        </form>
-                        {%else%}
-                        {% if 'email' in session %}
-                        <!-- You show the logged in user button -->
-                        <form action="{{ url_for('contact') }}" onsubmit="return validateRequest()" method="POST">
-                          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                          <button type="submit" class="dropdown-item text-light">Contact</button>
-                        </form>
-                        <form action="{{ url_for('report') }}" onsubmit="return validateRequest()" method="POST">
-                          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                          <button type="submit" class="dropdown-item text-light">Report</button>
-                        </form>
-                        {% else %}
-                        <!-- You show the unlogged in user button -->
-                        <!-- The popup log in should be here -->
-                        <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                        <button type="submit" class="dropdown-item text-light" data-toggle="modal"
-                        data-target="#myModal">Contact</button>
-
-                        <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                        <button type="submit" class="dropdown-item text-light" data-toggle="modal"
-                        data-target="#myModal">Report</button>
-                        {% endif %}
-                        {%endif%}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-8">
-                      {% if 'group' in session and session['group'] == "admin" %}
-                      <p><span>Author: {{ post['author'] }}</span></p>
-                      {% elif post in user_posts %}
-                      <p><span>Your post</span></p>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <div class="row mb-1">
-                    <div class="col-8 professor_div">
-                      <p class="review-professor my-0"><span>Professor:</span> {{ post['professor'] }}</p>
-                      <a href="#">{{ post['professor'] }}'s Rating</a>
-                    </div>
-                    <div class="col text-right">
-                      <p class="review-date text-right"><span>{{ post['posted_date'] }}</span></p>
-                    </div>
-                  </div>
-                  <p class="review-tags">
-                    {% if post['attendance'] %}
-                    <span> Attendance:</span> {{ post['attendance'] }}
-                    {% endif %}
-                    {% if post['grade'] %}
-                    <span> Grade:</span> {{ post['grade'] }}
-                    {% endif %}
-                    {% if post['textbook'] %}
-                    <span> Textbook:</span> {{ post['textbook'] }}
-                    {% endif %}
-                    {% if post['semester_taken']%}
-                    <span> Semester:</span> {{ post['semester_taken'] }}
-                    {% endif %}
-                  </p>
-
-                  <p class="review-body">{{ post['text'] }}</p>
-
-                  <div class="row">
-                    <div class="col-6">
-                      {% if 'email' in session %}
-                      <!-- Upvoting/Downvoting is here -->
-                      <form action="" method="POST">
-                        <input class="vote_input" name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                        <input class="sort_input" name="sort" type="hidden" value="{{ sort_value }}"></input>
-                        {% if post['post_ID'] in upvoted %}
-                        <!-- Show bright upvotes-->
-                        <button type="submit" name="button" class="voted review-votes upvote mx-2">
-                          <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
-                        </button>
-                        {% else %}
-                        <!-- Default color-->
-                        <button type="submit" name="button" class="review-votes upvote mx-2">
-                          <i class="fas fa-arrow-up"></i> {{ post['upvotes'] }}
-                        </button>
-                        {% endif %}
-
-                        {% if post['post_ID'] in downvoted %}
-                        <!-- Show bright downvotes-->
-                        <button type="submit" name="button" class="voted review-votes downvote mx-2">
-                          <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
-                        </button>
-                        {% else %}
-                        <!-- Default color-->
-                        <button type="submit" name="button" class="review-votes downvote mx-2">
-                          <i class="fas fa-arrow-down"></i> {{ post['downvotes'] }}
-                        </button>
-                        {% endif %}
-                      </form>
-
-                      {% else %}
-                      <button type="button" name="button" class="upvote mx-2"><i class="fas fa-arrow-up"
-                        data-toggle="modal" data-target="#myModal"></i>{{ post['upvotes'] }}</button>
-                        <button type="button" name="button" class="downvote mx-2"><i
-                          class="fas fa-arrow-down" data-toggle="modal"
-                          data-target="#myModal"></i>{{ post['downvotes'] }}</button>
-                          {% endif %}
-                        </div>
-                        <div class="col-6 text-right">
-
-                          <p class="text-right">
-                            {%for i in range(0, post['rating'])%}
-                            <i class="fas fa-star"></i>
-                            {%endfor%}
-                            {%for i in range(0, (5 - post['rating']))%}
-                            <i class="far fa-star"></i>
-                            {%endfor%}
-                          </p>
-
-                      <div class="row">
-                        <div class="col-5 text-center">
-                        <form action="/text_to_speech" onsubmit="return validateRequest()" method="POST">
-                          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                          <button type="submit" class="dropdown-item text-light">Text to Speech</button>
-                        </form>
-                      </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-5 text-center">
-                          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                          <button type="submit" class="dropdown-item text-light">Transalate Text</button>
-                        </div>
-                      </div>
-
-                      <!-- Tags Example-->
-                      <div class="container tags d-flex flex-wrap justify-content-around">
-                        {% for tag in post['tags'].split(",") %}
-                        {% if tag %}
-                        <p class="text-warning review_tag">{{ tag }}</p>
-                        {% endif %}
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </li>
-                  {%endfor%}
-                </ul>
-                <!-- Optional JavaScript -->
-                <script src="{{ url_for('static', filename='course.js') }}"></script>
-                <script type="text/javascript">show_suggestions()</script>
-                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-                <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                crossorigin="anonymous"></script> -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-              </body>
-
-        </html>
+      </html>

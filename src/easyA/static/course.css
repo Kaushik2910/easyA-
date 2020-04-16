@@ -47,8 +47,9 @@ body {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
 #suggestions{
-	margin: 0 auto;
+
 	width: 80%;
 	border-radius: 1rem;
 	background: rgba(0, 0, 0, 0.3);
@@ -85,6 +86,10 @@ body {
 	border-color: #c2c2c2 !important;
 }
 
+#suggestions p{
+	color: rgba(194, 194, 194, 0.8);
+}
+
 input[type="text"]::placeholder{
 	color: #8E8E8E;
 }
@@ -102,138 +107,10 @@ input, button{
 	text-decoration: underline;
 }
 
-
-
-
-/* start */
-/* .tb
-{
-    display: table;
-    width: 100%;
+.text_fucntion_btn:hover{
+	color: white;
 }
 
-.td
-{
-    display: table-cell;
-    vertical-align: middle;
-}
-
-
-#cover
-{
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    position: relative;
-    padding: 1px;
-    background-color: #F5F5F5;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px #EBEBEB, 0 0 0 20px #8E8E8E;
-    transform: scale(0.6);
-}
-
-
-input[type="text"]::placeholder{
-    color: #8E8E8E;
-}
-
-#s-cover
-{
-    width: 1px;
-    padding-left: 35px;
-}
-
-#submit_btn
-{
-    position: relative;
-    display: block;
-    width: 84px;
-    height: 60px;
-    cursor: pointer;
-}
-
-#s-circle
-{
-    position: relative;
-    top: -8px;
-    left: 0;
-    width: 40px;
-    height: 40px;
-    margin-top: 0;
-    border-width: 10px;
-    border: 10px solid #FBB03B;
-    background-color: transparent;
-    border-radius: 50%;
-    transition: 0.5s ease all;
-}
-
-button span
-{
-    position: absolute;
-    top: 35px;
-    left: 17px;
-    display: block;
-    width: 45px;
-    height: 15px;
-    background-color: transparent;
-    border-radius: 10px;
-    transform: rotateZ(52deg);
-    transition: 0.5s ease all;
-}
-
-button span:before, button span:after
-{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 35px;
-    height: 12px;
-    background-color: #FBB03B;
-    border-radius: 10px;
-    transform: rotateZ(0);
-    transition: 0.5s ease all;
-}
-
-#s-cover:hover #s-circle
-{
-    top: -1px;
-    width: 67px;
-    height: 15px;
-    border-width: 0;
-    background-color: #FBB03B;
-    border-radius: 20px;
-}
-
-#s-cover:hover span
-{
-    top: 50%;
-    left: 56px;
-    width: 25px;
-    margin-top: -9px;
-    transform: rotateZ(0);
-}
-
-#s-cover:hover button span:before
-{
-    bottom: 11px;
-    transform: rotateZ(52deg);
-}
-
-#s-cover:hover button span:after
-{
-    bottom: -11px;
-    transform: rotateZ(-52deg);
-}
-#s-cover:hover button span:before, #s-cover:hover button span:after
-{
-    right: -6px;
-    width: 40px;
-    background-color: #FBB03B;
-} */
-
-/* end */
 
 
 #class-header {
@@ -351,6 +228,19 @@ ul {
 
 
 @media screen and (min-width: 601px) {
+	#suggestions{
+		margin-top: 1.5rem;
+	}
+	#login_check2{
+		margin-top: 1.5rem;
+	}
+	#login_check3{
+		margin-top: 1.5rem;
+	}
+	#user{
+		margin-top: 1.5rem;
+	}
+
 	#logo_phone{
 		display: none;
 	}
@@ -364,4 +254,12 @@ ul {
 .scrolled{
 	transition-duration: .3s;
 	transition-timing-function: ease;
+}
+
+.selected {
+	background-color: #292929;
+}
+
+.selected p{
+	color: white !important;
 }
