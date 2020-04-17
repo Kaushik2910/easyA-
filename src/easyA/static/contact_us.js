@@ -21,7 +21,8 @@ function isAnonymous() {
   }
 }
 
-function getPriority() {
+function validateForm() {
   getPriority();
   isAnonymous();
+  return true;
 }
