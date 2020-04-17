@@ -18,24 +18,16 @@
     <div class="d-flex justify-content-center">
       <a href="{{ url_for('index') }}" id="logo">easy<span>A</span></a>
     </div>
-    <hr>
   </div>
 
+  <hr>
+
   <div id="new_msg" class="container">
-    <form action="{{ url_for('post_contact_admin') }}" method="POST" onsubmit="getPriority()">
-      <div class="form-row">
-        <div class="col-6">
-          <input name = "first_name" type="text" class="form-control" placeholder="First Name">
-        </div>
-        <div class="col-6">
-          <input name="last_name" type="text" class="form-control" placeholder="Last Name">
-        </div>
-      </div>
-      {% if 'email' in session %}
-      <input name="email" type="hidden" class="form-control" placeholder="E-mail" value="{{ session['email'] }}">
-      {% else %}
-      <input name="email" type="email" class="form-control" placeholder="E-mail">
-      {% endif %}
+
+    <form action="{{ url_for('post_contact_admin') }}" method="POST" onsubmit="validateForm()">
+      <input id="email" name="email" type="hidden" class="form-control" placeholder="E-mail" value="{{ session['email'] }}">
+
+      <input id="priority" type="hidden" name="priority" value="">
       <select id="subject" class="form-control" name="subject">
         <option id="default_sjt" value="">Subject</option>
         <option value="professor">Request a professor</option>
@@ -43,11 +35,17 @@
         <option value="bad_info">Report inaccuarate information</option>
         <option value="other">Other</option>
       </select>
-      <input id="priority" type="hidden" name="priority" value="">
-      <div class="form-group">
+
+      <div class="form-group mt-2">
         <textarea name="message" required class="form-control" id="new_report_body" placeholder="What would you like to say?*" rows="10"></textarea>
         <small id="emailHelp" class="form-text text-muted pl-2">*required</small>
       </div>
+
+      <div class="d-flex flex-column flex-md-row align-items-md-end">
+        <button id="anon_btn" type="button" class="btn btn-outline-light m-1" data-toggle="button" aria-pressed="false" autocomplete="off">Private</button>
+        <small class="text-muted mb-2">Private messages are completly anonymous</small>
+      </div>
+
       <div class="d-flex justify-content-end">
         <button type="button" name="button" class="cancel-btn m-2">Go back</button>
         <button type="submit" class="btn btn-warning m-2">Send</button>

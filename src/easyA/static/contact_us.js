@@ -12,3 +12,15 @@ function getPriority() {
       priority.value = "low";
   }
 }
+
+function isAnonymous() {
+  var anon_btn = document.getElementById("anon_btn");
+  var email = document.getElementById("email");
+  if (anon_btn.classList.contains("active")) {
+    email.value = "";
+  }
+}
+
+function getPriority() {
+  getPriority();
+}
