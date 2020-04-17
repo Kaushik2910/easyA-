@@ -287,6 +287,11 @@ def post_report():
             "report_count": int(report_count)
         })
 
+        if report_count > 5:
+            message_body = "The report count for the post exceeded the specified limit:\n\n" + "Post ID: " + request.form['post_ID']
+            msg = Message(body=message_body, subject="Admin: Post report limit exceeded!!!", recipients=['easyApurdue@gmail.com'])
+            mail.send(msg)
+
         #Add the report to the database
         firestore_database.collection('reports').add(data)
 
