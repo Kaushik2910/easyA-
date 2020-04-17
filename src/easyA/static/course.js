@@ -309,12 +309,14 @@ window.onscroll = function() {
     $("#course_id").addClass("id_scrolled my-0 py-0");
     $("#logo").css("fontSize", "2rem");
     $("#review_label").show();
+    $("#text_search").hide();
 
     // console.log("You scrolled down");
 
   } else {
     $("#review_label").hide();
     $(".scroll_hide").show();
+    $("#text_search").show();
     $("#course_id").removeClass("id_scrolled my-0 py-0");
     $("#logo").css("fontSize", "3rem");
     // console.log("You scrolled up");

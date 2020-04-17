@@ -12,6 +12,17 @@ body {
     outline: none;
 }
 
+.review_li:nth-of-type(even) .prof_ratinng{
+	text-decoration: underline;
+	color: white;
+	text-shadow: 2px 2px 5px #fbb03b;
+}
+
+.review_li:nth-of-type(odd) .prof_ratinng{
+	text-decoration: underline;
+	color: #fbb03b;
+}
+
 #logo { /* easy */
 	font-family: STHeitiTC-Medium;
 	font-size: 3rem;
@@ -21,13 +32,13 @@ body {
 #logo span {
 	font-family: Noteworthy-Bold;
 	font-size: 110%;
-	color:#fbb03b;
+	color: #fbb03b;
 }
 
 #logo_phone { /* easy */
 	font-family: STHeitiTC-Medium;
 	font-size: 2rem;
-	color:#ffffff;
+	color: #ffffff;
 }
 
 #logo_phone span {
@@ -102,11 +113,6 @@ input, button{
     background-color: transparent;
 }
 
-.professor_div a{
-	color: white;
-	text-decoration: underline;
-}
-
 .text_fucntion_btn:hover{
 	color: white;
 }
@@ -134,7 +140,7 @@ hr {
 	box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
 	margin-bottom: -8px;
 }
-ul {
+#reviews_ul {
 	margin-top: 400px;
 }
 
@@ -166,7 +172,7 @@ ul {
 
 #review_button{
 	margin: auto;
-	color: #292929 !important;
+	/* color: #292929 !important; */
 	outline-color: #E08F4C;
 	background-color: #FBB03B;
 	border-color: #E08F4C;
@@ -177,19 +183,17 @@ ul {
 	outline: 0pt;
 }
 
-/* #row3 .btn:o{
-	color:292929;
-	background-color: #FBB03B;
-	border-color: #E08F4C;
-} */
-
-#row4, #row4 .btn {
+#row3, #row3 .btn {
 	color: rgba(235,235,235, .7);
 }
 
 
-#row4 .btn:hover {
+#row3 .btn:hover {
 	color: white;
+}
+
+#row3flex {
+	width: 100%
 }
 
 
@@ -212,14 +216,16 @@ ul {
 	color: white;
 }
 
-.modal-dialog{
-	height: 65%;
+
+#myModal{
+	top: 15%;
 }
 
 .modal-content{
-	height: 65%;
 	background-color: #292929;
+	border-radius: 1.5rem;
 }
+
 @media screen and (max-width: 600px) {
 	#logo{
 		display: none;
@@ -264,7 +270,7 @@ ul {
 	color: white !important;
 }
 
-.dropdown-toggle {
+#reviews_ul .dropdown-toggle {
 	padding-top: 0;
 	height: 0;
 }

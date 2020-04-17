@@ -1,15 +1,11 @@
-.modal-dialog{
-	height: 65%;
+#myModal{
+	top: 15%;
 }
 
 .modal-content{
-	height: 65%;
 	background-color: #292929;
+	border-radius: 1.5rem;
 }
-
-
-
-
 
 #a {
 	font-family: Noteworthy-Bold;
