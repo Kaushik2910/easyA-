@@ -23,4 +23,5 @@ function isAnonymous() {
 
 function getPriority() {
   getPriority();
+  isAnonymous();
 }
