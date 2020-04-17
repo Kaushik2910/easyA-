@@ -112,7 +112,8 @@ hr {
 	font-family: 'Poppins', sans-serif;
 }
 
-#row2 h1{
+#row2 h1, #row1 h1 {
+	font-family: 'Poppins', sans-serif;
 	font-weight: bold;
 	font-size: 4rem;
 }
@@ -124,8 +125,7 @@ hr {
 }
 
 #new_review {
-	margin-top: 18rem;
-	margin-bottom: 18rem;
+	margin: 16rem auto;
 }
 
 #new_review h2{
@@ -166,6 +166,7 @@ hr {
 
 #new_review_rating{
 	font-size: 2rem;
+	display: inline-block
 }
 
 .prof_suggestion{
@@ -195,6 +196,9 @@ hr {
 	}
 	#new_review h2{
 		font-size: 1.3rem;
+	}
+	#row1 h1{
+		font-size: 3rem;
 	}
 }
 @media screen and (min-width: 600px) {

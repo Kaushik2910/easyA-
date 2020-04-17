@@ -327,7 +327,6 @@ var month;
 var day;
 var date = $(".review-date");
 for (var i = 0; i < date.length; i++) {
-  console.log(date[i].innerText);
   year = date[i].innerText.substring(0, 4);
   switch (parseInt(date[i].innerText.substring(5, 7))) {
     case 1:
@@ -383,3 +382,14 @@ for (var i = 0; i < date.length; i++) {
   }
   date[i].innerText = month + ' ' + day + ', ' + year;
 }
+
+// function fix_dropdowns(){
+//   $(".dropdown_div").on("shown.bs.dropdown", function(){
+//     // console.log(this.classList);
+//     var dropdown_btn = this.getElementsByClassName("dropdown-toggle")[0];
+//     $(this).dropdown('toggle')
+//     alert(this.classList);
+//     var dropdown_menu = this.getElementsByClassName("dropdown-menu")[0];
+//     dropdown_menu.style.top = "-2rem"
+//   });
+// }

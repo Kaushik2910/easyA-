@@ -263,3 +263,8 @@ ul {
 .selected p{
 	color: white !important;
 }
+
+.dropdown-toggle {
+	padding-top: 0;
+	height: 0;
+}

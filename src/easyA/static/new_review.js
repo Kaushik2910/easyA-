@@ -119,29 +119,43 @@ document.addEventListener("keydown",function(e){
   }
 });
 
-window.onscroll = function() {
-  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-    $("#name").addClass("text-center");
-    $("#row2 h2").hide();
+function screenScroll(){
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+      $("#row1 h1").show();
+      $("#row2").hide();
+      $("#row2 h1").hide();
+      $("#row2 h2").hide();
+      $("#row1").removeClass("mb-3");
 
-    if (window.screen.width < 601) {
-      $("#row1").removeClass("my-3 ");
-      $("#name").css("fontSize", "3rem");
+    } else {
+      $("#row1 h1").hide();
+      $("#row2").show();
+      $("#row2 h1").show();
+      $("#row2 h2").show();
+      $("#row1").addClass("mb-3");
     }
+}
+screenScroll()
+window.onscroll = screenScroll;
 
-
+$("#required").hide();
+function validateForm() {
+  if ($("#professor_input")[0].value == "") {
+    $("#professor_input_div").addClass("border border-danger");
   } else {
-    $("#name").removeClass("text-center");
-    $("#row2 h2").show();
-    $("#row1").addClass("my-3");
-    $("#name").css("fontSize", "4rem");
-
+    $("#professor_input_div").remove("border border-danger");
   }
-};
 
-window.onresize = function() {
-  if (window.screen.width > 600) {
-    $("#row1").addClass("my-3");
-    $("#name").css("fontSize", "4rem");
+  if ($("#rating")[0].value == "") {
+    $("#new_review_rating").addClass("border border-danger");
+  } else {
+    $("#new_review_rating").remove("border border-danger");
   }
+
+  if ($("#professor_input")[0].value == "" || $("#rating")[0].value == "" ) {
+    $("#required").show();
+    return false;
+  }
+
+  return true;
 }
