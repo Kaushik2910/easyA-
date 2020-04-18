@@ -302,26 +302,7 @@ for (var i = 0; i < profs_divs.length; i++) {
   profs_divs[i].getElementsByTagName("a")[0].href = rating_link + prof_name;
 }
 
-$("#review_label").hide();
-window.onscroll = function() {
-  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-    $(".scroll_hide").hide();
-    $("#course_id").addClass("id_scrolled my-0 py-0");
-    $("#logo").css("fontSize", "2rem");
-    $("#review_label").show();
-    $("#text_search").hide();
 
-    // console.log("You scrolled down");
-
-  } else {
-    $("#review_label").hide();
-    $(".scroll_hide").show();
-    $("#text_search").show();
-    $("#course_id").removeClass("id_scrolled my-0 py-0");
-    $("#logo").css("fontSize", "3rem");
-    // console.log("You scrolled up");
-  }
-};
 
 
 var year;
@@ -385,13 +366,43 @@ for (var i = 0; i < date.length; i++) {
   date[i].innerText = month + ' ' + day + ', ' + year;
 }
 
-// function fix_dropdowns(){
-//   $(".dropdown_div").on("shown.bs.dropdown", function(){
-//     // console.log(this.classList);
-//     var dropdown_btn = this.getElementsByClassName("dropdown-toggle")[0];
-//     $(this).dropdown('toggle')
-//     alert(this.classList);
-//     var dropdown_menu = this.getElementsByClassName("dropdown-menu")[0];
-//     dropdown_menu.style.top = "-2rem"
-//   });
-// }
+
+
+window.onresize = function() {
+  $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
+}
+
+window.onscroll = function() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    $(".scroll_hide").hide();
+    $("#logo").css("fontSize", "2rem");
+    $("#text_search").hide();
+
+    // $("#row2 .d-flex").css("width", "50%");
+    // $("#id_name_div").removeClass("justify-content-center");
+    // $("#id_name_div").addClass("justify-content-end");
+    // $("#rating_write_div").removeClass("justify-content-around");
+    // $("#rating_write_div").addClass("justify-content-start");
+    // $(".spacer").show();
+    // console.log("You scrolled down");
+
+  } else {
+    $(".scroll_hide").show();
+    $("#text_search").show();
+    $("#logo").css("fontSize", "3rem");
+
+    // $("#row2 .d-flex").css("width", "100%");
+    // $("#id_name_div").addClass("justify-content-center");
+    // $("#id_name_div").removeClass("justify-content-end");
+    // $("#rating_write_div").addClass("justify-content-around");
+    // $("#rating_write_div").removeClass("justify-content-start");
+    // $(".spacer").hide();
+    // console.log("You scrolled up");
+
+  }
+};
+
+window.addEventListener('load', function () {
+  show_suggestions();
+  $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
+})

@@ -81,7 +81,38 @@
         {% endif %}
       </div>
     </div>
-    <div id='row2' class="row">
+
+    <div id="row2" class="mb-1">
+      <div id="id_name_div" class="d-flex flex-column flex-md-row justify-content-center">
+        <h1 class="scrolled text-center text-md-right mb-0" id="course_id">{{ course_id }}</h1>
+        <div class="pl-3 text-left scroll_hide my-auto">
+          <h2 class="scrolled">{{ course_name }}</h2>
+          <p class="mb-0 scrolled text-muted">{{ description }}</p>
+        </div>
+      </div>
+      <div id="rating_write_div" class="scroll_flex d-flex flex-column flex-md-row justify-content-md-around">
+        <div class="scroll_hide scrolled">
+          <h3 class="text-right">
+            {%for i in range(0, rating)%}
+            <i class="fas fa-star"></i>
+            {%endfor%}
+            {%for i in range(0, (5 - rating))%}
+            <i class="far fa-star"></i>
+            {%endfor%}
+          </h3>
+          <h4 class="text-right">Based on {{ rating_count }} ratings.</h4>
+        </div>
+        {% if 'email' in session %}
+        <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light text-light">
+        {% else %}
+        <button id="review_button" type="submit" class="btn btn-light text-light" data-toggle="modal" data-target="#myModal">
+        {% endif %}
+        Write a review
+        </button>
+      </div>
+    </div>
+
+    <!-- <div id='row2' class="row">
       <div class="col-6">
         <div class="container d-flex flex-column text-right">
           <h1 class="scrolled" id="course_id">{{ course_id }}</h1>
@@ -99,27 +130,23 @@
         </div>
       </div>
       <div class="col-6 flex-column d-flex align-items-end m-0">
-        <div class="scroll_hide scrolled">
+        <div class="scroll_hide scrolled text-left">
           <h2 class="align-bottom">{{ course_name }}</h2>
           <p class="align-bottom">{{ description }}</p>
         </div>
         {% if 'email' in session %}
-        <!-- You show the logged in user button -->
         <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light text-light">
           Write a review
         </button>
         {% else %}
-        <!-- You show the unlogged in user button -->
-        <!-- The popup log in should be here -->
         <button id="review_button" type="submit" class="btn btn-light text-light" data-toggle="modal" data-target="#myModal">
           Write a review
         </button>
         {% endif %}
       </div>
-    </div>
+    </div> -->
 
     <div id='row3' class="row">
-      <p id="review_label" class="align-bottom m-0 p-0 text-muted scrolled">Student Reviews</p>
       <div id="row3flex" class="d-flex flex-column flex-md-row justify-content-between">
         <div id="filter" class="scroll_hide scrolled">
           <div class="btn-group">
@@ -179,7 +206,7 @@
   <hr>
 </div>
 
-<ul id="reviews_ul">
+<ul id="reviews_ul" class="px-1">
   {%for post in user_posts%}
   {%if not post['text'] or post['text'].isspace()%}
 
@@ -195,7 +222,7 @@
         <div class="col-1 d-flex justify-content-end align-items-start">
           <div class="btn-group dropdown_div">
             <button type="button" class="btn btn-sm text_fucntion_btn dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false"></button>
+            aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
             <div class="dropdown-menu dropdown-menu-right bg-warning">
               <form action="{{ url_for('delete_review') }}" method="POST">
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
@@ -226,27 +253,19 @@
   <li class="review_li">
     <div class="container review">
 
-      <div class="row">
-        <div class="col-8">
-          {% if 'group' in session and session['group'] == "admin" %}
-          <p><span>Author:</span> {{ post['author'] }}</p>
+      <div class="d-flex justify-content-between">
+        <div class="author_spot">
+          <!-- {% if 'group' in session and session['group'] == "admin" %}
+          <p class="mb-0"><span>Author:</span> {{ post['author'] }}</p>
           {% elif post in user_posts %}
-          <p><span>Your post</span></p>
+          <p class="mb-0"><span>Your post</span></p>
           <input id="my_post" type="hidden">
-          {% endif %}
+          {% endif %} -->
         </div>
-      </div>
-      <div class="row mb-1">
-        <div class="col-7 professor_div">
-          <p class="review-professor my-0"><span>Professor:</span> <a class="prof_ratinng" href="#">{{ post['professor'] }}</a></p>
-        </div>
-        <div class="col-4 text-right">
-          <small class="review-date text-right text-muted">{{ post['posted_date'] }}</small>
-        </div>
-        <div class="col-1 d-flex justify-content-end align-items-start">
+        <div class="d-flex justify-content-end align-items-start">
           <div class="btn-group dropdown_div">
             <button type="button" class="btn btn-sm text_fucntion_btn dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false"></button>
+            aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
             <div class="dropdown-menu dropdown-menu-right bg-warning">
               {%if post in user_posts or ('group' in session and session['group'] == "admin") %}
               <form action="{{ url_for('delete_review') }}" method="POST">
@@ -287,36 +306,68 @@
           </div>
         </div>
       </div>
-      <p class="review-tags">
+      <div class="mb-1 d-flex justify-content-between">
+        <div class="professor_div">
+          <p class="review-professor my-0"><span>Professor:</span> <a class="prof_ratinng" href="#">{{ post['professor'] }}</a></p>
+        </div>
+        <div class="text-right">
+          <small class="review-date text-right text-muted">{{ post['posted_date'] }}</small>
+        </div>
+
+      </div>
+      <div class="review-tags mt-1 d-flex flex-column flex-md-row">
         {% if post['attendance'] %}
-        <span> Attendance:</span> {{ post['attendance'] }}
+        <p class="m-0"><span> Attendance:</span> {{ post['attendance'] }}</p>
         {% endif %}
         {% if post['grade'] %}
-        <span> Grade:</span> {{ post['grade'] }}
+        <p class="m-0"><span> Grade:</span> {{ post['grade'] }}</p>
         {% endif %}
         {% if post['textbook'] %}
-        <span> Textbook:</span> {{ post['textbook'] }}
+        <p class="m-0"><span> Textbook:</span> {{ post['textbook'] }}</p>
         {% endif %}
         {% if post['semester_taken']%}
-        <span> Semester:</span> {{ post['semester_taken'] }}
+        <p class="m-0"><span> Semester:</span> {{ post['semester_taken'] }}</p>
         {% endif %}
-      </p>
-
-      <p class="review-body">{{ post['text'] }}</p>
-      <div class="d-flex flex-row-reverse">
-        <form action="/text_to_speech" onsubmit="return validateRequest()" method="POST">
-          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-          <button type="submit" class="btn text_fucntion_btn"><i class="fas fa-volume-up"></i></button>
-        </form>
-
-        <form action="/translate_text" onsubmit="return validateRequest()" method="POST">
-          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-          <button type="submit" class="btn text_fucntion_btn"><i class="fas fa-language"></i></button>
-        </form>
       </div>
 
-      <div class="row">
-        <div class="col-6">
+      <div class="d-flex mt-1 justify-content-between">
+        <p class="review-body">{{ post['text'] }}</p>
+        <div class="d-flex flex-column">
+          <form action="/text_to_speech" onsubmit="return validateRequest()" method="POST">
+            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+            <button type="submit" class="p-0 btn text_fucntion_btn"><i class="fas fa-volume-up"></i></button>
+          </form>
+
+          <form action="/translate_text" onsubmit="return validateRequest()" method="POST">
+            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
+            <button type="submit" class="p-0  btn text_fucntion_btn"><i class="fas fa-language"></i></button>
+          </form>
+        </div>
+
+      </div>
+
+
+
+      <div class="container tags d-flex flex-wrap justify-content-around">
+        {% for tag in post['tags'].split(",") %}
+        {% if tag %}
+        <p class="text-warning review_tag p-0 m-0">{{ tag }}</p>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <div>
+          <p>
+            {%for i in range(0, post['rating'])%}
+            <i class="fas fa-star"></i>
+            {%endfor%}
+            {%for i in range(0, (5 - post['rating']))%}
+            <i class="far fa-star"></i>
+            {%endfor%}
+          </p>
+        </div>
+        <div>
           {% if 'email' in session %}
           <!-- Upvoting/Downvoting is here -->
           <form action="" method="POST">
@@ -354,28 +405,6 @@
               class="fas fa-arrow-down" data-toggle="modal"
               data-target="#myModal"></i>{{ post['downvotes'] }}</button>
               {% endif %}
-            </div>
-            <div class="col-6 text-right">
-
-              <p class="text-right">
-                {%for i in range(0, post['rating'])%}
-                <i class="fas fa-star"></i>
-                {%endfor%}
-                {%for i in range(0, (5 - post['rating']))%}
-                <i class="far fa-star"></i>
-                {%endfor%}
-              </p>
-            </div>
-
-
-
-            <!-- Tags Example-->
-            <div class="container tags d-flex flex-wrap justify-content-around">
-              {% for tag in post['tags'].split(",") %}
-              {% if tag %}
-              <p class="text-warning review_tag">{{ tag }}</p>
-              {% endif %}
-              {% endfor %}
             </div>
           </div>
         </li>
@@ -431,9 +460,6 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"></script>
-      <script type="text/javascript">
-      show_suggestions();
-      </script>
     </body>
 
     </html>
