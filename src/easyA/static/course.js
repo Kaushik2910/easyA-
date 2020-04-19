@@ -406,12 +406,12 @@ window.onscroll = function() {
 
 function shareable() {
   var query = document.URL.split('?',2)[1];
-  if (query == null) {
+  if (query == null || query =="") {
     $("#all_reviews").hide();
     return;
   }
 
-  if (document.getElementById() != null) {
+  if (document.getElementById(query) != null) {
     var reviews = document.getElementsByClassName("review_li");
     for (var i = 0; i < reviews.length; i++) {
       if (reviews[i].id == query) {
@@ -420,8 +420,10 @@ function shareable() {
         reviews[i].style.display = "none";
       }
     }
+    $("#filter").hide();
+    $("#text_search").hide();
   }
-  $("#filter").hide();
+
 
 
 }
