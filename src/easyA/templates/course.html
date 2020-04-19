@@ -326,6 +326,7 @@
 
       <div class="d-flex mt-1 justify-content-between">
         <p class="review-body">{{ post['text'] }}</p>
+        <p class="translation review-body"></p>
         <div class="d-flex flex-column">
           <form action="/text_to_speech" onsubmit="return validateRequest()" method="POST">
             <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>

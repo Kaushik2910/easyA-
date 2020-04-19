@@ -44,6 +44,7 @@ function validateRequest() {
 }
 
 function filter_reviews() {
+  var query = document.URL.split('!',2)[1];
   var prof_checks = document.getElementsByClassName("prof_check");
   var profs = [];
   for (var i = 0; i < prof_checks.length; i++) {
