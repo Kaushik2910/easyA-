@@ -4,6 +4,7 @@ from easyA import db
 
 from flask import render_template, request, session, redirect, url_for
 from flask_mail import Message
+from googletrans import Translator
 import google.cloud
 import requests
 import json
@@ -737,4 +738,19 @@ def do_text_to_speech():
     
     engine.runAndWait()
     
+    return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
+
+@app.route('/translate_text',methods=['POST', 'GET'])
+def do_translate_text():
+
+    translator = Translator()
+    
+    post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+
+    post_dict = post.to_dict()
+
+    result = translator.translate('Ciao, mi chiamo Kaushik')
+
+    transalated_txt = result.text;
+
     return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
