@@ -44,7 +44,6 @@ function validateRequest() {
 }
 
 function filter_reviews() {
-  var query = document.URL.split('!',2)[1];
   var prof_checks = document.getElementsByClassName("prof_check");
   var profs = [];
   for (var i = 0; i < prof_checks.length; i++) {
@@ -405,7 +404,30 @@ window.onscroll = function() {
   }
 };
 
+function shareable() {
+  var query = document.URL.split('?',2)[1];
+  if (query == null) {
+    $("#all_reviews").hide();
+    return;
+  }
+
+  if (document.getElementById() != null) {
+    var reviews = document.getElementsByClassName("review_li");
+    for (var i = 0; i < reviews.length; i++) {
+      if (reviews[i].id == query) {
+        reviews[i].style.display = "block";
+      } else {
+        reviews[i].style.display = "none";
+      }
+    }
+  }
+  $("#filter").hide();
+
+
+}
+
 window.addEventListener('load', function () {
+  shareable();
   show_suggestions();
   $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
 })

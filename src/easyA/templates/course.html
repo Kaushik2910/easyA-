@@ -131,6 +131,7 @@
 
     <div id='row3'>
       <div id="row3flex" class="d-flex flex-column flex-md-row justify-content-between">
+        <a id="all_reviews" href="/{{ course_id }}">See All Reviews</a>
         <div id="filter" class="scroll_hide scrolled">
           <div class="row">
             <div class="col-4">
@@ -244,7 +245,7 @@
   {%endfor%}
 
   {%for post in posts%}
-  <li class="review_li">
+  <li id="{{ post['post_ID'] }}" class="review_li">
     <div class="container review">
 
       <div class="d-flex justify-content-between">
