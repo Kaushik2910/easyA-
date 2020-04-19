@@ -168,9 +168,10 @@ hr {
 	width: 3rem
 }
 
+
+
 #review_button{
 	width: 80%;
-	margin: auto auto;
 	max-width: 16rem;
 	outline-color: #E08F4C;
 	background-color: #FBB03B;
@@ -224,13 +225,17 @@ hr {
 }
 
 @media screen and (max-width: 600px) {
+	#review_button{
+		margin: auto auto;
+	}
+
 	#logo{
 		display: none;
 	}
 
 	#row2 h1{
 		font-weight: bold;
-		font-size: 16vw;
+		font-size: 3rem;
 	}
 
 	#row2 h2{
@@ -257,19 +262,23 @@ hr {
 @media screen and (min-width: 601px) {
 	#row2 h1{
 		font-weight: bold;
-		font-size: 7vw;
+		font-size: 6rem;
 	}
 
 	#row2 h2{
-		font-size: 2vw;
+		font-size: 2rem;
 	}
 
 	#row2 h3{
-		font-size: 2.5vw;
+		font-size: 2rem;
 	}
 
 	#row2 h4{
-		font-size: 2vw;
+		font-size: 1rem;
+	}
+
+	#review_button{
+		margin: auto 0;
 	}
 
 	#suggestions{

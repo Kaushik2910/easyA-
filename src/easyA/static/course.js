@@ -377,28 +377,30 @@ window.onscroll = function() {
     $(".scroll_hide").hide();
     $("#logo").css("fontSize", "2rem");
     $("#text_search").hide();
+    $("#review_button").css("width", "auto");
+    $("#review_button").css("padding", "2px 3px");
 
-    // $("#row2 .d-flex").css("width", "50%");
-    // $("#id_name_div").removeClass("justify-content-center");
-    // $("#id_name_div").addClass("justify-content-end");
-    // $("#rating_write_div").removeClass("justify-content-around");
-    // $("#rating_write_div").addClass("justify-content-start");
-    // $(".spacer").show();
-    // console.log("You scrolled down");
+    if (screen.width < 600) {
+      $("#row2 h1").css("fontSize", "2rem");
+      $("#review_button").css("fontSize", "0.8rem");
+    } else {
+      $("#row2 h1").css("fontSize", "2.5rem");
+    }
+
 
   } else {
     $(".scroll_hide").show();
     $("#text_search").show();
     $("#logo").css("fontSize", "3rem");
+    $("#review_button").css("width", "80%");
+    $("#review_button").css("padding", "");
 
-    // $("#row2 .d-flex").css("width", "100%");
-    // $("#id_name_div").addClass("justify-content-center");
-    // $("#id_name_div").removeClass("justify-content-end");
-    // $("#rating_write_div").addClass("justify-content-around");
-    // $("#rating_write_div").removeClass("justify-content-start");
-    // $(".spacer").hide();
-    // console.log("You scrolled up");
-
+    if (screen.width < 600) {
+      $("#row2 h1").css("fontSize", "3rem");
+      $("#review_button").css("fontSize", "1rem");
+    } else {
+      $("#row2 h1").css("fontSize", "6rem");
+    }
   }
 };
 

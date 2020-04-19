@@ -20,7 +20,7 @@
   <div id="class-header">
 
     <div class="container mb-0">
-      <div id="row1" class="d-flex align-self-center justify-content-between mb-3">
+      <div id="row1" class="d-flex align-self-center justify-content-between mb-md-3 mb-1">
         <div>
           <div class="text-center">
             <a class="scrolled" href="{{ url_for('index') }}" id="logo">easy<span>A</span></a>
@@ -31,7 +31,7 @@
           <div id="suggestions" class="input-group">
             <form method="get" action="#" id="search_bar_form" onsubmit="return validateSearch()">
               <div class="input-group">
-                <input id="search_bar" type="text" class="form-control" placeholder="Search" required>
+                <input id="search_bar" type="text" class="form-control" placeholder="{{ course_id }}" required>
                 <div class="input-group-append">
                   <button id="search_bar_btn" type="submit"><i class="fas fa-search"></i></button>
                 </div>
@@ -74,11 +74,27 @@
           </div>
         </div>
         {% else %}
-        <input id="userID" type="text" name="" hidden value="guest">
-        <button id="login_check2" type="submit" class="btn btn-outline-light mx-2 scrolled scroll_hide" data-toggle="modal"
-        data-target="#myModal">Log in</button>
-        <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
-        class="btn btn-outline-warning mx-2 scrolled scroll_hide">Sign up</button>
+        <div class="d-none d-md-block">
+          <input id="userID" type="text" name="" hidden value="guest">
+          <button id="login_check2" type="submit" class="btn btn-outline-light mx-2" data-toggle="modal"
+          data-target="#myModal">Log in</button>
+          <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
+          class="btn btn-outline-warning mx-2">Sign up</button>
+        </div>
+        <div class="d-md-none">
+          <div class="btn-group">
+            <button id="user" type="button" class="btn btn-outline-warning mr-2" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right bg-warning text-center">
+              <button type="submit" class="dropdown-item text-light" data-toggle="modal" data-target="#myModal">
+              Log in
+              </button>
+              <a class="dropdown-item text-light" href="{{ url_for('signup') }}">Sign up</a>
+            </div>
+          </div>
+        </div>
+
         {% endif %}
       </div>
     </div>
@@ -92,8 +108,8 @@
         </div>
       </div>
       <div id="rating_write_div" class="scroll_flex d-flex flex-column flex-md-row justify-content-md-around">
-        <div class="scroll_hide scrolled">
-          <h3 class="text-right">
+        <div id="rating_div" class="scroll_hide scrolled">
+          <h3 class="text-right text-md-center">
             {%for i in range(0, rating)%}
             <i class="fas fa-star"></i>
             {%endfor%}
@@ -101,7 +117,7 @@
             <i class="far fa-star"></i>
             {%endfor%}
           </h3>
-          <h4 class="text-right">Based on {{ rating_count }} ratings.</h4>
+          <h4 class="text-right text-md-center">Based on {{ rating_count }} ratings.</h4>
         </div>
         {% if 'email' in session %}
         <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light text-light">
@@ -113,88 +129,65 @@
       </div>
     </div>
 
-    <!-- <div id='row2' class="row">
-      <div class="col-6">
-        <div class="container d-flex flex-column text-right">
-          <h1 class="scrolled" id="course_id">{{ course_id }}</h1>
-          <div id="rating" class="scroll_hide scrolled">
-            <h3>
-              {%for i in range(0, rating)%}
-              <i class="fas fa-star"></i>
-              {%endfor%}
-              {%for i in range(0, (5 - rating))%}
-              <i class="far fa-star"></i>
-              {%endfor%}
-            </h3>
-            <h4>Based on {{ rating_count }} ratings.</h4>
-          </div>
-        </div>
-      </div>
-      <div class="col-6 flex-column d-flex align-items-end m-0">
-        <div class="scroll_hide scrolled text-left">
-          <h2 class="align-bottom">{{ course_name }}</h2>
-          <p class="align-bottom">{{ description }}</p>
-        </div>
-        {% if 'email' in session %}
-        <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light text-light">
-          Write a review
-        </button>
-        {% else %}
-        <button id="review_button" type="submit" class="btn btn-light text-light" data-toggle="modal" data-target="#myModal">
-          Write a review
-        </button>
-        {% endif %}
-      </div>
-    </div> -->
-
-    <div id='row3' class="row">
+    <div id='row3'>
       <div id="row3flex" class="d-flex flex-column flex-md-row justify-content-between">
         <div id="filter" class="scroll_hide scrolled">
-          <div class="btn-group">
-            <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
-            <div id="sort_options" class="dropdown-menu bg-warning text-light">
-              <form id="sort_form" class="d-none" action="/course/{{course_id}}" method="POST">
-                <input id="sort_input" name="sort" type="hidden" value=""></input>
-              </form>
-              <small>Chronological</small>
-              <button id="chronological_new" type="button"
-              class="dropdown-item sort_btn text-light">Newest Posts</button>
-              <button id="chronological_old" type="button"
-              class="dropdown-item sort_btn text-light">Oldest Posts</button>
-              <div class="dropdown-divider"></div>
-              <small>Upvotes</small>
-              <button id="most_upvotes" type="button" class="dropdown-item sort_btn text-light">
-                Most Upvotes
-              </button>
-              <button id="least_upvotes" type="button" class="dropdown-item sort_btn text-light">
-                Least Upvotes
-              </button>
+          <div class="row">
+            <div class="col-4">
+              <div class="btn-group">
+                <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
+                <div id="sort_options" class="dropdown-menu bg-warning text-light">
+                  <form id="sort_form" class="d-none" action="/course/{{course_id}}" method="POST">
+                    <input id="sort_input" name="sort" type="hidden" value=""></input>
+                  </form>
+                  <small>Chronological</small>
+                  <button id="chronological_new" type="button"
+                  class="dropdown-item sort_btn text-light">Newest Posts</button>
+                  <button id="chronological_old" type="button"
+                  class="dropdown-item sort_btn text-light">Oldest Posts</button>
+                  <div class="dropdown-divider"></div>
+                  <small>Upvotes</small>
+                  <button id="most_upvotes" type="button" class="dropdown-item sort_btn text-light">
+                    Most Upvotes
+                  </button>
+                  <button id="least_upvotes" type="button" class="dropdown-item sort_btn text-light">
+                    Least Upvotes
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="btn-group">
+                <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
+                <div class="dropdown-menu bg-warning text-light">
+                  {% for professor in current_profs %}
+                  <input class="prof_check filter_check" type="checkbox" value="{{ professor }}">
+                  {{ professor }}</input>
+                  <br>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="btn-group">
+                <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
+                <div class="dropdown-menu bg-warning text-light">
+                  {% for tag in current_tags %}
+                  <input class="tag_check filter_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
+                  <br>
+                  {% endfor %}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="btn-group">
-            <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
-            <div class="dropdown-menu bg-warning text-light">
-              {% for professor in current_profs %}
-              <input class="prof_check filter_check" type="checkbox" value="{{ professor }}">
-              {{ professor }}</input>
-              <br>
-              {% endfor %}
-            </div>
-          </div>
 
-          <div class="btn-group">
-            <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
-            <div class="dropdown-menu bg-warning text-light">
-              {% for tag in current_tags %}
-              <input class="tag_check filter_check" type="checkbox" value="{{ tag }}"> {{ tag }}</input>
-              <br>
-              {% endfor %}
-            </div>
-          </div>
+
+
+
         </div>
         <input id="text_search" type="text" class="scroll_hide scrolled form-control mr-0" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search for an specific review">
 
