@@ -103,6 +103,10 @@ def signup(errorMessage="", requestTrigger=True):
 def contact_admin():
     return render_template('contact_us.html')
 
+@app.route('/review_reports')
+def review_reports():
+    return render_template('review_reports.html')
+
 @app.route( '/course/')
 @app.route('/course/<course_id>', methods=['POST', 'GET'])
 def course_page(course_id, get_info=False):
@@ -148,7 +152,7 @@ def course_page(course_id, get_info=False):
                     #Sum all course rating
                     rating += tempDict['rating']
                     rating_count += 1
-    
+
                     posts.append(tempDict)
                     #Build professors array
                     if tempDict['professor'] not in current_profs:
@@ -167,7 +171,7 @@ def course_page(course_id, get_info=False):
                     #Sum all course rating
                     rating += tempDict['rating']
                     rating_count += 1
-        
+
 
                     if tempDict['text'] and not tempDict['text'].isspace():
                         posts.append(tempDict)
@@ -261,7 +265,7 @@ def report():
         #Banned user
         if session['group'] == "banned":
             return redirect(request.environ['HTTP_REFERER'])
-        
+
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         return render_template('report.html', post_ID=request.form['post_ID'], post=post.to_dict())
 
@@ -351,7 +355,7 @@ def post_contact_admin():
 
         #Add the inquiry to the database
         firestore_database.collection('inquiries').add(data)
-        
+
         # Send mail
         msg = Message(body=message_body, subject="Admin: A user wants to contact you", recipients=['easyApurdue@gmail.com'])
         mail.send(msg)
@@ -395,7 +399,7 @@ def delete_review():
         #Banned user
         if session['group'] == "banned":
             return redirect(request.environ['HTTP_REFERER'])
-        
+
         career_id = (session['email'].split('@', 2))[0]
         author = firestore_database.collection('users').document(career_id).get()
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
@@ -449,7 +453,7 @@ def do_login():
 
         user_dict =  user_ref.get().to_dict()
         session['group'] = user_dict['group']
-        
+
 
         print("User logged in successfully")
         return redirect(request.environ['HTTP_REFERER'])
@@ -566,7 +570,7 @@ def do_upvote():
         #Banned user
         if session['group'] == "banned":
             return redirect(request.environ['HTTP_REFERER'])
-        
+
         career_id = (session['email'].split('@', 2))[0]
         author = firestore_database.collection('users').document(career_id).get()
 
@@ -647,7 +651,7 @@ def do_downvote():
         #Banned user
         if session['group'] == "banned":
             return redirect(request.environ['HTTP_REFERER'])
-        
+
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         post_dict = post.to_dict()
 
@@ -732,9 +736,9 @@ def do_text_to_speech():
     post = firestore_database.collection('posts').document(request.form['post_ID']).get()
 
     post_dict = post.to_dict()
-    
+
     engine.say(post_dict['text'])
-    
+
     engine.runAndWait()
-    
+
     return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
