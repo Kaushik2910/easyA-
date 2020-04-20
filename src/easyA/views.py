@@ -753,8 +753,19 @@ def do_translate_text():
 
     post_dict = post.to_dict()
 
-    result = translator.translate('Ciao, mi chiamo Kaushik')
+    if post_dict['translated_text']:
 
-    transalated_txt = result.text;
+        post.reference.update({
+                "translated_text": str("")
+        })
+
+    else:
+        result = translator.translate(post_dict['text'])
+
+        transalated_txt = result.text
+        
+        post.reference.update({
+                "translated_text": str(transalated_txt)
+        })
 
     return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))

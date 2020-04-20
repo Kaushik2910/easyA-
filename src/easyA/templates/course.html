@@ -323,7 +323,6 @@
       <div class="d-flex mt-1 justify-content-between">
         <div class="d-flex felx-column">
           <p class="review-body">{{ post['text'] }}</p>
-          <p class="translation review-body"></p>
         </div>
         <div class="d-flex flex-column">
           <form action="/text_to_speech" onsubmit="return validateRequest()" method="POST">
@@ -336,10 +335,9 @@
             <button type="submit" class="p-0  btn text_fucntion_btn"><i class="fas fa-language"></i></button>
           </form>
         </div>
-
       </div>
 
-
+      <p class="translation review-body">{{post['translated_text']}}</p>
 
       <div class="container tags d-flex flex-wrap justify-content-around">
         {% for tag in post['tags'].split(",") %}
