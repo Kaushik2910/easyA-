@@ -376,7 +376,7 @@ def post_review(course, course_id):
         "professor": request.form['professor'],
         "attendance": request.form['attendance'],
         "textbook": request.form['textbook'],
-        "semester_taken": str(request.form['semester_taken']) + " " + str(request.form['semester_taken_year']) if str(request.form['semester_taken']) != "Prefer not to mention" else "",
+        "semester_taken": str(request.form['semester_taken']) + " " + str(request.form['semester_taken_year']) if str(request.form['semester_taken']) != "" else "",
         "grade": request.form['grade'],
         "rating": int(request.form['rating']) if request.form['rating'] else 1,
         "tags": request.form['tags'],
@@ -741,9 +741,9 @@ def do_text_to_speech():
 
     language = 'en'
 
-    myobj = gTTS(text=post_dict['text'], lang=language, slow=False) 
+    myobj = gTTS(text=post_dict['text'], lang=language, slow=False)
 
-    myobj.save("welcome.mp3") 
+    myobj.save("welcome.mp3")
     os.system("start welcome.mp3")
 
     # engine.say(post_dict['text'])
@@ -757,7 +757,7 @@ def do_text_to_speech():
 def do_translate_text():
 
     translator = Translator()
-    
+
     post = firestore_database.collection('posts').document(request.form['post_ID']).get()
 
     post_dict = post.to_dict()
@@ -772,7 +772,7 @@ def do_translate_text():
         result = translator.translate(post_dict['text'])
 
         transalated_txt = result.text
-        
+
         post.reference.update({
                 "translated_text": str(transalated_txt)
         })
