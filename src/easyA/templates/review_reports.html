@@ -19,12 +19,21 @@
       <a href="./" id="logo">easy<span>A</span></a>
     </div>
     <div class="container review">
+        <h1 class="review-class">{{ post['course'] }}</h1>
+        <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
+        <p class="review-body">{{ post['text'] }}</p>
     </div>
     <hr>
   </div>
 
-  <div id="new_report" class="container">
-  </div>
+  <ul>
+    {%for report in reports%}
+    <li>
+      <p><span>Author:</span> {{ report['author'] }}</p>
+      <p>{{ report['body'] }}</p>
+    </li>
+    {%endfor%}
+  </ul>
 
 
   <!-- Optional JavaScript -->

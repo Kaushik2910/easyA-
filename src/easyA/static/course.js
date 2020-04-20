@@ -43,6 +43,16 @@ function validateRequest() {
   return true;
 }
 
+function validateTranslate(post) {
+  var translation = document.getElementById(post).getElementsByClassName("translation")[0];
+  console.log(translation.textContent == null || translation.textContent == "");
+  if (translation.textContent == null || translation.textContent == "") {
+    return true;
+  }
+  $(translation).toggle();
+  return false;
+}
+
 function filter_reviews() {
   var prof_checks = document.getElementsByClassName("prof_check");
   var profs = [];
@@ -424,12 +434,13 @@ function shareable() {
     $("#text_search").hide();
   }
 
-
-
 }
+
+
 
 window.addEventListener('load', function () {
   shareable();
   show_suggestions();
+  $(".translation").hide();
   $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
 })

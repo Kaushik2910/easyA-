@@ -224,6 +224,10 @@ hr {
 	border-radius: 1.5rem;
 }
 
+.translation {
+	transition:visibility 0s, height 2s ease-in-out;
+}
+
 @media screen and (max-width: 600px) {
 	#review_button{
 		margin: auto auto;
