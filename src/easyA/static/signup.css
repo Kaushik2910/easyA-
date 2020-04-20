@@ -1,7 +1,6 @@
 #logo { /* easy */
 	margin-top: 3%;
 	font-family: STHeitiTC-Medium;
-	font-size: 6.5rem;
 	color:#ffffff;
 }
 
@@ -36,10 +35,6 @@ body {
 	margin-bottom: -8px;
 }
 
-#signup_form_div {
-	margin-top: 16rem;
-	width: 70%;
-}
 
 #signup_form_div .form-control{
 	font-size: 1rem;
@@ -69,4 +64,28 @@ body {
 
 #signup_form_div .invalid_field{
 	border-color: red!important;;
+}
+
+@media screen and (max-width: 600px) {
+	#logo { /* easy */
+		margin-top: 15%;
+		font-size: 3rem;
+	}
+	#signup_form_div {
+		margin-top: 12rem;
+	}
+
+
+}
+
+@media screen and (min-width: 601px) {
+	#logo { /* easy */
+		margin-top: 3%;
+		font-size: 6.5rem;
+	}
+
+	#signup_form_div {
+		margin-top: 16rem;
+		width: 70%;
+	}
 }

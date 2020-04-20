@@ -1,7 +1,5 @@
 #logo { /* easy */
-	margin-top: 3%;
 	font-family: STHeitiTC-Medium;
-	font-size: 6.5rem;
 	color:#ffffff;
 }
 
@@ -36,10 +34,6 @@ body {
 	margin-bottom: -8px;
 }
 
-#login_form {
-	margin-top: 20rem;
-	width: 70%;
-}
 
 #login_form .form-control{
 	font-size: 1rem;
@@ -67,4 +61,29 @@ body {
 
 .form-text a {
 	color: rgba(235,235,235,0.6);
+}
+
+@media screen and (max-width: 600px) {
+	#logo { /* easy */
+		margin-top: 15%;
+		font-size: 3rem;
+	}
+
+	#login_form {
+		margin-top: 12rem;
+	}
+
+
+}
+
+@media screen and (min-width: 601px) {
+	#logo { /* easy */
+		margin-top: 3%;
+		font-size: 6.5rem;
+	}
+
+	#login_form {
+		margin-top: 16rem;
+		width: 70%;
+	}
 }

@@ -22,7 +22,7 @@
       <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
       <p class="review-body">{{ post['text'] }}</p>
     </div>
-    <hr>
+    <hr class="d-none d-md-block">
   </div>
 
   <div id="new_msg" class="container">
@@ -42,7 +42,7 @@
         <small id="emailHelp" class="form-text text-muted pl-2">*required</small>
       </div>
       <div class="d-flex justify-content-end">
-        <button type="button" name="button" class="cancel-btn m-2">Go back</button>
+        <button type="button" name="button" class="cancel-btn m-2" onclick="window.location.href = 'course/{{ post['course_id'] }}';">Go back</button>
         <button type="submit" class="btn btn-warning m-2">Send</button>
       </div>
     </form>

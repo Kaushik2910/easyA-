@@ -373,6 +373,7 @@ def post_review(course, course_id):
         "posted_date": datetime.datetime.now().isoformat(),
         "author": author.reference,
         "course": course.reference,
+        "course_id":request.form['course'],
         "professor": request.form['professor'],
         "attendance": request.form['attendance'],
         "textbook": request.form['textbook'],

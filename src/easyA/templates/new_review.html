@@ -61,6 +61,7 @@
 <div id="new_review" class="container">
   <h2>It’s your turn to grade the class!</h2>
   <form action="/course/{{course_id}}/new_review" method="POST" onsubmit="return validateForm()">
+    <input type="hidden" name="course" value="{{ course_id }}">
     <div class="form-row">
       <div class="col-12 col-md-10">
         <label for="new_review_professor">Professor: </label>
