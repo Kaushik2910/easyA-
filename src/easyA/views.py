@@ -5,6 +5,8 @@ from easyA import db
 from flask import render_template, request, session, redirect, url_for
 from flask_mail import Message
 from googletrans import Translator
+from gtts import gTTS
+import os
 import google.cloud
 import requests
 import json
@@ -732,15 +734,22 @@ def do_downvote():
 @app.route('/text_to_speech',methods=['POST', 'GET'])
 def do_text_to_speech():
 
-    engine = pyttsx3.init()
 
     post = firestore_database.collection('posts').document(request.form['post_ID']).get()
 
     post_dict = post.to_dict()
 
-    engine.say(post_dict['text'])
+    language = 'en'
 
-    engine.runAndWait()
+    myobj = gTTS(text=post_dict['text'], lang=language, slow=False) 
+
+    myobj.save("welcome.mp3") 
+    os.system("start welcome.mp3")
+
+    # engine.say(post_dict['text'])
+
+    # engine.runAndWait()
+
 
     return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
 
