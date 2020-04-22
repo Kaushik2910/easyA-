@@ -322,22 +322,18 @@
 
       <div class="d-flex mt-1 justify-content-between review_text_div">
         <div class="d-flex flex-column">
-          <p class="review-body">{{ post['text'] }}</p>
+          <p id="{{ post['post_ID'] }}-text" class="review-body">{{ post['text'] }}</p>
           <p class="translation review-body border-left border-light pl-2 ml-1">{{post['translated_text']}}</p>
         </div>
         <div class="d-flex flex-column">
-          <form action="/text_to_speech" class="accesibilit_form" method="POST">
-            <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-            <button type="submit" class="p-0 btn text_fucntion_btn"><i class="fas fa-volume-up"></i></button>
-          </form>
-
+          <button onclick="speakLoud('{{ post['post_ID'] }}')" class="p-0 btn text_fucntion_btn"><i class="fas fa-volume-up"></i></button>
           <form action="/translate_text" class="accesibilit_form" onsubmit="return validateTranslate('{{ post['post_ID'] }}')" method="POST">
             <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
             <button type="submit" class="p-0  btn text_fucntion_btn"><i class="fas fa-language"></i></button>
+
           </form>
         </div>
       </div>
-
 
 
       <div class="container tags d-flex flex-wrap justify-content-around">
@@ -437,6 +433,13 @@
           </div>
         </div>
       </div>
+
+      <script>
+        function speakLoud(postID) {
+            var text = document.getElementById(postID + "-text");
+            speechSynthesis.speak(new SpeechSynthesisUtterance(text.innerHTML));
+        }
+      </script>
       <!-- Optional JavaScript -->
       <script src="{{ url_for('static', filename='course.js') }}"></script>
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->

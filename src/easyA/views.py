@@ -733,27 +733,6 @@ def do_downvote():
         return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
     return redirect(url_for('index'))
 
-@app.route('/text_to_speech',methods=['POST', 'GET'])
-def do_text_to_speech():
-
-
-    post = firestore_database.collection('posts').document(request.form['post_ID']).get()
-
-    post_dict = post.to_dict()
-
-    language = 'en'
-
-    myobj = gTTS(text=post_dict['text'], lang=language, slow=False)
-
-    myobj.save("welcome.mp3")
-    os.system("start welcome.mp3")
-
-    # engine.say(post_dict['text'])
-
-    # engine.runAndWait()
-
-
-    return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
 
 @app.route('/translate_text',methods=['POST', 'GET'])
 def do_translate_text():
