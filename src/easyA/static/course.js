@@ -444,3 +444,24 @@ window.addEventListener('load', function () {
   $(".translation").hide();
   $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
 })
+
+function copyLink(course_id, post_id) {
+
+  var url = document.URL.split('course',2)[0];
+  url = url + 'course/' + course_id + '?' + post_id;
+  console.log(url);
+
+  const el = document.createElement('textarea');
+  el.value = url;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+
+
+  // url.select();
+  // url.setSelectionRange(0, 99999);
+  // document.execCommand("copy");
+  alert("Link copied to clipboard")
+  return false;
+}

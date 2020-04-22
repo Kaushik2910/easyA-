@@ -262,16 +262,8 @@
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                 <button type="submit" class="dropdown-item text-light">Delete</button>
               </form>
-              <form action="#"method="POST">
-                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                <button type="submit" class="dropdown-item text-light">Share</button>
-              </form>
               {%else%}
               {% if 'email' in session %}
-              <form action="#"method="POST">
-                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                <button type="submit" class="dropdown-item text-light">Share</button>
-              </form>
               <form action="{{ url_for('contact') }}" method="POST">
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                 <button type="submit" class="dropdown-item text-light">Contact</button>
@@ -292,6 +284,9 @@
               data-target="#myModal">Report</button>
               {% endif %}
               {%endif%}
+              <form action="#"method="GET" onsubmit="return copyLink('{{ course_id }}', '{{ post['post_ID'] }}')">
+                <button type="submit" class="dropdown-item text-light share_btn">Share</button>
+              </form>
             </div>
           </div>
         </div>
