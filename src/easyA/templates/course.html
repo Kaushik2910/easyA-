@@ -120,7 +120,7 @@
           <h4 class="text-right text-md-center">Based on {{ rating_count }} ratings.</h4>
         </div>
         {% if 'email' in session %}
-        <button id="review_button" onclick="window.location.href = '/course/{{course_id}}/new_review';" type="button" class="btn btn-light text-light">
+        <button id="review_button" onclick="newReview('{{course_id}}')" type="button" class="btn btn-light text-light">
         {% else %}
         <button id="review_button" type="submit" class="btn btn-light text-light" data-toggle="modal" data-target="#myModal">
         {% endif %}
@@ -131,10 +131,9 @@
 
     <div id='row3'>
       <div id="row3flex" class="d-flex flex-column flex-md-row justify-content-between">
-        <a id="all_reviews" class="text-light" href="/course/{{ course_id }}">All Reviews</a>
+        <button id="all_reviews" class="btn btn-outline-warning border-0" type="button" name="all_posts" onclick="allPosts()">All Reviews</button>
         <div id="filter" class="scroll_hide scrolled">
-          <div class="row">
-            <div class="col-3">
+            <div class="d-flex justify-content-between">
               <div class="btn-group">
                 <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
@@ -157,8 +156,6 @@
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="col-3">
               <div class="btn-group">
                 <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
@@ -170,8 +167,6 @@
                   {% endfor %}
                 </div>
               </div>
-            </div>
-            <div class="col-3">
               <div class="btn-group">
                 <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
@@ -182,10 +177,9 @@
                   {% endfor %}
                 </div>
               </div>
-            </div>
-            <div class="col-3">
-              <button id="my_post_btn" type="button" name="my_post" onclick="myPost()">My Review</button>
-            </div>
+              {%for post in user_posts%}
+              <button id="my_post_btn" class="btn btn-outline-warning border-0" type="button" name="my_post" onclick="myPost()">My Review</button>
+              {%endfor%}
           </div>
         </div>
         <input id="text_search" type="text" class="scroll_hide scrolled form-control mr-0" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search for an specific review">
@@ -208,8 +202,7 @@
       <div class="row mb-1">
         <div class="col-7">
           <!-- <p id="user_post"><span>Your empty post</span></p> -->
-          <p><span>Your post</span></p>
-          <input id="user_post" type="hidden">
+          <p class="my_post"><span>Your post</span></p>
         </div>
         <div class="col-4 text-right">
           <small class="review-date text-right text-muted">{{ post['posted_date'] }}</small>
@@ -253,8 +246,7 @@
           {% if 'group' in session and session['group'] == "admin" %}
           <p class="mb-0"><span>Author:</span> {{ post['author'] }}</p>
           {% elif post in user_posts %}
-          <p class="mb-0"><span>Your post</span></p>
-          <input id="user_post" type="hidden">
+          <p class="mb-0 my_post"><span>Your post</span></p>
           {% endif %}
         </div>
         <div class="d-flex justify-content-end align-items-start">

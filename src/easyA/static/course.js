@@ -378,9 +378,9 @@ function myPost() {
   var btn = document.getElementById("my_post_btn");
   var reviews = document.getElementsByClassName("review_li");
   if (btn.innerText == "My Review") {
-    btn.innerText == "All Reviews";
+    btn.innerText = "All Reviews";
     for (var i = 0; i < reviews.length; i++) {
-      if (reviews[i].getElementById("user_post") != null) {
+      if (reviews[i].getElementsByClassName("my_post").length == 1) {
         reviews[i].style.display = "block";
       } else {
         reviews[i].style.display = "none";
@@ -392,8 +392,21 @@ function myPost() {
       reviews[i].style.display = "block";
     }
   }
+}
+function allPosts() {
+  $("#all_reviews").hide();
+  $(".review_li").show();
+}
 
-
+function newReview(course_id){
+  if (document.getElementsByClassName("my_post").length == 0) {
+    window.location.href = '/course/' + course_id + '/new_review';
+  } else {
+    alert("You can only review this class once\nYou can also delete your old review and write a new one");
+    if (document.getElementById("my_post_btn").innerText == "My Review") {
+      myPost();
+    }
+  }
 }
 
 window.onresize = function() {
