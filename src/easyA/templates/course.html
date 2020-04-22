@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="StyleSheet" href="{{ url_for('static', filename='course.css') }}" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kalam&family=Poppins:wght@400;700&family=Questrial&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <title>{{ course_id }} - easyA</title>
@@ -131,10 +131,10 @@
 
     <div id='row3'>
       <div id="row3flex" class="d-flex flex-column flex-md-row justify-content-between">
-        <a id="all_reviews" class="text-light" href="/course/{{ course_id }}">See All Reviews</a>
+        <a id="all_reviews" class="text-light" href="/course/{{ course_id }}">All Reviews</a>
         <div id="filter" class="scroll_hide scrolled">
           <div class="row">
-            <div class="col-4">
+            <div class="col-3">
               <div class="btn-group">
                 <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
@@ -158,7 +158,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <div class="btn-group">
                 <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professor</button>
@@ -171,7 +171,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <div class="btn-group">
                 <button type="button" class="border-0 btn btn-outline-warning dropdown-toggle mx-auto"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
@@ -182,6 +182,9 @@
                   {% endfor %}
                 </div>
               </div>
+            </div>
+            <div class="col-3">
+              <button id="my_post_btn" type="button" name="my_post" onclick="myPost()">My Review</button>
             </div>
           </div>
         </div>
@@ -204,7 +207,9 @@
     <div class="container review">
       <div class="row mb-1">
         <div class="col-7">
-          <p id="user_post"><span>Your empty post</span></p>
+          <!-- <p id="user_post"><span>Your empty post</span></p> -->
+          <p><span>Your post</span></p>
+          <input id="user_post" type="hidden">
         </div>
         <div class="col-4 text-right">
           <small class="review-date text-right text-muted">{{ post['posted_date'] }}</small>
@@ -248,7 +253,7 @@
           <p class="mb-0"><span>Author:</span> {{ post['author'] }}</p>
           {% elif post in user_posts %}
           <p class="mb-0"><span>Your post</span></p>
-          <input id="my_post" type="hidden">
+          <input id="user_post" type="hidden">
           {% endif %}
         </div>
         <div class="d-flex justify-content-end align-items-start">
@@ -260,10 +265,6 @@
               <form action="{{ url_for('delete_review') }}" method="POST">
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                 <button type="submit" class="dropdown-item text-light">Delete</button>
-              </form>
-              <form action="#"method="POST">
-                <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
-                <button type="submit" class="dropdown-item text-light">Share</button>
               </form>
               {%else%}
               {% if 'email' in session %}
@@ -288,6 +289,9 @@
               data-target="#myModal">Report</button>
               {% endif %}
               {%endif%}
+              <form action="#"method="GET" onsubmit="return copyLink('{{ course_id }}', '{{ post['post_ID'] }}')">
+                <button type="submit" class="dropdown-item text-light share_btn">Share</button>
+              </form>
             </div>
           </div>
         </div>

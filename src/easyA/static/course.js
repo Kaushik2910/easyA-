@@ -45,7 +45,6 @@ function validateRequest() {
 
 function validateTranslate(post) {
   var translation = document.getElementById(post).getElementsByClassName("translation")[0];
-  console.log(translation.textContent == null || translation.textContent == "");
   if (translation.textContent == null || translation.textContent == "") {
     return true;
   }
@@ -171,7 +170,6 @@ for (var i = 0; i < votes.length; i++) {
       });
 
     });
-    // console.log(votes[i].nodeType);
     if (other_vote) {
       other_vote[i].setAttribute('disabled', 'disabled');
       setTimeout(function(){other_vote[i].removeAttribute('disabled');}, 500);
@@ -376,7 +374,27 @@ for (var i = 0; i < date.length; i++) {
   date[i].innerText = month + ' ' + day + ', ' + year;
 }
 
+function myPost() {
+  var btn = document.getElementById("my_post_btn");
+  var reviews = document.getElementsByClassName("review_li");
+  if (btn.innerText == "My Review") {
+    btn.innerText == "All Reviews";
+    for (var i = 0; i < reviews.length; i++) {
+      if (reviews[i].getElementById("user_post") != null) {
+        reviews[i].style.display = "block";
+      } else {
+        reviews[i].style.display = "none";
+      }
+    }
+  } else {
+    btn.innerText = "My Review";
+    for (var i = 0; i < reviews.length; i++) {
+      reviews[i].style.display = "block";
+    }
+  }
 
+
+}
 
 window.onresize = function() {
   $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
@@ -444,3 +462,18 @@ window.addEventListener('load', function () {
   $(".translation").hide();
   $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
 })
+
+function copyLink(course_id, post_id) {
+  var url = document.URL.split('course',2)[0];
+  url = url + 'course/' + course_id + '?' + post_id;
+
+  const el = document.createElement('textarea');
+  el.value = url;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+
+  alert("Link copied to clipboard")
+  return false;
+}

@@ -7,20 +7,27 @@
 	border-radius: 1.5rem;
 }
 
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #292929
+}
+
+h1 {
+	font-family: 'Questrial', sans-serif;
+	color:#ffffff;
+}
+
+
 #a {
-	font-family: Noteworthy-Bold;
+	font-family: 'Kalam', cursive;
 	font-size: 110%;
 	color: #fbb03b;
 }
 
 #slogan {
+	font-family: 'Poppins', sans-serif;
 	font-size: 1rem;
 	color:#F5F5F5;
-}
-
-body {
-	font-family: 'Poppins', sans-serif;
-	background-color: #292929
 }
 
 *{
@@ -62,10 +69,6 @@ input, button
 	background: rgba(0, 0, 0, 0.3);
 }
 
-h1 {
-	font-family: STHeitiTC-Medium;
-	color:#ffffff;
-}
 
 .suggestion p{
 	color: rgba(194, 194, 194, 0.3);

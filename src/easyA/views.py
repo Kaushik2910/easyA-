@@ -384,7 +384,8 @@ def post_review(course, course_id):
         "text": request.form['text'],
         "report_count": 0,
         "downvotes": 0,
-        "upvotes": 0
+        "upvotes": 0,
+        "translated_text" : str("")
     }
 
     #Add the post to the database
