@@ -1,12 +1,12 @@
 #logo { /* easy */
 	/* margin-top: 3%; */
-	font-family: STHeitiTC-Medium;
+	font-family: 'Questrial', sans-serif;
 	font-size: 3rem;
 	color:#ffffff;
 }
 
 #logo span {
-	font-family: Noteworthy-Bold;
+	font-family: 'Kalam', cursive;
 	font-size: 110%;
 	color:#fbb03b;
 }
