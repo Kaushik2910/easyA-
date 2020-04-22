@@ -1,10 +1,10 @@
 #logo { /* easy */
-	font-family: STHeitiTC-Medium;
+	font-family: 'Questrial', sans-serif;
 	color:#ffffff;
 }
 
 #logo span {
-	font-family: Noteworthy-Bold;
+	font-family: 'Kalam', cursive;
 	font-size: 110%;
 	color:#fbb03b;
 }
