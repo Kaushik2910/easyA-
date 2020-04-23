@@ -53,6 +53,7 @@ def contact():
     if request.method == 'POST':
         #Banned user
         if session['group'] == "banned":
+            session['errorMessage'] = "You cannot contact the reviewer because you are BANNED!"
             return redirect(request.environ['HTTP_REFERER'])
 
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
@@ -107,8 +108,10 @@ def contact_admin():
 
 @app.route( '/course/')
 @app.route('/course/<course_id>', methods=['POST', 'GET'])
-def course_page(course_id, get_info=False):
-
+def course_page(course_id, get_info=False, errorMessage=""):
+        if 'errorMessage' in session:
+            errorMessage = session['errorMessage']
+            session.pop('errorMessage')
         course_name = ""
         posts = []
         user_posts = []
@@ -256,7 +259,7 @@ def course_page(course_id, get_info=False):
         #Get the course list and post count from the index function
         course_list = index(get_info=True)
 
-        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted, sort_value=sort_function, course_list=course_list)
+        return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted, sort_value=sort_function, course_list=course_list, errorMessage=errorMessage)
 
 @app.route('/course/<course_id>/<post_id>', methods=['POST', 'GET'])
 def review_reports(course_id, post_id):
@@ -320,6 +323,7 @@ def new_review(course_id):
 
     #Banned user
     if session['group'] == "banned":
+        session['errorMessage'] = "You cannot add a new post because you are BANNED!"
         return redirect("/course/" + course_id)
 
     professors = []
@@ -328,7 +332,7 @@ def new_review(course_id):
         #User has already posted a review, do not post render new review page
 
         #TODO: Show error in course page
-
+        session['errorMessage'] = "You already have a review on this course!"
         return redirect('/course/' + course_id)
 
     if request.method == 'POST':
@@ -350,6 +354,7 @@ def report():
     if request.method == 'POST':
         #Banned user
         if session['group'] == "banned":
+            session['errorMessage'] = "You cannot report a post because you are BANNED!"
             return redirect(request.environ['HTTP_REFERER'])
 
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
@@ -473,6 +478,7 @@ def post_review(course, course_id):
             if count_profs >= 5:
                 #TODO: add error that user already has an added professor
 
+                session['errorMessage'] = "You added new five professors to this course, please use an existing professor name!"
                 return redirect('/course/' + str(course_id))
     
     #Check if professor is in database or not
@@ -540,6 +546,7 @@ def delete_review():
     if request.method == 'POST':
         #Banned user
         if session['group'] == "banned":
+            session['errorMessage'] = "You cannot delete a post because you are BANNED!"
             return redirect(request.environ['HTTP_REFERER'])
 
         career_id = (session['email'].split('@', 2))[0]
@@ -554,7 +561,7 @@ def delete_review():
         if post_dict['author'] != author.reference and not ('group' in session and session['group'] == "admin"):
 
             #TODO: Show error that user cannot delete this post
-
+            session['errorMessage'] = "You cannot delete a post that is not yours!"
             return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
 
 
@@ -723,6 +730,7 @@ def do_upvote():
     if request.method == 'POST':
         #Banned user
         if session['group'] == "banned":
+            session['errorMessage'] = "You cannot upvote a post because you are BANNED!"
             return redirect(request.environ['HTTP_REFERER'])
 
         career_id = (session['email'].split('@', 2))[0]
@@ -804,6 +812,7 @@ def do_downvote():
     if request.method == 'POST':
         #Banned user
         if session['group'] == "banned":
+            session['errorMessage'] = "You cannot downvote a post because you are BANNED!"
             return redirect(request.environ['HTTP_REFERER'])
 
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
