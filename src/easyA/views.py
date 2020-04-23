@@ -106,10 +106,6 @@ def signup(errorMessage="", requestTrigger=True):
 def contact_admin():
     return render_template('contact_us.html')
 
-@app.route('/review_reports')
-def review_reports():
-    return render_template('review_reports.html')
-
 @app.route( '/course/')
 @app.route('/course/<course_id>', methods=['POST', 'GET'])
 def course_page(course_id, get_info=False):
@@ -229,6 +225,61 @@ def course_page(course_id, get_info=False):
         course_list = index(get_info=True)
 
         return render_template('course.html', course_id=course_id, course_name=course_name, description=description, rating=rating, rating_count=rating_count, posts=sorted_posts, user_posts=user_posts, current_profs=current_profs, current_tags=current_tags, upvoted=upvoted, downvoted=downvoted, sort_value=sort_function, course_list=course_list)
+
+@app.route('/course/<course_id>/<post_id>', methods=['POST', 'GET'])
+def review_reports(course_id, post_id):
+    #Only admins allowed here
+
+    if 'email' not in session:
+        return render_template("not_found.html")
+
+    if 'group' not in session or session['group'] != "admin":
+        return render_template("not_found.html")
+
+    # career_id = (session['email'].split('@', 2))[0]
+    # user = firestore_database.collection('users').document(career_id).get()
+    course_ref = firestore_database.collection('courses').where('course_id', '==', course_id)
+
+    post = firestore_database.collection('posts').document(post_id).get()
+    postDict = dict()
+    reports = []
+    for course in course_ref.stream():
+        if post.exists and post.to_dict()['course'] == course.reference:
+            postDict = post.to_dict()
+            postDict['post_ID'] = post.id
+            postDict['author'] = postDict['author'].get().id
+            postDict['course'] = postDict['course'].get().to_dict()['course_id']
+            report_ref = firestore_database.collection('reports').where('report_post', '==', post.reference).stream()
+            for report in report_ref:
+                tempDict = report.to_dict()
+                tempDict['report_ID'] = report.id
+                tempDict['author'] = tempDict['author'].get().id
+                reports.append(tempDict)
+        else:
+            return render_template("not_found.html")
+
+    return render_template('review_reports.html', post=postDict, reports=reports)
+
+#Deleting a report function
+@app.route('/delete_report_admin', methods=['POST', 'GET'])
+def delete_report_admin():
+    #Check for logged in or not
+    if 'email' not in session:
+        return render_template("not_found.html")
+
+    if 'group' not in session or session['group'] != "admin":
+        return render_template("not_found.html")
+
+    if request.method == 'POST':
+        report = firestore_database.collection('reports').document(request.form['report_ID']).get()
+
+        #Delete post
+        report.reference.delete()
+
+        return redirect(request.environ['HTTP_REFERER'])
+
+    return render_template("not_found.html")
+
 
 @app.route('/course/<course_id>/new_review', methods=['POST', 'GET'])
 def new_review(course_id):
