@@ -360,49 +360,47 @@ for (var i = 0; i < date.length; i++) {
   day = date[i].innerText.substring(8, 10);
   switch (parseInt(day) % 10) {
     case 1:
-      day +="st";
+      day += "<sup>st</sup>";
       break;
     case 2:
-      day +="nd";
+      day += "<sup>nd</sup>";
       break;
     case 3:
-      day +="rd";
+      day += "<sup>rd</sup>";
       break;
     default:
-    day +="th";
+    day += "<sup>th</sup>";
   }
-  date[i].innerText = month + ' ' + day + ', ' + year;
+  date[i].innerHTML = month + ' ' + day + ', ' + year;
 }
 
 function myPost() {
   var btn = document.getElementById("my_post_btn");
   var reviews = document.getElementsByClassName("review_li");
-  if (btn.innerText == "My Review") {
-    btn.innerText = "All Reviews";
-    for (var i = 0; i < reviews.length; i++) {
-      if (reviews[i].getElementsByClassName("my_post").length == 1) {
-        reviews[i].style.display = "block";
-      } else {
-        reviews[i].style.display = "none";
-      }
-    }
-  } else {
-    btn.innerText = "My Review";
-    for (var i = 0; i < reviews.length; i++) {
+  for (var i = 0; i < reviews.length; i++) {
+    if (reviews[i].getElementsByClassName("my_post").length == 1) {
       reviews[i].style.display = "block";
+    } else {
+      reviews[i].style.display = "none";
     }
   }
+  $("#all_reviews").show();
+  $("#filter").hide();
+  $("#text_search").hide();
 }
+
 function allPosts() {
   $("#all_reviews").hide();
   $(".review_li").show();
+  $("#filter").show();
+  $("#text_search").show();
 }
 
 function newReview(course_id){
   if (document.getElementsByClassName("my_post").length == 0) {
     window.location.href = '/course/' + course_id + '/new_review';
   } else {
-    alert("You can only review this class once\nYou can also delete your old review and write a new one");
+    $('#review_modal').modal('toggle');
     if (document.getElementById("my_post_btn").innerText == "My Review") {
       myPost();
     }

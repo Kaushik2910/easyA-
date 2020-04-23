@@ -241,6 +241,13 @@ hr {
 	#share_modal .btn-warning {
 		width: 100%;
 	}
+	#review_modal{
+		top: 30%;
+	}
+
+	#review_modal .btn-warning {
+		width: 100%;
+	}
 
 	#login_modal button {
 		width: 100%;
@@ -328,6 +335,10 @@ hr {
 	}
 
 	#share_modal{
+		top: 20%;
+	}
+
+	#review_modal{
 		top: 20%;
 	}
 }
