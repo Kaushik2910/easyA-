@@ -487,9 +487,6 @@ function clipboard(){
   tempInput.select();
   document.execCommand("copy");
   document.body.removeChild(tempInput);
-  $("#copy_btn").hide();
-  $("#copied_btn").show();
-  shareLink.innerText = "Copied to clipboard";
 }
 
 function speakLoud(postID) {
