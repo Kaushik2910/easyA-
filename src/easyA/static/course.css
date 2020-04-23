@@ -7,6 +7,10 @@ body {
   background-color: #292929;
 }
 
+#filter .dropdown-menu {
+	font-size: 0.75rem;
+}
+
 
 * {
     outline: none;
