@@ -209,8 +209,9 @@
         </div>
         <div class="col-1 d-flex justify-content-end align-items-start">
           <div class="btn-group dropdown_div">
-            <button type="button" class="btn btn-sm text_fucntion_btn dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
+            <button type="button" class="btn btn-sm text_fucntion_btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-ellipsis-h"></i>
+            </button>
             <div class="dropdown-menu dropdown-menu-right bg-warning">
               <form action="{{ url_for('delete_review') }}" method="POST">
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
@@ -250,8 +251,10 @@
         </div>
         <div class="d-flex justify-content-end align-items-start">
           <div class="btn-group dropdown_div">
-            <button type="button" class="btn btn-sm text_fucntion_btn dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
+            <!-- <button type="button" class="btn btn-sm text_fucntion_btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+            <button type="button" class="btn text_fucntion_btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-ellipsis-h"></i>
+            </button>
             <div class="dropdown-menu dropdown-menu-right bg-warning">
               {%if post in user_posts or ('group' in session and session['group'] == "admin") %}
               <form action="{{ url_for('delete_review') }}" method="POST">
