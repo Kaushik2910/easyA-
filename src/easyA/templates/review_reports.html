@@ -16,10 +16,10 @@
   <!-- class="fixed-top" -->
   <div id="class-header" >
     <div class="d-flex justify-content-center">
-      <a href="./" id="logo">easy<span>A</span></a>
+      <a href="/" id="logo">easy<span>A</span></a>
     </div>
     <div class="container review">
-        <h1 class="review-class">{{ post['course'] }}</h1>
+        <h1 class="review-class">{{ post['author'] }}</h1>
         <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
         <p class="review-body">{{ post['text'] }}</p>
     </div>
@@ -30,7 +30,12 @@
     {%for report in reports%}
     <li>
       <p><span>Author:</span> {{ report['author'] }}</p>
-      <p>{{ report['body'] }}</p>
+      <p>{{ report['text'] }}</p>
+      
+      <form action="{{ url_for('delete_report_admin') }}" method="POST">
+        <input name="report_ID" type="hidden" value="{{ report['report_ID'] }}"></input>
+        <button type="submit" class="dropdown-item text-light">Delete</button>
+      </form>
     </li>
     {%endfor%}
   </ul>

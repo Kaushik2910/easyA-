@@ -261,6 +261,9 @@
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                 <button type="submit" class="dropdown-item text-light">Delete</button>
               </form>
+              <form action="/course/{{ course_id }}/{{ post['post_ID'] }}" method="GET">
+                <button type="submit" class="dropdown-item text-light">View all reports</button>
+              </form>
               {%else%}
               {% if 'email' in session %}
               <form action="{{ url_for('contact') }}" method="POST">
