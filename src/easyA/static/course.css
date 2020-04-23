@@ -215,7 +215,7 @@ hr {
 }
 
 
-#myModal{
+#login_modal{
 	top: 15%;
 }
 
@@ -228,7 +228,24 @@ hr {
 	transition:visibility 0s, height 2s ease-in-out;
 }
 
+#copied_btn {
+	display: none;
+}
+
+
 @media screen and (max-width: 600px) {
+	#share_modal{
+		top: 30%;
+	}
+
+	#share_modal .btn-warning {
+		width: 100%;
+	}
+
+	#login_modal button {
+		width: 100%;
+	}
+
 	#review_button{
 		margin: auto auto;
 	}
@@ -308,6 +325,10 @@ hr {
 	.review{
 		padding: 0.5rem 2rem 1rem;
 		margin: 1rem auto;
+	}
+
+	#share_modal{
+		top: 20%;
 	}
 }
 

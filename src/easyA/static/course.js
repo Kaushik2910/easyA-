@@ -129,7 +129,7 @@ for (var i = 0; i < votes.length; i++) {
       num++;
     }
     var form = this.parentElement;
-    var other_vote;
+    var other_vote = null;
     if (this.classList.contains("upvote")) {
       this.innerHTML = "<i class='fas fa-arrow-up'></i> " + num;
       form.action = "/upvote";
@@ -170,8 +170,8 @@ for (var i = 0; i < votes.length; i++) {
       });
 
     });
-    if (other_vote) {
-      other_vote[i].setAttribute('disabled', 'disabled');
+    if (other_vote != null) {
+      other_vote.setAttribute('disabled', 'disabled');
       setTimeout(function(){other_vote[i].removeAttribute('disabled');}, 500);
     }
     votes[i].setAttribute('disabled', 'disabled');
@@ -467,8 +467,6 @@ function shareable() {
 
 }
 
-
-
 window.addEventListener('load', function () {
   shareable();
   show_suggestions();
@@ -476,17 +474,27 @@ window.addEventListener('load', function () {
   $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
 })
 
-function copyLink(course_id, post_id) {
+function copyLinkHelper(course_id, post_id) {
+  var shareLink = document.getElementById("shareLink");
   var url = document.URL.split('course',2)[0];
   url = url + 'course/' + course_id + '?' + post_id;
+  shareLink.innerText = url;
+}
 
-  const el = document.createElement('textarea');
-  el.value = url;
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
+function clipboard(){
+  var shareLink = document.getElementById("shareLink");
+  var tempInput = document.createElement("input");
+  tempInput.value = shareLink.innerText;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
+  $("#copy_btn").hide();
+  $("#copied_btn").show();
+  shareLink.innerText = "Copied to clipboard";
+}
 
-  alert("Link copied to clipboard")
-  return false;
+function speakLoud(postID) {
+    var text = document.getElementById(postID + "-text");
+    speechSynthesis.speak(new SpeechSynthesisUtterance(text.innerHTML));
 }

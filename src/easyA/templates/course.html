@@ -77,7 +77,7 @@
         <div class="d-none d-md-block">
           <input id="userID" type="text" name="" hidden value="guest">
           <button id="login_check2" type="submit" class="btn btn-outline-light mx-2" data-toggle="modal"
-          data-target="#myModal">Log in</button>
+          data-target="#login_modal">Log in</button>
           <button id="login_check3" onclick="window.location.href = '{{ url_for('signup') }}';" type="button"
           class="btn btn-outline-warning mx-2">Sign up</button>
         </div>
@@ -87,7 +87,7 @@
             aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right bg-warning text-center">
-              <button type="submit" class="dropdown-item text-light" data-toggle="modal" data-target="#myModal">
+              <button type="submit" class="dropdown-item text-light" data-toggle="modal" data-target="#login_modal">
               Log in
               </button>
               <a class="dropdown-item text-light" href="{{ url_for('signup') }}">Sign up</a>
@@ -122,7 +122,7 @@
         {% if 'email' in session %}
         <button id="review_button" onclick="newReview('{{course_id}}')" type="button" class="btn btn-light text-light">
         {% else %}
-        <button id="review_button" type="submit" class="btn btn-light text-light" data-toggle="modal" data-target="#myModal">
+        <button id="review_button" type="submit" class="btn btn-light text-light" data-toggle="modal" data-target="#login_modal">
         {% endif %}
         Write a review
         </button>
@@ -260,8 +260,6 @@
               </form>
               {%else%}
               {% if 'email' in session %}
-                <button type="submit" class="dropdown-item text-light" data-toggle="modal"
-              data-target="#myModal2{{ post['post_ID'] }}">Share</button>
               <form action="{{ url_for('contact') }}" method="POST">
                 <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
                 <button type="submit" class="dropdown-item text-light">Contact</button>
@@ -274,13 +272,16 @@
               <!-- The popup log in should be here -->
               <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
               <button type="submit" class="dropdown-item text-light" data-toggle="modal"
-              data-target="#myModal">Contact</button>
+              data-target="#login_modal">Contact</button>
 
               <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
               <button type="submit" class="dropdown-item text-light" data-toggle="modal"
-              data-target="#myModal">Report</button>
+              data-target="#login_modal">Report</button>
               {% endif %}
               {%endif%}
+              <button type="button" onclick="copyLinkHelper('{{ course_id }}','{{ post['post_ID'] }}')" class="dropdown-item text-light" data-toggle="modal" data-target="#share_modal">
+                Share
+              </button>
             </div>
           </div>
         </div>
@@ -377,53 +378,40 @@
 
           {% else %}
           <button type="button" name="button" class="upvote mx-2"><i class="fas fa-arrow-up"
-            data-toggle="modal" data-target="#myModal"></i>{{ post['upvotes'] }}</button>
+            data-toggle="modal" data-target="#login_modal"></i>{{ post['upvotes'] }}</button>
             <button type="button" name="button" class="downvote mx-2"><i
               class="fas fa-arrow-down" data-toggle="modal"
-              data-target="#myModal"></i>{{ post['downvotes'] }}</button>
+              data-target="#login_modal"></i>{{ post['downvotes'] }}</button>
               {% endif %}
             </div>
           </div>
         </li>
-        <div class="modal" id="myModal2{{ post['post_ID'] }}">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-            
-              
-              <div class="modal-header">
-                <h4 class="modal-title">Share Link</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              
-              
-              <div class="modal-body">
-                <input type="text" value="http://localhost:5000/course/{{ course_id }}?{{ post['post_ID'] }}" id="shareLink" size="75"></input>
-              </div>
-              
-              
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-warning" onclick= "clipboard('http://localhost:5000/course/{{ course_id }}?{{ post['post_ID'] }}')">Copy Link</button>
-                  <script>
-                    function clipboard(value1){
-                      var copytext=document.getElementById("shareLink");
-                      var tempInput = document.createElement("input");
-                      tempInput.value = value1;
-                      document.body.appendChild(tempInput);
-                      tempInput.select();
-                      document.execCommand("copy");
-                      alert("Copied Share Link to Clipboard: " + tempInput.value);
-                      document.body.removeChild(tempInput);
-                    }
-                  </script>
-              </div>
-              
-            </div>
-          </div>
-        </div>
         {%endfor%}
       </ul>
 
-      <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal" id="share_modal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-header mx-1 mb-0">
+              <h4 class="modal-title">Share Link</h4>
+              <button type="button" class="text-muted" data-dismiss="modal"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="modal-body m-0 py-1">
+              <p class="m-0 mt-1" id="shareLink"></p>
+            </div>
+
+            <div class="modal-footer mx-1 mt-0 mb-1 border-0">
+              <button id="copy_btn" type="button" class="btn btn-warning text-light" onclick= "clipboard()">Copy Link</button>
+              <button id="copied_btn" type="button" class="btn btn-warning text-light" data-dismiss="modal">OK</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="login_modal" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -450,7 +438,7 @@
                   </p>
                 </div>
                 <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-warning">Log in</button>
+                  <button type="submit" class="btn btn-warning text-light">Log in</button>
                 </div>
               </form>
             </div>
@@ -458,7 +446,7 @@
         </div>
       </div>
 
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD
       <script>
         function speakLoud(postID) {
             var text = document.getElementById(postID + "-text");
@@ -466,12 +454,12 @@
         }
       </script>
 =======
-      
 
 
 
 
->>>>>>> ee05cd00fa89995093a4d40771f349f6027dec87
+
+>>>>>>> ee05cd00fa89995093a4d40771f349f6027dec87 -->
       <!-- Optional JavaScript -->
       <script src="{{ url_for('static', filename='course.js') }}"></script>
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
