@@ -36,17 +36,12 @@ body {
 	margin-bottom: -8px;
 }
 
-.review{
-	padding: 20px;
-	margin: 1rem auto;
-}
-
-.review span{
-	font-weight: bold;
-}
-
 h1, h2, h3, h4, h5, h6, p{
 		color: #F5F5F5;
+}
+
+ul, li {
+    list-style-type: none;
 }
 
 body {
@@ -54,42 +49,19 @@ body {
   background-color: #292929;
 }
 
-#new_report {
-	margin-top: auto;
+
+.report{
+	background: #1F1F1F;
+	border-radius: .5rem;
 }
 
-#new_report h2{
-	color:#fbb03b;
+#back_btn {
+	text-align: right;
+	color: #6c757d;
+	width: 90%;
+	margin: auto;
+}
+
+.report span{
 	font-weight: bold;
-	margin-bottom: 1rem;
-}
-#new_report .btn-outline-warning{
-	margin: 0.25rem;
-}
-
-#new_report .form-group{
-	color:#fbb03b;
-	font-weight: bold;
-}
-
-#new_report .form-control{
-	font-size: 1rem;
-	color: #F5F5F5;
-	border-color: #292929;
-	background-color: #1F1F1F;
-}
-
-#new_report .form-control:focus{
-	border-color: rgba(240, 240, 240, 0.7);
-	outline-color: white;
-}
-
-#new_report .btn-outline-warning{
-	margin: 0.35rem;
-}
-
-.cancel-btn{
-	background-color: transparent;
-	color: #818181;
-	border: none;
 }

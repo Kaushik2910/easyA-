@@ -7,38 +7,46 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='logo.ico') }}">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="StyleSheet" href="../static/report.css" />
+  <link rel="StyleSheet" href="{{ url_for('static', filename='review_reports.css') }}" />
   <link href="https://fonts.googleapis.com/css2?family=Kalam&family=Poppins:wght@400;700&family=Questrial&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/6b9101bbf3.js" crossorigin="anonymous"></script>
-  <title>Report - easyA</title>
+  <title>Reports - easyA</title>
 </head>
 <body>
   <!-- class="fixed-top" -->
   <div id="class-header" >
     <div class="d-flex justify-content-center">
-      <a href="/" id="logo">easy<span>A</span></a>
+      <a href="{{ url_for('index') }}" id="logo">easy<span>A</span></a>
     </div>
     <div class="container review">
-        <h1 class="review-class">{{ post['author'] }}</h1>
+        <h3 class="review-class">{{ post['author'] }}</h3>
         <p class="review-professor"><span>Professor:</span>  {{ post['professor'] }}</p>
         <p class="review-body">{{ post['text'] }}</p>
     </div>
     <hr>
   </div>
 
-  <ul>
+  <ul class="p-0">
     {%for report in reports%}
-    <li>
-      <p><span>Author:</span> {{ report['author'] }}</p>
-      <p>{{ report['text'] }}</p>
-      
-      <form action="{{ url_for('delete_report_admin') }}" method="POST">
-        <input name="report_ID" type="hidden" value="{{ report['report_ID'] }}"></input>
-        <button type="submit" class="dropdown-item text-light">Delete</button>
-      </form>
+    <li class="my-1">
+      <div class="container report">
+        <p><span>Author:</span> {{ report['author'] }}</p>
+        <p>{{ report['text'] }}</p>
+
+        <form action="{{ url_for('delete_report_admin') }}" method="POST">
+          <input name="report_ID" type="hidden" value="{{ report['report_ID'] }}"></input>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-danger border-0">Delete</button>
+          </div>
+        </form>
+      </div>
     </li>
     {%endfor%}
   </ul>
+  <div class="d-flex justify-content-end">
+    <a id="back_btn" href="../{{ post['course_id'] }}"> Go Back</a>
+  </div>
+
 
 
   <!-- Optional JavaScript -->
