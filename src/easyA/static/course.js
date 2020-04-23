@@ -301,17 +301,14 @@ document.addEventListener("keydown",function(e){
 })
 
 
-var rating_link = "https://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=Purdue+University+-+West+Lafayette&schoolID=783&query="
-var profs_divs = document.getElementsByClassName("professor_div");
-var prof_name;
-for (var i = 0; i < profs_divs.length; i++) {
-  prof_name = profs_divs[i].getElementsByClassName("review-professor")[0].innerText.replace("Professor: ","");
-  prof_name = prof_name.replace(/ /g,"+");
-  profs_divs[i].getElementsByTagName("a")[0].href = rating_link + prof_name;
-}
-
-
-
+// var rating_link = "https://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=Purdue+University+-+West+Lafayette&schoolID=783&query="
+// var profs_divs = document.getElementsByClassName("professor_div");
+// var prof_name;
+// for (var i = 0; i < profs_divs.length; i++) {
+//   prof_name = profs_divs[i].getElementsByClassName("review-professor")[0].innerText.replace("Professor: ","");
+//   prof_name = prof_name.replace(/ /g,"+");
+//   profs_divs[i].getElementsByTagName("a")[0].href = rating_link + prof_name;
+// }
 
 var year;
 var month;

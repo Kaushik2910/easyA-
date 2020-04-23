@@ -295,7 +295,11 @@
       </div>
       <div class="mb-1 d-flex justify-content-between">
         <div class="professor_div">
-          <p class="review-professor my-0"><span>Professor:</span> <a class="prof_ratinng" href="#">{{ post['professor'] }}</a></p>
+          {% if post['professor_link'] %}
+          <p class="review-professor my-0"><span>Professor:</span> <a class="prof_ratinng" href="{{ post['professor_link'] }}">{{ post['professor'] }}</a></p>
+          {% else %}
+          <p class="review-professor my-0"><span>Professor:</span> {{ post['professor'] }}</p>
+          {% endif %}
         </div>
         <div class="text-right">
           <small class="review-date text-right text-muted">{{ post['posted_date'] }}</small>

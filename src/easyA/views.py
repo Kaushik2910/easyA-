@@ -5,15 +5,14 @@ from easyA import db
 from flask import render_template, request, session, redirect, url_for
 from flask_mail import Message
 from googletrans import Translator
-from gtts import gTTS
 import os
 import google.cloud
+from lxml import html
 import requests
 import json
 import time
 import datetime
 import operator
-import pyttsx3
 
 firestore_database, realtime_database, firebase_wrapper, admin_auth = db.init_db()
 auth = firebase_wrapper.auth()
@@ -148,6 +147,23 @@ def course_page(course_id, get_info=False):
                     tempDict['author'] = tempDict['author'].get().id
                     tempDict['post_ID'] = post.id
 
+                    #Check if Prof is in rate my prof
+                    page_uri = "https://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=Purdue+University+-+West+Lafayette&schoolID=783&query=" + tempDict['professor'].replace(" ", "+")
+                    page = requests.get(page_uri)
+                    tree = html.fromstring(page.content)
+                    result = tree.xpath('//div[@class="result-count"]/text()')[2]
+                    if result == "Your search didn\'t return any results.":
+                        tempDict['professor_link'] = ""
+                        result_count = 0
+                    else:
+                        result_count = int(result.split(" ")[3])
+
+                    if result_count == 1:
+                        professor_page = "https://www.ratemyprofessors.com" + tree.xpath('//li[@class="listing PROFESSOR"]/a/@href')[0]
+                        tempDict['professor_link'] = professor_page
+                    elif result_count > 1:
+                        tempDict['professor_link'] = page_uri
+
                     #Sum all course rating
                     rating += tempDict['rating']
                     rating_count += 1
@@ -167,10 +183,26 @@ def course_page(course_id, get_info=False):
                     tempDict = post.to_dict()
                     tempDict['post_ID'] = post.id
 
+                    #Check if Prof is in rate my prof
+                    page_uri = "https://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=Purdue+University+-+West+Lafayette&schoolID=783&query=" + tempDict['professor'].replace(" ", "+")
+                    page = requests.get(page_uri)
+                    tree = html.fromstring(page.content)
+                    result = tree.xpath('//div[@class="result-count"]/text()')[2]
+                    if result == "Your search didn\'t return any results.":
+                        tempDict['professor_link'] = ""
+                        result_count = 0
+                    else:
+                        result_count = int(result.split(" ")[3])
+
+                    if result_count == 1:
+                        professor_page = "https://www.ratemyprofessors.com" + tree.xpath('//li[@class="listing PROFESSOR"]/a/@href')[0]
+                        tempDict['professor_link'] = professor_page
+                    elif result_count > 1:
+                        tempDict['professor_link'] = page_uri
+
                     #Sum all course rating
                     rating += tempDict['rating']
                     rating_count += 1
-
 
                     if tempDict['text'] and not tempDict['text'].isspace():
                         posts.append(tempDict)
@@ -420,6 +452,55 @@ def post_contact_admin():
 def post_review(course, course_id):
     career_id = (session['email'].split('@', 2))[0]
     author = firestore_database.collection('users').document(career_id).get()
+    author_dict = author.to_dict()
+    added_professors = []
+    if 'added_professors' in author_dict:
+        if author.to_dict()['added_professors'] != "[]":
+            added_professors = author.to_dict()['added_professors'].strip("[]").replace('\'', '').split(", ")
+            count_profs = 0
+            temp_add_prof = added_professors.copy()
+            for p in added_professors:
+                p_ref = firestore_database.collection('professors').document(p)
+                if not p_ref.get().exists:
+                    #If professor was delete from database, either by ref count or an admin
+                    temp_add_prof.remove(p)
+                    continue
+                p_dict = p_ref.get().to_dict()
+                if p_dict['course'].get().to_dict()['course_id'] == course_id:
+                    if p_dict['professor_name'] != request.form['professor']:
+                        count_profs = count_profs + 1
+            added_professors = temp_add_prof
+            if count_profs >= 5:
+                #TODO: add error that user already has an added professor
+
+                return redirect('/course/' + str(course_id))
+    
+    #Check if professor is in database or not
+    professor_ref = firestore_database.collection('professors').where('professor_name', '==', request.form['professor'])
+    prof_exists = None
+    for professor in professor_ref.stream():
+        prof_exists = professor
+
+    if not prof_exists:
+        #Add to database
+        prof_data = {
+            "course": course.reference,
+            "professor_name": request.form['professor'],
+            "reference_count": 1
+        }
+        firestore_database.collection('professors').add(prof_data)
+
+        #Link to user
+        for professor in professor_ref.stream():
+            prof_exists = professor
+
+        added_professors.append(prof_exists.id)
+    else:
+        #Incerement ref. count
+        prof_exists.reference.update({
+                "reference_count": prof_exists.to_dict()['reference_count'] + 1
+        })
+
     data = {
         "posted_date": datetime.datetime.now().isoformat(),
         "author": author.reference,
@@ -442,6 +523,11 @@ def post_review(course, course_id):
     #Add the post to the database
     firestore_database.collection('posts').add(data)
 
+    #Update the added_professors array if necessary
+    author.reference.update({
+        "added_professors": str(added_professors)
+    })
+
     return redirect('/course/' + str(course_id))
 
 #Deleting a review function
@@ -460,6 +546,9 @@ def delete_review():
         author = firestore_database.collection('users').document(career_id).get()
         post = firestore_database.collection('posts').document(request.form['post_ID']).get()
         post_dict = post.to_dict()
+        professor_ref = firestore_database.collection('professors').where('professor_name', '==', post_dict['professor'])
+        for professor in professor_ref.stream():
+            prof_exists = professor
 
         #Make sure the user owns the post
         if post_dict['author'] != author.reference and not ('group' in session and session['group'] == "admin"):
@@ -474,8 +563,17 @@ def delete_review():
         for report in report_ref:
             report.reference.delete()
 
+        #Decrement professor reference count
+        prof_exists.reference.update({
+                "reference_count": int(prof_exists.to_dict()['reference_count']) - 1
+        })
+
         #Delete post
         post.reference.delete()
+
+        if int(prof_exists.reference.get().to_dict()['reference_count']) <= 0:
+            #Delete professor because ref count is 0
+            prof_exists.reference.delete()
 
         return redirect('/course/' + str(post_dict['course'].get().to_dict()['course_id']))
 
