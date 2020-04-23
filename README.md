@@ -17,6 +17,8 @@ pip install pyrebase
 pip install google-cloud-firestore
 pip install firebase-admin
 pip install Flask-Mail
+pip install googletrans
+pip install lxml
 ```
 
 ## Getting Started
