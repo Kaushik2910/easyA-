@@ -1,7 +1,7 @@
 
 var userID = document.getElementById("userID");
 
-if (userID.value == "user" || userID.value == "admin" || userID.value == "banned") {
+if (userID.value != "guest") {
   var user = document.getElementById("user");
   var fixed_user = user.innerHTML;
   user.innerHTML =  fixed_user.replace("@purdue.edu", "");
