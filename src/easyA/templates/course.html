@@ -445,11 +445,11 @@
               <h5 class="modal-title">Login</h5>
             </div>
             <div class="modal-body">
-              <form action="{{ url_for('login') }}" method="POST">
-                <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
+              <form action="{{ url_for('login') }}" method="POST" onsubmit="checkEmail()">
                 <div class="form-group mb-4">
-                  <input name="u_email" type="email" class="form-control"
+                  <input id="emailHelp" name="u_email" type="email" class="form-control"
                   aria-describedby="emailHelp" placeholder="Enter email" autocomplete="on">
+                  <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
                 </div>
                 <div class="form-group">
                   <input name="u_password" type="password" class="form-control" id="pwd"

@@ -52,11 +52,11 @@
         <h5 class="modal-title text-white">Login</h5>
       </div>
       <div class="modal-body">
-        <form action="{{ url_for('login') }}" method="POST">
+        <form action="{{ url_for('login') }}" method="POST" onsubmit="checkEmail()">
           <small id="emailHelp" class="pl-2">{{ errorMessage }}</small>
           <div class="form-group mb-4">
-            <input name="u_email" type="email" class="form-control" aria-describedby="emailHelp"
-            placeholder="Enter email" autocomplete="on">
+            <input id="u_email" name="u_email" type="text" class="form-control" aria-describedby="emailHelp"
+            placeholder="Purdue username or email" autocomplete="on">
           </div>
           <div class="form-group">
             <input name="u_password" type="password" class="form-control" id="pwd"

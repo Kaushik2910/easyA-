@@ -124,3 +124,11 @@ document.addEventListener("keydown",function(e){
     disp_sugs[disp_sugs.length - 1].classList.add("selected");
   }
 })
+
+function checkEmail(){
+  var u_email = document.getElementById("u_email");
+  let regex = new RegExp("[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+");
+  if (u_email.value.match(regex) == null) {
+    u_email.value += "@purdue.edu"
+  }
+}
