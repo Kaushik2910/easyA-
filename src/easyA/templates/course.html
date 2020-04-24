@@ -54,17 +54,20 @@
         </div>
         <div>
           {% if 'email' in session %}
-          <input id="userID" type="text" name="" hidden value="user">
+
           <div class="btn-group">
             <button id="user" type="button" class="btn btn-outline-warning mr-2" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>
             <span class="d-none d-md-inline">
               {% if session['group'] == 'banned' %}
               {{ session['email'] }} - BANNED
+              <input id="userID" type="text" name="" hidden value="banned">
               {% elif session['group'] == 'admin' %}
               {{ session['email'] }} - ADMIN
+              <input id="userID" type="text" name="" hidden value="admin">
               {% else %}
               {{ session['email'] }}
+              <input id="userID" type="text" name="" hidden value="user">
               {% endif %}
             </span>
           </button>
