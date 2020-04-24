@@ -35,6 +35,7 @@
 
         <form action="{{ url_for('delete_report_admin') }}" method="POST">
           <input name="report_ID" type="hidden" value="{{ report['report_ID'] }}"></input>
+          <input name="post_ID" type="hidden" value="{{ post['post_ID'] }}"></input>
           <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-outline-danger border-0">Delete</button>
           </div>

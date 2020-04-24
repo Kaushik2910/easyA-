@@ -307,6 +307,12 @@ def delete_report_admin():
 
     if request.method == 'POST':
         report = firestore_database.collection('reports').document(request.form['report_ID']).get()
+        post = firestore_database.collection('posts').document(request.form['post_ID']).get()
+
+        report_count = int(post.to_dict()['report_count']) - 1
+        post.reference.update({
+            "report_count": int(report_count)
+        })
 
         #Delete post
         report.reference.delete()
