@@ -1,7 +1,7 @@
 
 var userID = document.getElementById("userID");
 
-if (userID.value == "user") {
+if (userID.value == "user" || userID.value == "admin" || userID.value == "banned") {
   var user = document.getElementById("user");
   var fixed_user = user.innerHTML;
   user.innerHTML =  fixed_user.replace("@purdue.edu", "");
@@ -120,8 +120,10 @@ var votes = document.getElementsByClassName("review-votes");
 
 for (var i = 0; i < votes.length; i++) {
   votes[i].onclick = function(){
-
-
+    var user_group = document.getElementById("userID").value;
+    if (user_group == "banned" || user_group == "guest") {
+      return;
+    }
     var num = this.innerText;
     if (this.classList.contains("voted")) {
       num--;

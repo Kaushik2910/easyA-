@@ -68,7 +68,7 @@
         <div id="professor_input_div" class="px-2 py-0 form-control new_review_input">
           <input id="professor_input" class="p-0" type="text" name="professor" placeholder="Professor">
           {% for professor in professors %}
-          <div class="prof_suggestion_div">
+          <div class="prof_suggestion_div" onclick="autoCompleteProf('{{ professor['professor_name'] }}')">
             <p class="prof_suggestion my-1">{{ professor['professor_name'] }}</p>
           </div>
           {% endfor %}

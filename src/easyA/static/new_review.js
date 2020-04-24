@@ -59,14 +59,20 @@ function show_suggestions(){
 var prof_input = document.getElementById("professor_input");
 prof_input.addEventListener("input", show_suggestions);
 
-var sugs = document.getElementsByClassName("prof_suggestion_div");
-for (var i = 0; i < sugs.length; i++) {
-  var prof_p = sugs[i].getElementsByClassName("prof_suggestion")[0];
-  sugs[i].onclick = function(){
-    prof_input.value = prof_p.textContent;
-    $(".prof_suggestion").hide();
-  };
+// var sugs = document.getElementsByClassName("prof_suggestion_div");
+// for (var i = 0; i < sugs.length; i++) {
+//   var prof_p = sugs[i].getElementsByClassName("prof_suggestion")[0];
+//   sugs[i].onclick = function(){
+//     prof_input.value = prof_p.textContent;
+//     $(".prof_suggestion").hide();
+//   };
+// }
+
+function autoCompleteProf(prof_name) {
+  document.getElementById("professor_input").value = prof_name;
+  $(".prof_suggestion").hide();
 }
+
 
 document.addEventListener("keydown",function(e){
   if (e.which != 40 && e.which != 38 && e.which != 13) {
