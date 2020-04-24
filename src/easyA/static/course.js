@@ -471,21 +471,18 @@ window.addEventListener('load', function () {
   $("#reviews_ul").css("marginTop", $("#class-header").height() * 1.02 + "px");
 })
 
-function copyLinkHelper(course_id, post_id) {
+function clipboard(course_id, post_id) {
   var shareLink = document.getElementById("shareLink");
   var url = document.URL.split('course',2)[0];
   url = url + 'course/' + course_id + '?' + post_id;
   shareLink.innerText = url;
-}
-
-function clipboard(){
-  var shareLink = document.getElementById("shareLink");
   var tempInput = document.createElement("input");
-  tempInput.value = shareLink.innerText;
+  tempInput.value = url;
   document.body.appendChild(tempInput);
   tempInput.select();
   document.execCommand("copy");
   document.body.removeChild(tempInput);
+
 }
 
 function speakLoud(postID) {

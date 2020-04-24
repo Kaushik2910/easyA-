@@ -293,7 +293,7 @@
               data-target="#login_modal">Report</button>
               {% endif %}
               {%endif%}
-              <button type="button" onclick="copyLinkHelper('{{ course_id }}','{{ post['post_ID'] }}')" class="dropdown-item text-light" data-toggle="modal" data-target="#share_modal">
+              <button type="button" onclick="clipboard('{{ course_id }}','{{ post['post_ID'] }}')" class="dropdown-item text-light" data-toggle="modal" data-target="#share_modal">
                 Share
               </button>
             </div>
@@ -436,7 +436,7 @@
               <p class="m-0 mt-1" id="shareLink"></p>
             </div>
             <div class="modal-footer mx-1 mt-0 mb-1 border-0">
-              <button id="copy_btn" type="button" class="btn btn-warning text-light" onclick= "clipboard()" data-dismiss="modal">OK</button>
+              <button id="copy_btn" type="button" class="btn btn-warning text-light" data-dismiss="modal">OK</button>
             </div>
           </div>
         </div>
@@ -477,20 +477,6 @@
         </div>
       </div>
 
-<!-- <<<<<<< HEAD
-      <script>
-        function speakLoud(postID) {
-            var text = document.getElementById(postID + "-text");
-            speechSynthesis.speak(new SpeechSynthesisUtterance(text.innerHTML));
-        }
-      </script>
-=======
-
-
-
-
-
->>>>>>> ee05cd00fa89995093a4d40771f349f6027dec87 -->
       <!-- Optional JavaScript -->
       <script src="{{ url_for('static', filename='course.js') }}"></script>
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
