@@ -299,7 +299,7 @@
       <div class="mb-1 d-flex justify-content-between">
         <div class="professor_div">
           {% if post['professor_link'] %}
-          <p class="review-professor my-0"><span>Professor:</span> <a class="prof_ratinng" href="{{ post['professor_link'] }}">{{ post['professor'] }}</a></p>
+          <p class="review-professor my-0"><span>Professor:</span> <a class="prof_ratinng" href="{{ post['professor_link'] }}" target="_blank" rel="noopener noreferrer">{{ post['professor'] }}</a></p>
           {% else %}
           <p class="review-professor my-0"><span>Professor:</span> {{ post['professor'] }}</p>
           {% endif %}
